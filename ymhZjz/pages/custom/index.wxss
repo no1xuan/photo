@@ -1,0 +1,34 @@
+/* pages/custom/index.wxss */
+.custom {
+  height: 100vh;
+  background-color: #fff;
+}
+
+.size {
+  width: 70vw;
+  height: 30vh;
+  margin: 0 auto;
+  /* margin: 0 70px; */
+  margin-top: 20vh;
+  color: #2c2c2c !important;
+}
+
+
+.van-field__label {
+  font-size: 18px;
+}
+
+.bottom {
+  margin: 100px auto;
+}
+
+.bottom button:first-child {
+  margin: 0 70px;
+  height: 45px;
+  color: #fff;
+  background-color: #2c2c2c;
+  border-radius: 10px;
+  font-size: 18px;
+  text-align: center;
+  line-height: 45px;
+}

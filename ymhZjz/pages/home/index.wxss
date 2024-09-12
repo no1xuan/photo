@@ -1,0 +1,183 @@
+/* 轮博图样式 */
+.swiper-component {
+    width: 100%;
+    height: 60vh;
+}
+
+.swiper-content {
+    width: 100%;
+    height: 100%;
+}
+
+.slide-image {
+    width: 100%;
+    height: 100%;
+}
+
+/* 内容区域 */
+.content {
+    width: 90%;
+    height: 400rpx;
+    background-color: #fff;
+    margin: 0 auto;
+    border-radius: 30rpx;
+    position: relative;
+    top: -100rpx;
+    box-shadow: 0px 5px 8px #ccc;
+}
+
+.top {
+    height: 65%;
+    border-bottom: 1rpx solid #eee;
+
+}
+
+.top-block {
+    height: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.top-left {
+    width: 33.333%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-size: 30rpx;
+    font-weight: 500;
+
+}
+
+.top-line {
+    height: 80%;
+    border: 1rpx solid #eee;
+}
+
+.top-right {
+    width: 66.666%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-size: 30rpx;
+    font-weight: 500;
+}
+
+
+
+.bottom {
+    height: 35%;
+    /* background-color: #0f0; */
+    border-radius: 40rpx;
+}
+
+.bottom-block {
+    height: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.bottom-line {
+    height: 70%;
+    border: 1rpx solid #eee;
+}
+
+.bottom-cell {
+    width: 33.3%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 20rpx;
+}
+
+.bottom-cell>view view:last-child {
+    font-size: 18rpx;
+    color: #ccc;
+}
+
+.my-photo {
+    width: 90%;
+    height: 100rpx;
+    background-color: #fff;
+    margin: 0 auto;
+    border-radius: 30rpx;
+    position: relative;
+    top: -70rpx;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+}
+
+.my-photo view:first-child {
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+}
+
+.other {
+    width: 100%;
+    height: 100%;
+    background-color: #fff;
+    position: relative;
+    top: -40rpx;
+    padding: 20px 0;
+}
+
+.other-title {
+    font-weight: 500;
+    margin-left: 20px;
+}
+
+.other-content {
+    display: flex;
+
+}
+
+.other-content .other-block:first-child {
+    height: 250px;
+    width: 50%;
+    margin: 20px 20px 0 20px;
+    background-color: #000;
+    border-radius: 15px;
+}
+
+.other-content .other-block:last-child {
+    height: 250px;
+    width: 93%;
+    margin: 20px 20px 5px 22px;
+    background-color: #30323C;
+    border-radius: 15px;
+}
+
+.other-block {
+    position: relative;
+}
+
+.other-img {
+    width: 100%;
+    height: 100%;
+    margin: 0 auto;
+    border-radius: 15px;
+}
+
+.other-msg {
+    height: 20%;
+    position: absolute;
+    font-size: 14px;
+    color: #fff;
+    left: 8px;
+    bottom: 0;
+}
+
+.other-msg2 {
+  height: 11%;
+  position: absolute;
+  font-size: 14px;
+  color: #fff;
+  left: 8px;
+  bottom: 0;
+}

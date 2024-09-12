@@ -1,0 +1,105 @@
+<view class="home-page">
+	<view class="swiper-component">
+		<swiper class="swiper-content" indicator-dots="true" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}">
+      <block wx:for-items="{{swiperDatas}}" wx:key="index">
+    <swiper-item>
+        <image src="{{item.imgurl}}" class="slide-image" />
+    </swiper-item>
+</block>
+		</swiper>
+	</view>
+	<view class="content">
+		<view class="top">
+			<view class="top-block">
+				<view class="top-left">
+					<image style="width: 65px; height: 70px; margin-bottom: 5px " src="../../images/home/methods.png" bindtap="navigateTo" data-url="/pages/methods/index"></image>
+					<view bindtap="navigateTo" data-url="/pages/methods/index">查看攻略</view>
+				</view>
+				<view class="top-line"></view>
+				<view class="top-right">
+					<image style="width: 45px; height: 65px; margin-bottom: 5px " src="../../images/home/build.png" bindtap="navigateTo" data-url="/pages/sizeList/index"></image>
+					<view bindtap="navigateTo" data-url="/pages/sizeList/index">快速制作</view>
+				</view>
+			</view>
+		</view>
+		<view class="bottom">
+			<view class="bottom-block">
+				<view class="bottom-cell">
+					<image style="width: 30px; height: 30px; margin-right: 5px " src="../../images/home/hot.png" bindtap="navigateTo" data-url="/pages/sizeList/index"></image>
+					<view bindtap="navigateTo" data-url="/pages/sizeList/index">
+						<view>热门推荐</view>
+						<view>近期高频尺寸</view>
+					</view>
+
+				</view>
+				<view class="bottom-line"></view>
+				<view class="bottom-cell">
+					<image style="width: 30px; height: 30px; margin-right: 5px " src="../../images/home/custom.png"></image>
+					<view bindtap="navigateTo" data-url="/pages/custom/index">
+						<view>自定义</view>
+						<view>多种尺寸制作</view>
+					</view>
+
+				</view>
+				<view class="bottom-line"></view>
+				<view class="bottom-cell">
+					<image style="width: 30px; height: 30px; margin-right: 5px " src="../../images/home/search.png" bindtap="navigateTo" data-url="/pages/searchs/index"></image>
+					<view bindtap="navigateTo" data-url="/pages/searchs/index">
+						<view>搜索</view>
+						<view>关键字查找</view>
+					</view>
+				</view>
+			</view>
+		</view>
+
+	</view>
+	<view class="my-photo" bindtap="navigateTo" data-url="/pages/works/index">
+		<view>
+			<image style="width: 25px; height: 20px; margin: 0 10px 0 15px " src="../../images/home/my-photo.png"></image>
+			<view>我的作品</view>
+		</view>
+		<view style="margin-right: 15px; font-size: 25rpx; color: #ccc ">立即查看
+      <van-icon name="flower-o" />
+		</view>
+	</view>
+	<view class="other">
+		<view class="other-title">探索系列</view>
+
+    <view class="other-content">
+			<view class="other-block">
+				<image class="other-img" bindtap="navigateTo" data-url="/pages/sizeList/index" src="../../images/home/3.png"></image>
+				<view class="other-msg">AI证件照</view>
+       <view class="other-msg2">支持多种尺寸+自定义背景</view>
+			</view>
+		</view>
+
+    
+
+		<view class="other-content">
+			<view class="other-block">
+				<image class="other-img" bindtap="toBeLaunched" src="../../images/home/4.png"></image>
+				<view class="other-msg">人像抠图</view>
+       <view class="other-msg2">智能识别人像，一键迅捷抠图</view>
+			</view>
+		</view>
+
+		<view class="other-content">
+			<view class="other-block">
+				<image class="other-img" bindtap="toBeLaunched" src="../../images/home/5.png"></image>
+				<view class="other-msg">黑白照片上色</view>
+        <view class="other-msg2">黑白照片一键上色变清晰</view>
+			</view>
+		</view>
+
+		<view class="other-content">
+			<view class="other-block">
+				<image class="other-img" bindtap="toBeLaunched" src="../../images/home/6.png"></image>
+				<view class="other-msg">粘土风写真</view>
+       <view class="other-msg2">又丑又萌的粘土风格照片</view>
+			</view>
+		</view>
+
+
+
+	</view>
+</view>

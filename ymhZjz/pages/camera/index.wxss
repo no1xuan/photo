@@ -1,0 +1,82 @@
+/* pages/autoCamera/autoCamera.wxss */
+page {
+  overflow: hidden;
+  height: 100%;
+}
+
+.camera {
+  position: relative;
+  box-sizing: border-box;
+  width: 100vw;
+  height: 100vh;
+}
+
+.contain-photo {
+  width: 100%;
+  height: 100%;
+}
+
+image {
+  width: 100%;
+  height: 100%;
+}
+
+.person {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  font-size: 150rpx;
+  top: 200rpx;
+  color: #fff;
+}
+
+.person image {
+  width: 100%;
+  height: 60%;
+}
+
+.icon_cameraC {
+  width: 150rpx;
+  height: 150rpx;
+  position: absolute;
+  font-size: 150rpx;
+  left: 50%;
+  margin-left: -75rpx;
+  bottom: 50rpx;
+  color: #fff;
+  /* border-radius: 50%;
+  background-color: #fff; */
+}
+
+.icon_cameraT {
+  width: 100rpx;
+  height: 100rpx;
+  position: absolute;
+  font-size: 100rpx;
+  right: 30rpx;
+  top: 10vh;
+  color: #fff;
+
+}
+
+.icon_back {
+  width: 100rpx;
+  height: 100rpx;
+  position: absolute;
+  font-size: 100rpx;
+  left: 70rpx;
+  bottom: 50rpx;
+  color: #fff;
+  /* background-color: #fff; */
+}
+
+.icon_confirm {
+  width: 100rpx;
+  height: 100rpx;
+  position: absolute;
+  font-size: 100rpx;
+  right: 70rpx;
+  bottom: 50rpx;
+  color: #fff;
+  /* background-color: #fff; */
+}

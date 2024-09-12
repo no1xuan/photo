@@ -1,0 +1,21 @@
+<view class="search">
+  <view class="s-input">
+    <van-search value="{{ value }}" bind:change="onChange" placeholder="请输入关键词,如：一寸" shape="round" />
+  </view>
+  <scroll-view class="container" scroll-y bindscrolltolower="moredata" scroll-top="{{scrollTop}}">
+    <view wx:for="{{photoSizeList}}" wx:for-index="id" wx:key="id" data-index="{{id}}" bindtap="goNextPage">
+      <view class="list">
+        <view>
+          <view class="title">{{ item.name }}</view>
+          <view class="description">{{item.widthPx}}*{{item.heightPx}} | {{item.widthMm}}*{{item.heightMm}}</view>
+        </view>
+        <image style="width: 50px; height: 50px" src="../sizeList/sizes/{{item.icon}}.png"></image>
+      </view>
+    </view>
+  </scroll-view>
+  <view class="none" wx:if="{{!photoSizeList.length}}">
+    <image src="./images/none.png" style="width: 100%;height: 100%;"></image>
+  </view>
+  <!-- 有问题，没有回到顶部，待修复 -->
+  <!-- <view class="scroll-to-top" bindtap="scrollToTop">⬆</view> -->
+</view>

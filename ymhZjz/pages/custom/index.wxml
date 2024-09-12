@@ -1,0 +1,17 @@
+<!--pages/custom/index.wxml-->
+<view class="custom">
+  <view class="size">
+    <van-cell-group>
+      <van-field value="{{ name }}" type="string" label="名称：" placeholder="请输入名称" border="{{ false }}" size="large" maxlength="10" input-align="right" bind:change="changeName" />
+      <van-field value="{{ width }}" type="number" label="宽度：" placeholder="像素：px" border="{{ false }}" size="large" maxlength="4" input-align="right" bind:change="changeWidth" />
+      <van-field value="{{ height }}" type="number" label="高度：" placeholder="像素：px" border="{{ false }}" size="large" maxlength="4" input-align="right" bind:change="changeHeight" />
+      <van-field value="{{ size }} mm" type="string" label="尺寸:" placeholder="尺寸：mm" border="{{ false }}" size="large" input-align="right" readonly="{{true}}" />
+      <van-field value="{{ px }}" type="string" label="像素:" placeholder="像素：px" border="{{ false }}" size="large" input-align="right" readonly="{{true}}" />
+
+
+    </van-cell-group>
+  </view>
+  <view class="bottom">
+    <button bindtap="addSize" class="">保存尺寸</button>
+  </view>
+</view>

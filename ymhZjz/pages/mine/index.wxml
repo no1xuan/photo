@@ -1,0 +1,38 @@
+<view class="my-page">
+  <view class="top">
+    <!-- <view class="user-image">
+      <image style="width: 100%;height:100%;" mode="widthFix" src=""></image>
+    </view> -->
+    <view class="user-name" style="width:16em;padding: 100px;">
+      <view>本页面正在拼命开发中...</view>
+    </view>
+  </view>
+  <view class="container">
+    <view class="contact-support">
+      <button open-type="contact" class="contact-button" style="width: 100%;">
+        <van-icon name="service-o" /> 联系客服
+      </button>
+    </view>
+
+    <van-collapse accordion style="width: 100%;" bind:change="onCollapseChange" value="{{ activeNames }}">
+      <van-collapse-item title="常见问题" name="4" icon="records">
+        <van-collapse accordion value="{{ activeChildrenNames }}" bind:change="onChildrenChange">
+          <van-collapse-item title="制作证件照收费吗？" name="1">
+            <view style="margin-bottom: 5px;">制作证件照是完全免费的哦～</view>
+          <view style="margin-bottom: 5px;">就连广告都没有哦~</view>
+            <view>喜欢的话麻烦帮忙多分享分享哦~</view>
+          </van-collapse-item>
+          <van-collapse-item title="找不到想要的尺寸？" name="2">
+            <view>大部分常规的尺寸都支持，可通过搜索查找自己想要的尺寸，如果没有可以自定义尺寸哦~</view>
+          </van-collapse-item>
+          <van-collapse-item title="照片为什么这么模糊？" name="3">
+            <view>手机上查看证件照时会自动放大证件照，所以说手机上看到会感觉比较模糊</view>
+          </van-collapse-item>
+          <van-collapse-item title="在那里保存相片？" name="4">
+            <view>首页-我的作品里面</view>
+          </van-collapse-item>
+        </van-collapse>
+      </van-collapse-item>
+    </van-collapse>
+  </view>
+</view>
