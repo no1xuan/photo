@@ -1,5 +1,6 @@
 // 引入Dialog
 import Dialog from '../../miniprogram_npm/@vant/weapp/dialog/dialog';
+import Notify from '@vant/weapp/notify/notify';
 const app = getApp();
 
 Page({
@@ -18,6 +19,7 @@ Page({
       });
       return;
     }
+    Notify({ type: 'success', message: '只有下载过，才会出现在这里哦~' });
     this.getSizeList();
   },
 

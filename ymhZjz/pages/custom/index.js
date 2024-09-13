@@ -43,11 +43,6 @@ Page({
   }, 500),
 
   addSize() {
-    if(app.token == ""){
-      wx.navigateTo({
-        url: '/pages/login/index',
-      });
-    }
     if(this.data.width==0 || this.data.height==0){
       wx.showToast({
         title: '宽或高不能为0',
@@ -126,8 +121,11 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
-
+    if(app.token == ""){
+      wx.navigateTo({
+        url: '/pages/login/index',
+      });
+    }
   },
 
   /**

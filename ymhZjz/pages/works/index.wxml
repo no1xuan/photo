@@ -1,4 +1,5 @@
 <view class="works">
+  <van-notify id="van-notify" />
   <view class="container" wx:for="{{workList}}" wx:for-index="id" wx:key="id" data-index="{{id}}">
     <view class="left">
       <view class="photo">
