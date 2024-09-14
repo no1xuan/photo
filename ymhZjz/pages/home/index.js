@@ -43,7 +43,7 @@ Page({
     wx.showToast({
       title: "该功能正在内测中，即将开放",
       icon: 'none',
-      duration: 5000
+      duration: 1500
     });
    },
 
