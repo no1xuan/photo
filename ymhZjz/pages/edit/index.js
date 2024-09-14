@@ -53,7 +53,7 @@ Page({
     wx.request({
       url: app.url + 'api/getWeb',
       header: {
-        "token": app.token
+        "token": wx.getStorageSync("token")
       },
       method: "POST",
       success: (res) => { 
@@ -73,7 +73,6 @@ Page({
       this.setData({
         color:e.currentTarget.dataset.color
       })
-      console.log(e.currentTarget.dataset.color);
     this.updateColor(this.data.color,this.data.imageData.kimg);
   },
 
@@ -103,7 +102,7 @@ Page({
           "colors": color
         },
         header: {
-          "token": app.token
+          "token": wx.getStorageSync("token")
         },
         method: "POST",
         success: (res) => { 
@@ -133,7 +132,7 @@ saveNormalPhoto(){
   wx.request({
     url: app.url + 'api/updateUserPhonto',
     data: {"image": this.data.imageData.cimg,"photoId":  this.data.imageData.id2},
-    header: {"token": app.token},
+    header: {"token": wx.getStorageSync("token")},
     method: "POST",
     success: (res) => { 
       if (res.data.code == 200) {

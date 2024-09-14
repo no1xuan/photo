@@ -106,7 +106,7 @@ Page({
       name: 'file', 
       header: {
         'content-type': 'multipart/form-data', 
-        "token": app.token
+        "token": wx.getStorageSync("token")
       },
       success: (res) => {
         wx.hideLoading();
@@ -142,7 +142,7 @@ Page({
         "itemId": this.data.detail.id
       },
       header: {
-        "token": app.token
+        "token": wx.getStorageSync("token")
       },
       method: "POST",
       success: (res) => { 

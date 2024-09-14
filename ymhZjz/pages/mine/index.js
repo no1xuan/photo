@@ -34,7 +34,7 @@ Page({
     },
 
     onShow: function() {
-      if(app.token != ""){
+      if(wx.getStorageSync("token") != ""){
                // const token = wx.getStorageSync('token');
         // if (token) {
         //     wx.request({

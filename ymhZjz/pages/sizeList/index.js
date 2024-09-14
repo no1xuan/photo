@@ -21,7 +21,7 @@ Page({
       wx.navigateTo({
         url: '/pages/searchs/index',
       });
-    } else if (this.data.category == 4 && app.token == "") {
+    } else if (this.data.category == 4 && wx.getStorageSync("token") == "") {
       wx.navigateTo({
         url: '/pages/login/index',
       });
@@ -42,7 +42,7 @@ Page({
         pageSize: this.data.pageSize,
         type: this.data.category,
       },
-      header: { token: app.token },
+      header: { token: wx.getStorageSync("token") },
       method: "GET",
       success(res) {
         wx.hideLoading();

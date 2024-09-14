@@ -79,7 +79,7 @@ Page({
           "size":this.data.size  
       },
         header: {
-          "token": app.token
+          "token": wx.getStorageSync("token")
         },
         success(res) {
           if (res.data.code == 200) {
@@ -121,7 +121,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    if(app.token == ""){
+    if(wx.getStorageSync("token") == ""){
       wx.navigateTo({
         url: '/pages/login/index',
       });

@@ -13,7 +13,7 @@ Page({
 
   // 页面加载时请求第一页数据
   onLoad() {
-    if (app.token === "") {
+    if (wx.getStorageSync("token") == "") {
       wx.navigateTo({
         url: '/pages/login/index',
       });
@@ -39,7 +39,7 @@ Page({
         pageSize: this.data.pageSize,
       },
       header: {
-        "token": app.token
+        "token": wx.getStorageSync("token")
       },
       method: "GET",
       success(res) {
@@ -84,7 +84,7 @@ Page({
           id: e.target.dataset.id,
         },
         header: {
-          "token": app.token
+          "token": wx.getStorageSync("token")
         },
         method: "GET",
         success(res) {

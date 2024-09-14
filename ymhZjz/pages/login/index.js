@@ -22,7 +22,7 @@ Page({
                 success(res) {
                   wx.hideLoading();
                   if (res.data.code == 200) {
-                    app.token = res.data.data.token
+                    wx.setStorageSync('token', res.data.data.token)
                     wx.navigateBack({
                       delta: 1
                     });

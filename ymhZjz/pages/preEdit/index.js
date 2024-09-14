@@ -1,9 +1,5 @@
 const app = getApp()
 Page({
-
-  /**
-   * 页面的初始数据
-   */
   data: {
     //轮播图配置
     autoplay: true,
@@ -43,7 +39,7 @@ Page({
 
   // 相册选择
   chooseImage() {
-    if(app.token==""){
+    if(wx.getStorageSync("token")==""){
       wx.navigateTo({
         url: '/pages/login/index',
       });
@@ -86,7 +82,7 @@ Page({
 
   // 相机拍照
   chooseCamera() {
-    if(app.token==""){
+    if(wx.getStorageSync("token")==""){
       wx.navigateTo({
         url: '/pages/login/index',
       });
@@ -161,7 +157,7 @@ Page({
       name: 'file', 
       header: {
         'content-type': 'multipart/form-data', 
-        "token": app.token
+        "token": wx.getStorageSync("token")
       },
       useHighPerformanceMode:true,
       success: (res) => {
@@ -197,7 +193,7 @@ Page({
         "itemId": this.data.detail.id
       },
       header: {
-        "token": app.token
+        "token": wx.getStorageSync("token")
       },
       method: "POST",
       success: (res) => {
