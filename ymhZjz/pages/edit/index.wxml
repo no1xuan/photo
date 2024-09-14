@@ -14,7 +14,7 @@
             <view class="icon_select"></view>
           </view>
           <!-- 白色背景 -->
-          <view bindtap="toggleBg" data-color="#fff" class="color" style="background-color:#fff">
+          <view bindtap="toggleBg" data-color="#ffffff" class="color" style="background-color:#ffffff">
             <view class="icon_select"></view>
           </view>
           <!-- 红色背景 -->
