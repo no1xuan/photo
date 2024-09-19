@@ -1,0 +1,20 @@
+<view class="dialog {{show ? 'dialog_show' : ''}}">
+  <view wx:if="{{mask}}" class="weui-mask" catchtap="close" catchtouchmove="close"></view>
+  <view class="weui-actionsheet {{show ? 'weui-actionsheet_toggle' : ''}}" catchtouchmove="preventdefault">
+    <view class="weui-half-screen-dialog__hd">
+      <view class="weui-half-screen-dialog__hd__side" bindtap="close">
+        <a class="weui-icon-btn">
+          <i class="weui-icon-close-thin"></i>
+        </a>
+      </view>
+      <view class="weui-half-screen-dialog__hd__main">
+        <strong class="weui-half-screen-dialog__title">请选择颜色</strong>
+        <view class="weui-half-screen-dialog__subtitle">点击喜欢的颜色，然后松手即可</view>
+      </view>
+    </view>
+    <movable-area class="target" style="background-color:{{hueColor}}">
+      <movable-view direction="all" bindchange="changeSV" x="{{x}}" y="{{y}}" animation="{{false}}" class="iconfont icon-ios-locate-outline" bindtouchend="onEnd"></movable-view>
+    </movable-area>
+    <slider bindchanging="changeHue" activeColor="transparent" backgroundColor="transparent" class="ribbon" max="360" value="{{hsv.h}}" block-color="{{colorRes}}" bindtouchend="onEnd" />
+  </view>
+</view>
