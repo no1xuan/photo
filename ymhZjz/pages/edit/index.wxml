@@ -42,10 +42,11 @@
     </van-tabs>
 
     <view class="download-view">
-      <button bindtap="saveNormalPhoto" type="default" class="save-btn">保存预览照</button>
-      <button bindtap="saveHDPhoto" type="default" class="save-btn">保存AI高清照</button>
+      <button bindtap="openSavePhoto" data-type="1" type="default" class="save-btn">保存预览照</button>
+      <button bindtap="openSavePhoto" data-type="2" type="default" class="save-btn">保存AI高清照</button>
     </view>
 
     <color-picker bindchangeColor="pickColor" initColor="rgb(7,193,96)" show="{{pick}}" />
+    <van-dialog id="van-dialog" />
   </view>
 </view>

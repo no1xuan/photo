@@ -1,12 +1,21 @@
 const app = getApp()
 let canOnePointMove = false;
-let onePoint = { x: 0, y: 0 };
-let twoPoint = { x1: 0, y1: 0, x2: 0, y2: 0 };
+let onePoint = {
+  x: 0,
+  y: 0
+};
+let twoPoint = {
+  x1: 0,
+  y1: 0,
+  x2: 0,
+  y2: 0
+};
+
+import Dialog from '@vant/weapp/dialog/dialog'
 Page({
   data: {
     imageData: {},
     showScale: 480 / 295,
-    rpxRatio: 1,
     width: 0,
     height: 0,
     left: 0,
@@ -18,226 +27,378 @@ Page({
     maskTop: 0,
     maskScale: 1,
     maskRotate: 0,
-    pick:false,
-    color:"438edb",
-    picUrl:""
-    // downloadOne:1,
-    // downloadTwo:2
+    pick: false,
+    color: "438edb",
+    picUrl: "",
+    downloadOne: 1,
+    downloadTwo: 2,
+    videoUnitId: 0,
+    rewardedVideoAd: null,
+    typeDownload: 1
   },
 
-  onLoad: function (options) {
+  onLoad: function () {
     this.getImageData();
-    this.setRpxRatio();
-    // this.getWeb();
+    this.getWeb();
   },
 
   getImageData() {
     const eventChannel = this.getOpenerEventChannel && this.getOpenerEventChannel();
     eventChannel &&
       eventChannel.on('sendImageData', (data) => {
-        this.setData({ imageData: data });
-        console.log(this.data);
-        wx.setNavigationBarTitle({title: this.data.imageData.name+"（预览）"});
+        this.setData({
+          imageData: data
+        });
+        wx.setNavigationBarTitle({
+          title: this.data.imageData.name + "（预览）"
+        });
       });
   },
 
-  setRpxRatio() {
-    wx.getWindowInfo({
-      success: (res) => {
-        this.setData({ rpxRatio: res.screenWidth / 750 });
-      },
-    });
-  },
-
-  getWeb(){
+  getWeb() {
     wx.request({
       url: app.url + 'api/getWeb',
       header: {
         "token": wx.getStorageSync("token")
       },
       method: "POST",
-      success: (res) => { 
+      success: (res) => {
         this.setData({
           downloadOne: res.data.downloadOne,
-          downloadTwo: res.data.downloadTwo
+          downloadTwo: res.data.downloadTwo,
+          videoUnitId: res.data.videoUnitId
         });
+        this.initRewardedVideoAd(res.data.videoUnitId);
       }
     });
   },
 
   // 点击换背景
-  toggleBg(e) { 
-        wx.showLoading({
-            title: '制作中...',
-          })
-      this.setData({
-        color:e.currentTarget.dataset.color
-      })
-    this.updateColor(this.data.color,this.data.imageData.kimg);
+  toggleBg(e) {
+    wx.showLoading({
+      title: '制作中...',
+    })
+    this.setData({
+      color: e.currentTarget.dataset.color
+    })
+    this.updateColor(this.data.color, this.data.imageData.kimg);
   },
 
 
-    toPick: function () {
-      this.setData({
-        pick:true
-      })
-    },
+  toPick: function () {
+    this.setData({
+      pick: true
+    })
+  },
 
-    //自定义换背景
-    pickColor(e) {
+  //自定义换背景
+  pickColor(e) {
     wx.showLoading({
-    title: '制作中...',
+      title: '制作中...',
     })
-     let color =  this.rgbStringToHex(e.detail.color);
-     this.setData({color:color})
-      this.updateColor(color,this.data.imageData.kimg);
-    },
-
-    //调用换背景
-    updateColor(color,tu){
-      wx.request({
-        url: app.url + 'api/updateIdPhoto',
-        data: {
-          "image": tu,
-          "colors": color
-        },
-        header: {
-          "token": wx.getStorageSync("token")
-        },
-        method: "POST",
-        success: (res) => { 
-          if (res.data.code == 200) {
-            this.setData({
-              'imageData.cimg': res.data.data.cimg
-            });
-            wx.hideLoading();
-          } else if (res.data.code == 404) {
-            wx.hideLoading();
-            wx.showToast({
-            title: res.data.data,
-            icon: 'error'
-            })
-          
-          }
-        }
-      });
-      
-    },
-
-//保存证件照
-saveNormalPhoto(){
-  wx.showLoading({
-    title: '下载中...',
+    let color = this.rgbStringToHex(e.detail.color);
+    this.setData({
+      color: color
     })
-  wx.request({
-    url: app.url + 'api/updateUserPhonto',
-    data: {"image": this.data.imageData.cimg,"photoId":  this.data.imageData.id2},
-    header: {"token": wx.getStorageSync("token")},
-    method: "POST",
-    success: (res) => { 
-      if (res.data.code == 200) {
-        this.setData({
-          'picUrl': res.data.data.picUrl
-        });
-        //调用保存
-        this.savePicUrlAndImg();
-      } else if (res.data.code == 404) {
-        wx.showToast({
-        title: res.data.data,
-        icon: 'none'
-        })
-      
-      }
-    } 
-  });
-},
+    this.updateColor(color, this.data.imageData.kimg);
+  },
 
-//保存高清照
-saveHDPhoto(){
-  this.setData({
-    'picUrl': ""
-  });
-  this.updateColor(this.data.color,this.data.imageData.oimg);
-  wx.nextTick(() => {
-    this.saveNormalPhoto();
-  });
-},
-
-// 根据图片url下载保存
-savePicUrlAndImg() {
-  const that = this;
-  wx.downloadFile({
-    url: this.data.picUrl,
-    success: function(res) {
-      wx.hideLoading();
-      // 下载成功后将图片保存到本地
-      wx.saveImageToPhotosAlbum({
-        filePath: res.tempFilePath,
-        success: function() {
-          wx.showToast({
-            title: '保存成功',
-            icon: 'success',
-            duration: 2000
+  //调用换背景
+  updateColor(color, tu) {
+    wx.request({
+      url: app.url + 'api/updateIdPhoto',
+      data: {
+        "image": tu,
+        "colors": color
+      },
+      header: {
+        "token": wx.getStorageSync("token")
+      },
+      method: "POST",
+      success: (res) => {
+        if (res.data.code == 200) {
+          this.setData({
+            'imageData.cimg': res.data.data.cimg
           });
-        },
-        fail: function() {
-          that.checkq();  //解决用户拒绝相册
+          wx.hideLoading();
+        } else if (res.data.code == 404) {
+          wx.hideLoading();
+          wx.showToast({
+            title: res.data.data,
+            icon: 'error'
+          })
+
         }
-      });
-    },
-    fail: function(res) {
-      console.log(res)
-      wx.showToast({
-        title: '下载图片失败，请重试',
-        icon: 'none',
-        duration: 2000
-      });
+      }
+    });
+
+  },
+
+  //调用广告，根据type区分下载，1普通，2高清
+  openSavePhoto(e) {
+    this.setData({
+      typeDownload: e.currentTarget.dataset.type
+    });
+
+    //普通下载没开启广告
+    if(this.data.downloadOne==1 && e.currentTarget.dataset.type==1){
+      this.saveNormalPhoto();
+      return;
     }
-  });
-},
+    //高清下载没开启广告
+    if(this.data.downloadTwo==1 && e.currentTarget.dataset.type==2){
+      this.saveHDPhoto();
+      return;
+    }
+
+    //剩下都是开启广告了，弹出询问
+    Dialog.confirm({
+      title: '提示',
+      message: '观看一次广告，才能下载哦，您每观看完一次广告都是对我们最大的帮助',
+    })
+      .then(() => {
+        const rewardedVideoAd = this.data.rewardedVideoAd;
+        if (rewardedVideoAd) {
+          // 尝试播放广告
+          rewardedVideoAd.show().catch(() => {
+            // 如果广告未加载成功，则重新加载并播放广告
+            this.loadRewardedVideoAd(e.currentTarget.dataset.type);
+          });
+        } else {
+          console.error('广告实例不存在');
+          //防止广告权限被封或无广告权限导致用户无法下载
+          if (e.currentTarget.dataset.type == 1) {
+            this.saveNormalPhoto();
+          } else {
+            this.saveHDPhoto()
+          }
+        }
+      })
+      .catch(() => {
+       
+      });
+    
+    
+
+  },
 
 
-// 解决用户拒绝相册问题
-checkq() {
-  wx.getSetting({
-    success: (res) => {
-      if (!res.authSetting['scope.writePhotosAlbum']) {
-        wx.showModal({
-          title: '提示',
-          content: '保存图片需要授权哦',
-          success: (res) => {
-            if (res.confirm) {
-              wx.openSetting({
-                success: (res) => {
-                  this.savePicUrlAndImg();
-                },
-                fail: (res) => {
-                  console.log(res);
-                }
-              });
-            }
+
+  //保存证件照
+  saveNormalPhoto() {
+    wx.showLoading({
+      title: '下载中...',
+    })
+    wx.request({
+      url: app.url + 'api/updateUserPhonto',
+      data: {
+        "image": this.data.imageData.cimg,
+        "photoId": this.data.imageData.id2
+      },
+      header: {
+        "token": wx.getStorageSync("token")
+      },
+      method: "POST",
+      success: (res) => {
+        if (res.data.code == 200) {
+          this.setData({
+            'picUrl': res.data.data.picUrl
+          });
+          //调用保存
+          this.savePicUrlAndImg();
+        } else if (res.data.code == 404) {
+          wx.showToast({
+            title: res.data.data,
+            icon: 'none'
+          })
+
+        }
+      }
+    });
+  },
+
+  //保存高清照
+  saveHDPhoto() {
+    this.setData({
+      'picUrl': ""
+    });
+    this.updateColor(this.data.color, this.data.imageData.oimg);
+    wx.nextTick(() => {
+      this.saveNormalPhoto();
+    });
+  },
+
+  // 根据图片url下载保存
+  savePicUrlAndImg() {
+    const that = this;
+    wx.downloadFile({
+      url: this.data.picUrl,
+      success: function (res) {
+        wx.hideLoading();
+        // 下载成功后将图片保存到本地
+        wx.saveImageToPhotosAlbum({
+          filePath: res.tempFilePath,
+          success: function () {
+            wx.showToast({
+              title: '保存成功',
+              icon: 'success',
+              duration: 2000
+            });
+          },
+          fail: function () {
+            that.checkq(); //解决用户拒绝相册
           }
         });
+      },
+      fail: function (res) {
+        wx.showToast({
+          title: '下载图片失败，请重试',
+          icon: 'none',
+          duration: 2000
+        });
       }
-    }
-  });
-},
+    });
+  },
+
+
+  // 解决用户拒绝相册问题
+  checkq() {
+    wx.getSetting({
+      success: (res) => {
+        if (!res.authSetting['scope.writePhotosAlbum']) {
+          wx.showModal({
+            title: '提示',
+            content: '保存图片需要授权哦',
+            success: (res) => {
+              if (res.confirm) {
+                wx.openSetting({
+                  success: (res) => {
+                    this.savePicUrlAndImg();
+                  },
+                  fail: (res) => {
+                    console.log(res);
+                  }
+                });
+              }
+            }
+          });
+        }
+      }
+    });
+  },
 
 
 
 
   //去分享页面(待开发分享下载)
   async composeImage() {
-    wx.showLoading({ title: '制作中...' });
+    wx.showLoading({
+      title: '制作中...'
+    });
     wx.redirectTo({
       url: './complete/index?msg=111&tempFilePath=pa&url=https://www.haimati.cn/img/1_7_1.98819809.jpg',
     });
   },
 
-  
 
 
-  
+
+  // 初始化激励视频广告
+  initRewardedVideoAd(adUnitId) {
+    if (wx.createRewardedVideoAd) {
+      const rewardedVideoAd = wx.createRewardedVideoAd({
+        adUnitId: adUnitId
+      });
+
+      // 确保广告事件只监听一次
+      rewardedVideoAd.offLoad();
+      rewardedVideoAd.offError();
+      rewardedVideoAd.offClose();
+
+      // 监听广告加载成功
+      rewardedVideoAd.onLoad(() => {
+        console.log('重新拉取广告成功');
+      });
+
+      // 监听广告加载失败
+      rewardedVideoAd.onError((err) => {
+        console.error('激励视频广告加载失败', err);
+        //用户可能观看广告上限，防止无法下载，仍发放奖励
+        if (this.data.typeDownload == 1) {
+          this.saveNormalPhoto();
+        } else {
+          this.saveHDPhoto()
+        }
+      });
+
+      // 监听广告关闭事件
+      rewardedVideoAd.onClose((res) => {
+        if (res && res.isEnded) {
+          //发放奖励
+          if (this.data.typeDownload == 1) {
+            this.saveNormalPhoto();
+          } else {
+            this.saveHDPhoto()
+          }
+        } else {
+          console.log('没看完广告，不发奖励');
+          wx.showToast({
+            title: "需要看完广告才能下载哦~",
+            icon: 'none',
+            duration: 1500
+          });
+        }
+      });
+      this.setData({
+        rewardedVideoAd: rewardedVideoAd
+      });
+    } else {
+      console.error('微信版本太低不支持激励视频广告');
+      //防止无法下载，所以仍然发放奖励
+      if (this.data.typeDownload == 1) {
+        this.saveNormalPhoto();
+      } else {
+        this.saveHDPhoto()
+      }
+    }
+  },
+
+
+
+  // 加载激励视频广告
+  loadRewardedVideoAd(type) {
+    const rewardedVideoAd = this.data.rewardedVideoAd;
+    rewardedVideoAd
+      .load()
+      .then(() => rewardedVideoAd.show())
+      .catch((err) => {
+        console.error('广告加载失败', err);
+        //看广告上限/网络失败，为了防止无法下载，仍发放奖励
+        if (type == 1) {
+          this.saveNormalPhoto();
+        } else {
+          this.saveHDPhoto()
+        }
+      });
+  },
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   rgbStringToHex(rgbString) {
     // 提取 rgb 值
     const rgbValues = rgbString.match(/\d+/g);
@@ -248,12 +409,18 @@ checkq() {
     const b = parseInt(rgbValues[2], 10);
 
     return "#" + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1).toUpperCase();
-},
+  },
 
   bindload: function (e) {
     wx.hideLoading({});
-    const { width, height } = e.detail;
-    const { widthPx, heightPx } = this.data.imageData;
+    const {
+      width,
+      height
+    } = e.detail;
+    const {
+      widthPx,
+      heightPx
+    } = this.data.imageData;
     const _width = widthPx;
     const _height = (_width * height) / width;
 
@@ -289,7 +456,9 @@ checkq() {
   },
 
   touchmove: function (e) {
-    const { data } = this;
+    const {
+      data
+    } = this;
     const thatData = data;
 
     if (e.touches.length < 2 && canOnePointMove) {

@@ -50,14 +50,13 @@ Page({
             workList: that.data.pageNum === 1 ? newData : that.data.workList.concat(newData),  // 拼接新数据
             hasMore: newData.length === that.data.pageSize  // 如果返回的数据少于 pageSize，表示没有更多数据了
           });
-        } else if (res.data.code === 500) {
+        } else if (res.data.code === 404) {
           that.setData({
-            hasMore: false  // 状态码500时，设置为没有更多数据
+            hasMore: false 
           });
-          wx.showToast({
-            title: '没有更多数据',
-            icon: 'none',
-            duration: 2000
+        }else if(res.data.code === 500){
+          wx.navigateTo({
+            url: '/pages/login/index',
           });
         }
       },

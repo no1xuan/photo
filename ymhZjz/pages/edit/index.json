@@ -1,7 +1,7 @@
 {
   "navigationStyle": "default",
   "usingComponents": {
-    "color-picker": "../../components/color-picker/color-picker",
+    "color-picker": "color-picker/color-picker",
     "van-loading": "@vant/weapp/loading/index"
   }
 }
