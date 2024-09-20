@@ -37,6 +37,18 @@ Page({
             url: e.currentTarget.dataset.url,
         })
     },
+    mywork(){
+      console.log("进入")  
+      if (wx.getStorageSync("token") == "") {
+        wx.navigateTo({
+          url: "/pages/login/index",
+        });
+      }else{
+        wx.navigateTo({
+          url: "/pages/works/index",
+        });
+      }
+    },
 
    //即将上线项目弹出
    toBeLaunched(){

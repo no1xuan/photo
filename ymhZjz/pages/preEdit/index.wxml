@@ -9,7 +9,7 @@
     </swiper>
   </view>
 
-  <view class="preEdit-content">
+  <view class="preEdit-content" bindtap="warm">
     <view class="title">{{detail.name}}</view>
     <view class="block">
       <view>冲印尺寸</view>

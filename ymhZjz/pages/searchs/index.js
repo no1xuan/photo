@@ -54,7 +54,7 @@ Page({
           });
         }else{
           wx.showToast({
-            title: '没有更多尺寸啦~',
+            title: '没有找到相关尺寸~',
             icon: 'none'
           });
         }

@@ -32,7 +32,6 @@ Page({
 
   getSizeList: function () {
     if (!this.data.hasMoreData) return;
-    
     wx.showLoading({ title: '加载中...' });
     const that = this;
     wx.request({
@@ -53,8 +52,21 @@ Page({
             pageNum: that.data.pageNum + 1,
             hasMoreData: newData.length >= that.data.pageSize,
           });
-        } else if (res.data.code == 500) {
-          wx.showToast({ title: '暂无数据', icon: 'none' });
+        } else if (res.data.code == 404) {
+          console.log(that.data.category)
+          if(that.data.category==4){
+            wx.showToast({
+              title: "您还没有定制过尺寸哦~",
+              icon: 'none',
+              duration: 2000
+            });
+          }else{
+            wx.showToast({
+              title: "没有更多尺寸啦~",
+              icon: 'none',
+              duration: 1500
+            });
+          }
         }
       }
     });

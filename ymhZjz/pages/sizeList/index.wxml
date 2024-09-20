@@ -3,7 +3,7 @@
     <van-tab title="常用尺寸" name="1"></van-tab>
     <van-tab title="各类证件" name="3"></van-tab>
     <van-tab title="各类签证" name="2"></van-tab>
-    <van-tab title="自定义" name="4"></van-tab>
+    <van-tab title="我的定制" name="4"></van-tab>
     <van-tab title="搜索" name="5"></van-tab>
   </van-tabs>
 </view>

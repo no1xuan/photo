@@ -13,12 +13,6 @@ Page({
 
   // 页面加载时请求第一页数据
   onLoad() {
-    if (wx.getStorageSync("token") == "") {
-      wx.navigateTo({
-        url: '/pages/login/index',
-      });
-      return;
-    }
     Notify({ type: 'success', message: '只有下载过，才会出现在这里哦~' });
     this.getSizeList();
   },
@@ -71,32 +65,50 @@ Page({
     });
   },
 
-  // 删除操作
-  remove(e) {
-    let that = this;
-    Dialog.confirm({
-      message: '确定要删除这张吗？',
-    }).then(() => {
-      wx.request({
-        url: app.url + 'item/deletePhotoId',
-        data: {
-          id: e.target.dataset.id,
-        },
-        header: {
-          "token": wx.getStorageSync("token")
-        },
-        method: "GET",
-        success(res) {
-          wx.hideLoading();
-          if (res.data.code === 200) {
-            that.getSizeList();  // 刷新列表
-          }
+// 删除操作
+remove(e) {
+  let that = this;
+  const itemId = e.target.dataset.id;
+  
+  Dialog.confirm({
+    message: '确定要删除这张吗？',
+  }).then(() => {
+    wx.request({
+      url: app.url + 'item/deletePhotoId',
+      data: {
+        id: itemId,
+      },
+      header: {
+        "token": wx.getStorageSync("token")
+      },
+      method: "GET",
+      success(res) {
+        wx.hideLoading();
+        if (res.data.code === 200) {
+          // 本地移除页面元素
+          const updatedList = that.data.workList.filter(item => item.id !== itemId);
+          that.setData({
+            workList: updatedList
+          });
+          wx.showToast({
+            title: '删除成功',
+            icon: 'success',
+            duration: 2000
+          });
         }
-      });
-    }).catch(() => {
-      // 取消删除操作时，不执行任何操作
+      },
+      fail() {
+        wx.showToast({
+          title: '删除失败，请重试',
+          icon: 'none',
+          duration: 2000
+        });
+      }
     });
-  },
+  }).catch(() => {
+  });
+},
+
 
   // 页面上拉触底事件（下滑加载下一页）
   onReachBottom() {
@@ -104,7 +116,7 @@ Page({
       this.setData({
         pageNum: this.data.pageNum + 1
       });
-      this.getSizeList();  // 加载下一页数据
+      this.getSizeList();
     }
   },
 

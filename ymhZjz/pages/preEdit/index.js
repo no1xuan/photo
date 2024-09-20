@@ -6,7 +6,7 @@ Page({
     interval: 3000,
     duration: 1200,
     detail: {},
-    detailtow:{}
+    detailtow: {}
   },
 
   /**
@@ -37,9 +37,18 @@ Page({
     })
   },
 
+  //温馨提示
+  warm() {
+    wx.showToast({
+      title: "请点击底部相册选择或相机拍照",
+      icon: 'none',
+      duration: 1500
+    });
+  },
+
   // 相册选择
   chooseImage() {
-    if(wx.getStorageSync("token")==""){
+    if (wx.getStorageSync("token") == "") {
       wx.navigateTo({
         url: '/pages/login/index',
       });
@@ -52,37 +61,37 @@ Page({
       sizeType: 'original',
       camera: 'back',
       success: (res) => {
-      const file = res.tempFiles[0];
-      const fileType = file.tempFilePath.split('.').pop().toLowerCase();
-      const fileSizeMB = file.size / (1024 * 1024);
+        const file = res.tempFiles[0];
+        const fileType = file.tempFilePath.split('.').pop().toLowerCase();
+        const fileSizeMB = file.size / (1024 * 1024);
 
-      // 检查文件格式
-      if (fileType !== 'png' && fileType !== 'jpg' && fileType !== 'jpeg') {
-        wx.showToast({
-          title: '不支持该图片格式',
-          icon: 'none',
-          duration: 2000
-        });
-        return;
-      }
+        // 检查文件格式
+        if (fileType !== 'png' && fileType !== 'jpg' && fileType !== 'jpeg') {
+          wx.showToast({
+            title: '不支持该图片格式',
+            icon: 'none',
+            duration: 2000
+          });
+          return;
+        }
 
-      // 检查文件大小
-      if (fileSizeMB > 15) {
-        wx.showToast({
-          title: '图片太大啦，不能超15M哦',
-          icon: 'none',
-          duration: 2000
-        });
-        return;
-      }
-       this.imgUpload(res.tempFiles[0].tempFilePath)
+        // 检查文件大小
+        if (fileSizeMB > 15) {
+          wx.showToast({
+            title: '图片太大啦，不能超15M哦',
+            icon: 'none',
+            duration: 2000
+          });
+          return;
+        }
+        this.imgUpload(res.tempFiles[0].tempFilePath)
       }
     })
   },
 
   // 相机拍照
   chooseCamera() {
-    if(wx.getStorageSync("token")==""){
+    if (wx.getStorageSync("token") == "") {
       wx.navigateTo({
         url: '/pages/login/index',
       });
@@ -152,14 +161,14 @@ Page({
       title: '图片检测中',
     })
     wx.uploadFile({
-      url: app.url+'upload',
-      filePath: filePath, 
-      name: 'file', 
+      url: app.url + 'upload',
+      filePath: filePath,
+      name: 'file',
       header: {
-        'content-type': 'multipart/form-data', 
+        'content-type': 'multipart/form-data',
         "token": wx.getStorageSync("token")
       },
-      useHighPerformanceMode:true,
+      useHighPerformanceMode: true,
       success: (res) => {
         wx.hideLoading();
         let data = JSON.parse(res.data);
@@ -178,7 +187,7 @@ Page({
       }
     })
 
-   
+
   },
 
   imageDivision(tu) {
@@ -189,7 +198,7 @@ Page({
       url: app.url + 'api/createIdPhoto',
       data: {
         "image": tu,
-        "type":  this.data.detail.category == 4 ? 0 : 1,
+        "type": this.data.detail.category == 4 ? 0 : 1,
         "itemId": this.data.detail.id
       },
       header: {
@@ -213,7 +222,7 @@ Page({
         }
       }
     });
-  },  
+  },
 
   // 制作页面
   goEditPage(data) {
