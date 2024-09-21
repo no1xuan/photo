@@ -16,7 +16,7 @@
   
   <!-- 保存按钮 -->
   <van-button type="primary" data-url="{{item.nimg}}" bindtap="savePicUrlAndImg" style="margin-bottom: 10px;">
-    保存
+    下载
   </van-button>
   
   <!-- 删除按钮 -->

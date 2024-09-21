@@ -121,10 +121,9 @@ remove(e) {
   },
 
   // 根据图片url下载保存
-  savePicUrlAndImg(picUrl) {
-    console.log(picUrl);
+  savePicUrlAndImg(e) {
     wx.downloadFile({
-      url: picUrl,
+      url: e.target.dataset.url,
       success: function (res) {
         // 下载成功后将图片保存到本地
         wx.saveImageToPhotosAlbum({
@@ -145,7 +144,7 @@ remove(e) {
           }
         });
       },
-      fail: function () {
+      fail: function (e) {
         wx.showToast({
           title: '下载图片失败，请重试',
           icon: 'none',
