@@ -195,11 +195,6 @@ Page({
           console.log(res)
         },
         fail: (res) => {
-          wx.showToast({
-            title: res.errMsg,
-            duration: 3000,
-            icon: "none"
-          })
         }
       });
     }
