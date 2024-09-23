@@ -1,18 +1,22 @@
+/* 页面通用样式 */
 .my-page {
   height: 100vh;
-  /* background-color: #ccc; */
+  background-color: #f5f5f5; /* 背景颜色 */
 }
 
+/* 顶部区域样式 */
 .top {
   width: 100%;
   height: 280px;
   display: flex;
   align-items: center;
-  /* background: linear-gradient(to top, #2c2c2c, 60%, #C1CAD6); */
   background: radial-gradient(circle, #2c2c2c, 60%, #C1CAD6);
   clip-path: ellipse(80% 60% at 50% 40%);
+  position: relative;
+  overflow: hidden;
 }
 
+/* 用户头像样式 */
 .user-image {
   width: 80px;
   height: 80px;
@@ -20,47 +24,212 @@
   border-radius: 50%;
   margin-left: 20px;
   margin-right: 20px;
+  overflow: hidden;
 }
 
 .user-image image {
-  border-radius: 50%;
+  width: 100%;
+  height: 100%;
 }
 
+/* 用户名和日期样式 */
 .user-name {
-  font-size: 16px;
+  font-size: 17px;
+  color: #fff;
+  margin-top: 5px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.user-days {
+  font-size: 13px;
+  color: #fff;
+  margin-top: 5px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+/* 编辑图标样式 */
+.edit-icon {
+  margin-left: 5px;
   color: #fff;
 }
 
+.nickname {
+  display: flex;
+  align-items: center;
+  color: #fff;
+}
+
+/* 容器样式 */
 .container {
   background-color: #fff;
   margin: 0 20px;
   position: relative;
   top: -60px;
   border-radius: 15px;
-  padding: 20px 0;
+  padding: 20px 10px;
 }
 
-.van-hairline--top-bottom:after {
-  border-width: 0 !important;
-  border-top-width: 0 !important;
+/* 按钮容器样式 */
+.button-container {
+  text-align: left;
+  padding: 0 10px;
 }
 
-/* 联系客服按钮样式 */
-.contact-support {
-  margin: 10px 0;
-}
-
-.contact-button {
+/* 按钮项样式 */
+.button-item {
+  display: inline-block;
+  width: calc((100% - 3 * 15px - 2 * 10px) / 4); /* 每行显示4个按钮 */
+  margin-right: 15px;
+  margin-bottom: 20px;
+  vertical-align: top;
+  text-align: center;
   background-color: transparent;
   border: none;
-  text-align: left;
-  padding: 10px;
-  display: flex;
-  align-items: center;
-  width: 100%;
+  padding: 0;
 }
 
-.message-btn {
-  float: right;
-  margin-bottom: 15px;
+.button-item:nth-child(4n) {
+  margin-right: 0;
+}
+
+.button-item .icon-text {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.button-item .icon-text .van-icon {
+  margin: 0;
+}
+
+.button-item .icon-text text {
+  margin-top: 4px; /* 调整图标和文字之间的间距 */
+  font-size: 14px;
+  color: #333;
+}
+
+/* 模态框样式 */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.6);
+}
+
+.modal-content {
+  background-color: #fff;
+  width: 80%;
+  border-radius: 10px;
+  padding: 20px;
+}
+
+.modal-title {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.modal-list text {
+  display: block; /* 确保每个文本独占一行 */
+  margin-bottom: 10px;
+  color: #555;
+}
+
+/* 模态框内按钮样式 */
+.modal-body button {
+  width: 100%;
+  background-color: #333;
+  color: #fff;
+  border: none;
+  padding: 12px;
+  border-radius: 10px;
+  margin-top: 20px;
+  font-size: 16px;
+}
+
+/* 编辑个人资料表单样式 */
+.edit-profile-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.avatar-wrapper {
+  position: relative;
+  margin-bottom: 20px;
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 2px solid #eee;
+}
+
+.avatar-wrapper .avatar {
+  width: 100%;
+  height: 100%;
+}
+
+.avatar-wrapper .overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.4); /* 半透明遮罩 */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.overlay-text {
+  color: #fff;
+  font-size: 14px;
+  margin-top: 4px;
+}
+
+.nickname-input {
+  width: 100%;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 10px;
+  font-size: 16px;
+  margin-bottom: 20px;
+}
+
+.save-button {
+  width: 100%;
+  background-color: #07c160;
+  color: #fff;
+  border: none;
+  padding: 12px;
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+.nickname-input::placeholder {
+  color: #999;
+}
+
+/* 按钮基础样式 */
+button {
+  background-color: transparent;
+  border: none;
+  padding: 0;
+}
+
+/* 小屏幕适配 */
+@media screen and (max-width: 320px) {
+  .button-item {
+    width: 30%;
+  }
 }

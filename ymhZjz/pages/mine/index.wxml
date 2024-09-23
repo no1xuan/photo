@@ -1,38 +1,124 @@
 <view class="my-page">
   <view class="top">
-    <!-- <view class="user-image">
-      <image style="width: 100%;height:100%;" mode="widthFix" src=""></image>
-    </view> -->
-    <view class="user-name" style="width:16em;padding: 100px;">
-      <view>本页面正在拼命开发中...</view>
+    <!-- 用户头像 未登录 -->
+    <view class="user-image" wx:if="{{!authorized}}">
+      <image style="width: 100%; height: 100%;" mode="aspectFill" src="{{avatarUrl}}"></image>
+    </view>
+        <!-- 用户头像 已登录 -->
+        <view class="user-image" wx:if="{{authorized}}" bindtap="openEditProfileModal">
+      <image style="width: 100%; height: 100%;" mode="aspectFill" src="{{avatarUrl}}"></image>
+    </view>
+    <!-- 未登录 -->
+    <view class="user-name" style="width:6em;" bindtap="goLogin" wx:if="{{!authorized}}">
+      <view size="mini">登录/注册</view>
+    </view>
+    <!-- 已登录 -->
+    <view class="user-name" style="width:6em;" wx:if="{{authorized}}" bindtap="openEditProfileModal">
+      <view class="nickname">
+        Hi，{{nickname}}
+        <van-icon name="edit" size="16px" bindtap="openEditProfileModal" class="edit-icon" />
+      </view>
+      <view class="user-days" bindtap="openEditProfileModal">证件照伴侣已经陪伴你走过 {{days}} 天</view>
     </view>
   </view>
+
   <view class="container">
-    <view class="contact-support">
-      <button open-type="contact" class="contact-button" style="width: 100%;">
-        <van-icon name="service-o" /> 联系客服
+    <view class="button-container">
+      <button class="button-item" bindtap="mywork">
+        <view class="icon-text">
+          <van-icon name="photo-o" size="30px" />
+          <text>我的作品</text>
+        </view>
+      </button>
+      <button class="button-item" bindtap="navigateToEdit">
+        <view class="icon-text">
+          <van-icon name="gift-o" size="30px" />
+          <text>我的权益</text>
+        </view>
+      </button>
+      <button class="button-item" bindtap="navigateToFree">
+        <view class="icon-text">
+          <van-icon name="question-o" size="30px" />
+          <text>常见问题</text>
+        </view>
+      </button>
+      <button class="button-item" open-type="contact">
+        <view class="icon-text">
+          <van-icon name="service-o" size="30px" />
+          <text>客服中心</text>
+        </view>
+      </button>
+      <button class="button-item" bindtap="evaluate">
+        <view class="icon-text">
+          <van-icon name="star-o" size="30px" />
+          <text>赏好评</text>
+        </view>
+      </button>
+      <button class="button-item" open-type="share">
+        <view class="icon-text">
+          <van-icon name="share-o" size="30px" />
+          <text>分享</text>
+        </view>
+      </button>
+      <button class="button-item">
+        <view class="icon-text">
+          <van-icon name="ellipsis" size="30px" />
+          <text>待开发</text>
+        </view>
       </button>
     </view>
+  </view>
 
-    <van-collapse accordion style="width: 100%;" bind:change="onCollapseChange" value="{{ activeNames }}">
-      <van-collapse-item title="常见问题" name="4" icon="records">
-        <van-collapse accordion value="{{ activeChildrenNames }}" bind:change="onChildrenChange">
-          <van-collapse-item title="制作证件照收费吗？" name="1">
-            <view style="margin-bottom: 5px;">制作证件照是完全免费的哦～</view>
-          <view style="margin-bottom: 5px;">就连广告都没有哦~</view>
-            <view>喜欢的话麻烦帮忙多分享分享哦~</view>
-          </van-collapse-item>
-          <van-collapse-item title="找不到想要的尺寸？" name="2">
-            <view>大部分常规的尺寸都支持，可通过搜索查找自己想要的尺寸，如果没有可以自定义尺寸哦~</view>
-          </van-collapse-item>
-          <van-collapse-item title="照片为什么这么模糊？" name="3">
-            <view>手机上查看证件照时会自动放大证件照，所以说手机上看到会感觉比较模糊</view>
-          </van-collapse-item>
-          <van-collapse-item title="在那里保存相片？" name="4">
-            <view>首页-我的作品里面</view>
-          </van-collapse-item>
-        </van-collapse>
-      </van-collapse-item>
-    </van-collapse>
+  <!-- 我的权益弹框 -->
+  <view class="modal" wx:if="{{modalType === 'rights'}}">
+    <view class="modal-content">
+      <view class="modal-body">
+        <view class="modal-title">我的权益</view>
+        <view class="modal-list">
+          <text>● 你目前已经解锁基础功能，并无限制使用;</text>
+          <text>● 你目前享受一对一专属客服，7x24全年极速响应;</text>
+          <text>● 待解锁：排版照，人像抠图，黑白上色，粘土风写真;</text>
+          <text>● 请多多分享小程序，系统将自动为您解锁。</text>
+        </view>
+        <button bindtap="closeModal">我明白了</button>
+      </view>
+    </view>
+  </view>
+
+  <!-- 常见问题弹框 -->
+  <view class="modal" wx:if="{{modalType === 'questions'}}">
+    <view class="modal-content">
+      <view class="modal-body">
+        <view class="modal-title">常见问题</view>
+        <view class="modal-list">
+          <text>● 制作证件照收费吗？ 答：完全免费;</text>
+          <text>● 我的隐私是否安全？ 答：我们不保存您上传的照片，只记录您主动触发下载时的生成图;</text>
+          <text>● 在哪里查看下载记录？ 答：我的作品;</text>
+        </view>
+        <button bindtap="closeModal">我明白了</button>
+      </view>
+    </view>
+  </view>
+
+  <!-- 编辑头像和昵称的 -->
+  <view class="modal" wx:if="{{modalType === 'editProfile'}}">
+    <view class="modal-content">
+      <view class="modal-body">
+        <view class="modal-title">编辑个人资料</view>
+        <view class="edit-profile-form">
+          <!-- 头像选择 -->
+          <button class="avatar-wrapper" open-type="chooseAvatar" bind:chooseavatar="onChooseAvatar">
+            <image class="avatar" src="{{avatarFile}}" mode="aspectFill"></image>
+            <view class="overlay">
+              <van-icon name="camera-o" size="24px" color="#fff" />
+              <text class="overlay-text">更换头像</text>
+            </view>
+          </button>
+          <!-- 昵称输入 -->
+          <input type="nickname" class="nickname-input" placeholder="请输入昵称(非必填)" value="{{nicknameFile}}" bindinput="onNicknameInput"/>
+        </view>
+        <button class="save-button" bindtap="updateUserInfo">保存</button>
+      </view>
+    </view>
   </view>
 </view>

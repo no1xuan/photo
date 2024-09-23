@@ -18,11 +18,11 @@ Page({
         const data = {
             "swiperDatas": [{
                     "id": 1,
-                    "imgurl": "../../images/home/1.png"
+                    "imgurl": "../../images/home/1.jpg"
                 },
                 {
                     "id": 2,
-                    "imgurl": "../../images/home/2.png"
+                    "imgurl": "../../images/home/2.jpg"
                 }
             ]
         };
@@ -38,7 +38,6 @@ Page({
         })
     },
     mywork(){
-      console.log("进入")  
       if (wx.getStorageSync("token") == "") {
         wx.navigateTo({
           url: "/pages/login/index",
@@ -53,58 +52,20 @@ Page({
    //即将上线项目弹出
    toBeLaunched(){
     wx.showToast({
-      title: "该功能正在内测中，即将开放",
+      title: "您未解锁本功能",
       icon: 'none',
       duration: 1500
     });
    },
 
-
-    /**
-     * 生命周期函数--监听页面初次渲染完成
-     */
-    onReady: function () {
-
-    },
-
-    /**
-     * 生命周期函数--监听页面显示
-     */
-    onShow: function () {
-
-    },
-
-    /**
-     * 生命周期函数--监听页面隐藏
-     */
-    onHide: function () {
-
-    },
-
-    /**
-     * 生命周期函数--监听页面卸载
-     */
-    onUnload: function () {
-
-    },
-
-    /**
-     * 页面相关事件处理函数--监听用户下拉动作
-     */
-    onPullDownRefresh: function () {
-
-    },
-
-    /**
-     * 页面上拉触底事件的处理函数
-     */
-    onReachBottom: function () {
-    },
-
-    /**
-     * 用户点击右上角分享
-     */
-    onShareAppMessage: function () {
-
+    onShareAppMessage() {
+      return {
+        title: '哇塞，这个证件照小程序也太好用了吧！好清晰，还免费',
+        path: 'pages/home/index',
+        imageUrl: '../../images/share.jpg'
+      } 
     }
+
+
+    
 })
