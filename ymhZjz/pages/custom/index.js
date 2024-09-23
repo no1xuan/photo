@@ -1,179 +1,138 @@
 import tool from '././util'
-const app = getApp()
+const app = getApp();
 
 Page({
-
-  /**
-   * 页面的初始数据
-   */
   data: {
-    width: 0,
-    height: 0,
+    width: '',
+    height: '',
     name: '',
-    px: '295*413 px',
-    size: '25*35'
+    px: '0*0 px',
+    size: '0*0 mm'
   },
 
-  changeName: tool.debounce(function (e) {
-    if (e[0].detail) {
-      this.setData({
-        name: e[0].detail
-      })
-    }
-  }, 500),
-
-  changeWidth: tool.debounce(function (e) {
-    if (e[0].detail) {
-      this.setData({
-        width: Number(e[0].detail),
-        px: `${Number(e[0].detail)}*${this.data.height} px`,
-        size: `${Math.floor(Number(e[0].detail)/11.8)}*${Math.floor(this.data.height/11.8)}`
-      })
-    }
-  }, 500),
-
-  changeHeight: tool.debounce(function (e) {
-    if (e[0].detail) {
-      this.setData({
-        height: Number(e[0].detail),
-        px: `${this.data.width}*${Number(e[0].detail)} px`,
-        size: `${Math.floor(this.data.width/11.8)}*${Math.floor(Number(e[0].detail)/11.8)}`
-      })
-    }
-  }, 500),
-
-  addSize() {
-    if(this.data.width==0 || this.data.height==0){
-      wx.showToast({
-        title: '宽或高不能为0',
-        icon: 'error',
-        duration: 2000,
-        mask: true
-      })
-      return;
-    }
-    if(this.data.name==''){
-      wx.showToast({
-        title: '名字为必填',
-        icon: 'error',
-        duration: 2000,
-        mask: true
-      })
-      return;
-    }
-    if (!this.isNull(this.data)) {
-      wx.showToast({
-        title: '不能有特殊符号',
-        icon: 'error',
-        duration: 2000,
-        mask: true
-      })
-    } else {
-      wx.request({
-        url: app.url + 'item/saveCustom',
-        method: "POST",
-        data:{
-          "name":this.data.name,
-          "widthPx":this.data.width,
-          "heightPx":this.data.height,
-          "size":this.data.size  
-      },
-        header: {
-          "token": wx.getStorageSync("token")
-        },
-        success(res) {
-          if (res.data.code == 200) {
-            wx.showToast({
-              title: '定制成功',
-              duration: 2000,
-              mask: true
-            })
-          
-          } else {
-            wx.showToast({
-              title: '定制失败，请重试',
-              duration: 2000,
-              icon:"none",
-              mask: true
-            })
-          }
-          
-        }
-      })
-    }
-  },
-
-  isNull() {
-    const {
-      width,
-      height,
-      name
-    } = this.data
-    const reg = /^\d+$/;
-    if (!name || !reg.test(width) || !reg.test(height)) {
-      return false
-    } else {
-      return true
-    }
-  },
-
-  /**
-   * 生命周期函数--监听页面加载
-   */
-  onLoad: function (options) {
-    if(wx.getStorageSync("token") == ""){
+  onLoad: function () {
+    if (!wx.getStorageSync('token')) {
       wx.navigateTo({
-        url: '/pages/login/index',
+        url: '/pages/login/index'
       });
     }
   },
 
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-
+  changeName(e) {
+    const value = e.detail || '';
+    this.setData({
+      name: value
+    });
   },
 
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
+  changeWidth: tool.debounce(function (e) {
+    const value = e.detail;
+    this.setData({
+      width: value
+    });
+    this.updateSize();
+  }, 300),
 
+  changeHeight: tool.debounce(function (e) {
+    const value = e.detail;
+    this.setData({
+      height: value
+    });
+    this.updateSize();
+  }, 300),
+
+  updateSize() {
+    let width = parseInt(this.data.width, 10);
+    let height = parseInt(this.data.height, 10);
+    let width_px = isNaN(width) ? 0 : width;
+    let height_px = isNaN(height) ? 0 : height;
+    let width_mm = Math.floor(width_px / 11.8);
+    let height_mm = Math.floor(height_px / 11.8);
+    this.setData({
+      px: `${width_px}*${height_px} px`,
+      size: `${width_mm}*${height_mm} mm`
+    });
   },
 
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
+  addSize() {
+    const name = this.data.name.trim();
+    const width = parseInt(this.data.width, 10);
+    const height = parseInt(this.data.height, 10);
+    
+    if (!name) {
+      wx.showToast({
+        title: '名称为必填',
+        icon: 'none',
+        duration: 2000,
+        mask: true
+      });
+      return;
+    }
 
+    if (isNaN(width) || isNaN(height) || width <= 0 || height <= 0) {
+      wx.showToast({
+        title: '宽或高必须大于0',
+        icon: 'none',
+        duration: 2000,
+        mask: true
+      });
+      return;
+    }
+
+    if (!this.isValidName(name)) {
+      wx.showToast({
+        title: '名称不能包含特殊符号',
+        icon: 'none',
+        duration: 2000,
+        mask: true
+      });
+      return;
+    }
+
+    wx.request({
+      url: app.url + 'item/saveCustom',
+      method: 'POST',
+      data: {
+        name: name,
+        widthPx: width,
+        heightPx: height,
+        size: this.data.size
+      },
+      header: {
+        token: wx.getStorageSync('token')
+      },
+      success: (res) => {
+        if (res.data.code == 200) {
+          wx.showToast({
+            title: '定制成功',
+            duration: 2000,
+            mask: true
+          });
+          this.setData({
+            name: '',
+            width: '',
+            height: '',
+            px: '0*0 px',
+            size: '0*0 mm'
+          });
+        } else if(res.data.code == 404){
+          wx.showToast({
+            title: res.data.data,
+            duration: 2000,
+            icon: 'none',
+            mask: true
+          });
+        }else{
+          wx.navigateTo({
+            url: "/pages/login/index",
+          });
+        }
+      },
+    });
   },
 
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-
+  isValidName(name) {
+    const reg = /^[a-zA-Z0-9\u4e00-\u9fa5]+$/;
+    return reg.test(name);
   }
-})
+});

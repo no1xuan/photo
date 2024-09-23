@@ -37,14 +37,15 @@ Page({
             url: e.currentTarget.dataset.url,
         })
     },
-    mywork(){
+    
+    loginJump(e){
       if (wx.getStorageSync("token") == "") {
         wx.navigateTo({
           url: "/pages/login/index",
         });
       }else{
         wx.navigateTo({
-          url: "/pages/works/index",
+          url: e.currentTarget.dataset.url,
         });
       }
     },

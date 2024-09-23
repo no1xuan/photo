@@ -87,6 +87,7 @@ Page({
   },
 
   onLoad: function () {
+    console.log("页面被加载")
     this.getSizeList();
   },
 

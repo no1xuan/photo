@@ -1,34 +1,75 @@
-/* pages/custom/index.wxss */
 .custom {
-  height: 100vh;
+  min-height: 83vh;
+  background-color: #f5f5f5;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.container {
+  width: 90%;
+  max-width: 500px;
   background-color: #fff;
+  border-radius: 15px;
+  padding: 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
-.size {
-  width: 70vw;
-  height: 30vh;
-  margin: 0 auto;
-  /* margin: 0 70px; */
-  margin-top: 20vh;
-  color: #2c2c2c !important;
-}
-
-
-.van-field__label {
-  font-size: 18px;
+.input-field {
+  margin-bottom: 15px;
 }
 
 .bottom {
-  margin: 100px auto;
+  width: 90%;
+  max-width: 500px;
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
 }
 
-.bottom button:first-child {
-  margin: 0 70px;
-  height: 45px;
-  color: #fff;
+.save-button {
+  width: 100%;
+  padding: 12px 0;
   background-color: #2c2c2c;
+  color: #fff;
+  border: none;
   border-radius: 10px;
   font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+/* 使用微信小程序的 hover-class 进行样式修改 */
+.save-button-hover {
+  background-color: #1a1a1a;
+}
+
+/* 添加 active 状态的反馈 */
+.save-button:active {
+  background-color: #0d0d0d;
+}
+
+
+/* 标题样式 */
+.title {
+  font-size: 30px;
+  font-weight: bold;
+  color: #333;
+  margin-top: 20px;
+  margin-bottom: 20px;
   text-align: center;
-  line-height: 45px;
+}
+
+/* 响应式设计 */
+@media screen and (max-width: 600px) {
+  .container {
+    width: 95%;
+    padding: 15px;
+  }
+
+  .save-button {
+    font-size: 16px;
+  }
 }
