@@ -17,7 +17,7 @@
 				</view>
 				<view class="top-line"></view>
 				<view class="top-right" bindtap="navigateTo" data-url="/pages/sizeList/index">
-					<image style="width: 116rpx; height: 65px; margin-bottom: 5px; display: block; box-sizing: border-box" src="../../images/home/build.png"></image>
+					<image style="width: 138rpx; height: 125rpx; margin-bottom: 5px; display: block; box-sizing: border-box" src="../../images/home/build.png"></image>
 					<view>快速制作</view>
 				</view>
 			</view>
