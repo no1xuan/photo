@@ -1,20 +1,22 @@
-<view class="container">
+<view class="container"> 
   <view class="photo-edit-content">
-    <view class="canvas-view" style="background-color:#fff;width: 240.0px;height: 336px">
-      <image class="nowx_mask" style="width: 292px;left: 120px;top: 164px;transform: translate(-50%, -50%) scale(1) rotate(0deg);z-index: 99;height: 163.52px" src="./images/wmark.png" mode="widthFix"></image>
-      <image style="width: 240.0px;height: 336px;left: 120.0px;top: 164.0px;transform: translate(-50%, -50%) scale(1) rotate(0deg)" class="people-photo" src="{{imageData.cimg}}" bindload="bindload" catchtouchstart="touchstart" catchtouchmove="touchmove" catchtouchend="touchend"></image>
+    <view class="canvas-view" style="background-color:{{bgc}}; width: 240px; height: 336px">
+      <image class="nowx_mask" style="width: 292px; left: 120px; top: 164px; transform: translate(-50%, -50%) scale(1) rotate(0deg); z-index: 99; height: 163.52px" src="./images/wmark.png" mode="widthFix"></image>
+      <!-- 保证图片完全覆盖 canvas-view -->
+      <image class="people-photo" src="{{imageData.cimg}}" bindload="bindload"></image>
     </view>
   </view>
+  
   <view class="imgOpt">
-    <van-tabs active="{{ active }}" bind:click="clickTab" color="#2c2c2c">
+    <van-tabs active="1" bind:click="clickTab" color="#2c2c2c">
       <van-tab title="背景" name="1">
         <view class="colors">
-          <!-- 蓝色背景 -->
-          <view bindtap="toggleBg" data-color="#438edb" class="color" style="background-color:#438edb">
-            <view class="icon_select"></view>
-          </view>
           <!-- 白色背景 -->
           <view bindtap="toggleBg" data-color="#ffffff" class="color" style="background-color:#ffffff">
+            <view class="icon_select"></view>
+          </view>
+          <!-- 蓝色背景 -->
+          <view bindtap="toggleBg" data-color="#438edb" class="color" style="background-color:#438edb">
             <view class="icon_select"></view>
           </view>
           <!-- 红色背景 -->
@@ -35,15 +37,78 @@
           </view>
           <!-- 自定义颜色选项 -->
           <view bindtap="toPick" data-color="custom" class="color custom" style="display: flex; align-items: center; justify-content: center;">
-            <view class="custom-bg" style="background-color: #2c2c2c;width: 100%;height: 100%;font-size: 12px;color: #fff; margin:0 auto;line-height: 12vw;text-align: center;">自定义</view>
+            <view class="custom-bg" style="background-color: #2c2c2c; width: 100%; height: 100%; font-size: 12px; color: #fff; margin:0 auto; line-height: 12vw; text-align: center;">自定义</view>
+          </view>
+        </view>
+      </van-tab>
+      
+      <van-tab title="高级参数" name="2">
+        <van-notice-bar
+          scrollable="{{ false }}"
+          text="小提示：KB填0即代表不限制，DPI建议300"
+        />
+        <view class="advanced-params">
+          <!-- 新增的参数包装容器 -->
+          <view class="params-wrapper">
+            <!-- 左侧：KB 和 DPI 输入框 -->
+            <view class="left-params">
+              <!-- KB 大小输入 -->
+              <view class="param-item">
+                <text class="param-label">KB 大小:</text>
+                <input
+                  class="param-input"
+                  type="number"
+                  value="{{kb}}"
+                  bindinput="onKbInput"
+                />
+              </view>
+              <!-- DPI 大小输入 -->
+              <view class="param-item">
+                <text class="param-label">DPI 大小:</text>
+                <input
+                  class="param-input"
+                  type="number"
+                  value="{{dpi}}"
+                  bindinput="onDpiInput"
+                />
+              </view>
+            </view>
+            
+            <!-- 右侧：渲染模式单选按钮 -->
+            <view class="right-params">
+              <view class="param-item">
+                <text class="param-label">渲染模式:</text>
+              </view>
+              <view class="param-item">
+                <radio-group bindchange="onRenderChange" class="render-radio-group">
+                  <label class="radio-label">
+                    <radio value="0" checked="{{render === 0}}"/> 仅换背景色
+                  </label>
+                  <label class="radio-label">
+                    <radio value="1" checked="{{render === 1}}"/> 上下渐变效果
+                  </label>
+                  <label class="radio-label">
+                    <radio value="2" checked="{{render === 2}}"/> 中心渐变效果
+                  </label>
+                </radio-group>
+              </view>
+            </view>
           </view>
         </view>
       </van-tab>
     </van-tabs>
 
+    <!-- 保存按钮区域 -->
     <view class="download-view">
-      <button bindtap="openSavePhoto" data-type="1" type="default" class="save-btn">保存预览照</button>
-      <button bindtap="openSavePhoto" data-type="2" type="default" class="save-btn">保存AI高清照</button>
+      <!-- 在“背景”选项卡显示两个保存按钮 -->
+      <view wx:if="{{ active == 1 }}" class="button-group">
+        <button bindtap="openSavePhoto" data-type="1" type="default" class="save-btn">保存预览照</button>
+        <button bindtap="openSavePhoto" data-type="2" type="default" class="save-btn">保存AI高清照</button>
+      </view>
+      <!-- 在“高级参数”选项卡显示一个保存参数按钮 -->
+      <view wx:elif="{{ active == 2 }}" class="button-group">
+        <button bindtap="saveParams" type="default" class="save-btn single-btn">保存修改</button>
+      </view>
     </view>
 
     <color-picker bindchangeColor="pickColor" initColor="rgb(7,193,96)" show="{{pick}}" />

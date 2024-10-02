@@ -11,13 +11,13 @@
 	<view class="content">
 		<view class="top">
 			<view class="top-block">
-				<view class="top-left" bindtap="navigateTo" data-url="/pages/methods/index">
-					<image style="width: 65px; height: 70px; margin-bottom: 5px" src="../../images/home/methods.png"></image>
-					<view>拍照技巧</view>
+				<view class="top-left" bindtap="examineTo">
+					<image style="width: 116rpx; height: 109rpx; margin-bottom: 5px; display: block; box-sizing: border-box" src="../../images/home/methods.png"></image>
+					<view>中考报名</view>
 				</view>
 				<view class="top-line"></view>
 				<view class="top-right" bindtap="navigateTo" data-url="/pages/sizeList/index">
-					<image style="width: 45px; height: 65px; margin-bottom: 5px" src="../../images/home/build.png"></image>
+					<image style="width: 116rpx; height: 65px; margin-bottom: 5px; display: block; box-sizing: border-box" src="../../images/home/build.png"></image>
 					<view>快速制作</view>
 				</view>
 			</view>

@@ -1,16 +1,4 @@
 const app = getApp()
-let canOnePointMove = false;
-let onePoint = {
-  x: 0,
-  y: 0
-};
-let twoPoint = {
-  x1: 0,
-  y1: 0,
-  x2: 0,
-  y2: 0
-};
-
 import Dialog from '@vant/weapp/dialog/dialog'
 Page({
   data: {
@@ -28,13 +16,18 @@ Page({
     maskScale: 1,
     maskRotate: 0,
     pick: false,
-    color: "438edb",
+    color: "#ffffff",
+    colorType: 0,
     picUrl: "",
     downloadOne: 1,
     downloadTwo: 2,
     videoUnitId: 0,
     rewardedVideoAd: null,
-    typeDownload: 1
+    typeDownload: 1,
+    kb: 0,
+    dpi: 300,
+    render: 0,
+    active: 1
   },
 
   onLoad: function () {
@@ -47,8 +40,16 @@ Page({
     eventChannel &&
       eventChannel.on('sendImageData', (data) => {
         this.setData({
-          imageData: data
+          imageData: data,
+          dpi: data.dpi,
+          "imageData.cimg": data.kimg
         });
+        //某学校要求
+        if(this.data.imageData.id==759){
+          this.setData({
+            kb: 30
+          });
+        }
         wx.setNavigationBarTitle({
           title: this.data.imageData.name + "（预览）"
         });
@@ -79,11 +80,11 @@ Page({
       title: '制作中...',
     })
     this.setData({
-      color: e.currentTarget.dataset.color
+      color: e.currentTarget.dataset.color,
+      colorType: 1
     })
     this.updateColor(this.data.color, this.data.imageData.kimg);
   },
-
 
   toPick: function () {
     this.setData({
@@ -91,71 +92,80 @@ Page({
     })
   },
 
-  //自定义换背景
+  // 自定义换背景
   pickColor(e) {
     wx.showLoading({
       title: '制作中...',
     })
     let color = this.rgbStringToHex(e.detail.color);
     this.setData({
-      color: color
+      color: color,
+      colorType: 1
     })
     this.updateColor(color, this.data.imageData.kimg);
   },
 
-  //调用换背景
+  // 调用换背景
   updateColor(color, tu) {
     wx.request({
       url: app.url + 'api/updateIdPhoto',
       data: {
         "image": tu,
-        "colors": color
+        "colors": color,
+        "kb": this.data.kb,
+        "dpi": this.data.dpi,
+        "render": this.data.render
       },
       header: {
         "token": wx.getStorageSync("token")
       },
       method: "POST",
       success: (res) => {
+        wx.hideLoading();
         if (res.data.code == 200) {
           this.setData({
             'imageData.cimg': res.data.data.cimg
           });
-          wx.hideLoading();
         } else if (res.data.code == 404) {
-          wx.hideLoading();
           wx.showToast({
             title: res.data.data,
-            icon: 'error'
+            icon: 'none'
           })
-
         }
       }
     });
-
   },
 
-  //调用广告，根据type区分下载，1普通，2高清
+  // 调用广告，根据type区分下载，1普通，2高清
   openSavePhoto(e) {
+    if (this.data.colorType == 0) {
+      wx.showToast({
+        title: '您还没有选择背景颜色哦~',
+        icon: 'none',
+        duration: 3000
+      });
+      return;
+    }
     this.setData({
       typeDownload: e.currentTarget.dataset.type
     });
 
-    //普通下载没开启广告
-    if(this.data.downloadOne==1 && e.currentTarget.dataset.type==1){
+    // 普通下载没开启广告
+    if (this.data.downloadOne == 1 && e.currentTarget.dataset.type == 1) {
       this.saveNormalPhoto();
       return;
     }
-    //高清下载没开启广告
-    if(this.data.downloadTwo==1 && e.currentTarget.dataset.type==2){
+    // 高清下载没开启广告
+    if (this.data.downloadTwo == 1 && e.currentTarget.dataset.type == 2) {
       this.saveHDPhoto();
       return;
     }
 
-    //剩下都是开启广告了，弹出询问
+    // 剩下都是开启广告了，弹出询问
     Dialog.confirm({
-      title: '提示',
-      message: '观看一次广告，才能下载哦，您每观看完一次广告都是对我们最大的帮助',
-    })
+        title: '提示',
+        message: '观看一次广告，才能下载哦，您每观看完一次广告都是对我们最大的帮助',
+      })
       .then(() => {
         const rewardedVideoAd = this.data.rewardedVideoAd;
         if (rewardedVideoAd) {
@@ -166,8 +176,8 @@ Page({
           });
         } else {
           console.error('广告实例不存在');
-          //防止广告权限被封或无广告权限导致用户无法下载
-          if (e.currentTarget.dataset.type == 1) {
+          // 防止广告权限被封或无广告权限导致用户无法下载
+          if (this.data.typeDownload == 1) {
             this.saveNormalPhoto();
           } else {
             this.saveHDPhoto()
@@ -175,16 +185,35 @@ Page({
         }
       })
       .catch(() => {
-       
+        // 用户取消观看广告
       });
-    
-    
+  },
 
+  //高级参数
+  saveParams() {
+      if (isNaN(this.kb) || this.dpi<0){
+      this.setData({
+        kb: 0
+      })
+    }
+        if (isNaN(this.dpi) || this.dpi<72){
+        this.setData({
+          dpi: 72
+        });
+    }
+    this.setData({
+      colorType: 1
+    });
+    this.updateColor(this.data.color, this.data.imageData.kimg);
+    wx.showToast({
+      title: "修改成功",
+      icon: 'none',
+      duration: 1500
+    });
   },
 
 
-
-  //保存证件照
+  // 保存证件照
   saveNormalPhoto() {
     wx.showLoading({
       title: '下载中...',
@@ -204,27 +233,48 @@ Page({
           this.setData({
             'picUrl': res.data.data.picUrl
           });
-          //调用保存
+          // 调用保存
           this.savePicUrlAndImg();
         } else if (res.data.code == 404) {
           wx.showToast({
             title: res.data.data,
             icon: 'none'
           })
-
         }
       }
     });
   },
 
-  //保存高清照
+  // 保存高清照
   saveHDPhoto() {
-    this.setData({
-      'picUrl': ""
+    wx.showLoading({
+      title: '制作中...',
     });
-    this.updateColor(this.data.color, this.data.imageData.oimg);
-    wx.nextTick(() => {
-      this.saveNormalPhoto();
+    wx.request({
+      url: app.url + 'api/createIdHdPhoto',
+      data: {
+        "image": this.data.imageData.oimg,
+        "type": this.data.imageData.category == 4 ? 0 : 1,
+        "itemId": this.data.imageData.id
+      },
+      header: {
+        "token": wx.getStorageSync("token")
+      },
+      method: "POST",
+      success: (res) => {
+        wx.hideLoading();
+        if (res.data.code == 200) {
+          this.updateColor(this.data.color, res.data.data.kimg);
+          wx.nextTick(() => {
+            this.saveNormalPhoto();
+          });
+        } else if (res.data.code == 404) {
+          wx.showToast({
+            title: res.data.data,
+            icon: 'none'
+          });
+        }
+      }
     });
   },
 
@@ -246,7 +296,7 @@ Page({
             });
           },
           fail: function () {
-            that.checkq(); //解决用户拒绝相册
+            that.checkq(); // 解决用户拒绝相册
           }
         });
       },
@@ -288,9 +338,7 @@ Page({
   },
 
 
-
-
-  //去分享页面(待开发分享下载)
+  // 去分享页面(待开发分享下载)
   async composeImage() {
     wx.showLoading({
       title: '制作中...'
@@ -299,9 +347,6 @@ Page({
       url: './complete/index?msg=111&tempFilePath=pa&url=https://www.haimati.cn/img/1_7_1.98819809.jpg',
     });
   },
-
-
-
 
   // 初始化激励视频广告
   initRewardedVideoAd(adUnitId) {
@@ -323,7 +368,7 @@ Page({
       // 监听广告加载失败
       rewardedVideoAd.onError((err) => {
         console.error('激励视频广告加载失败', err);
-        //用户可能观看广告上限，防止无法下载，仍发放奖励
+        // 用户可能观看广告上限，防止无法下载，仍发放奖励
         if (this.data.typeDownload == 1) {
           this.saveNormalPhoto();
         } else {
@@ -334,7 +379,7 @@ Page({
       // 监听广告关闭事件
       rewardedVideoAd.onClose((res) => {
         if (res && res.isEnded) {
-          //发放奖励
+          // 发放奖励
           if (this.data.typeDownload == 1) {
             this.saveNormalPhoto();
           } else {
@@ -354,7 +399,7 @@ Page({
       });
     } else {
       console.error('微信版本太低不支持激励视频广告');
-      //防止无法下载，所以仍然发放奖励
+      // 防止无法下载，所以仍然发放奖励
       if (this.data.typeDownload == 1) {
         this.saveNormalPhoto();
       } else {
@@ -362,8 +407,6 @@ Page({
       }
     }
   },
-
-
 
   // 加载激励视频广告
   loadRewardedVideoAd(type) {
@@ -373,7 +416,7 @@ Page({
       .then(() => rewardedVideoAd.show())
       .catch((err) => {
         console.error('广告加载失败', err);
-        //看广告上限/网络失败，为了防止无法下载，仍发放奖励
+        // 看广告上限/网络失败，为了防止无法下载，仍发放奖励
         if (type == 1) {
           this.saveNormalPhoto();
         } else {
@@ -381,23 +424,6 @@ Page({
         }
       });
   },
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
   rgbStringToHex(rgbString) {
     // 提取 rgb 值
@@ -411,8 +437,8 @@ Page({
     return "#" + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1).toUpperCase();
   },
 
+
   bindload: function (e) {
-    wx.hideLoading({});
     const {
       width,
       height
@@ -442,72 +468,71 @@ Page({
     this.setData(imgLoadSetData);
   },
 
-  touchstart: function (e) {
-    if (e.touches.length < 2) {
-      canOnePointMove = true;
-      onePoint.x = e.touches[0].pageX * 2;
-      onePoint.y = e.touches[0].pageY * 2;
-    } else {
-      twoPoint.x1 = e.touches[0].pageX * 2;
-      twoPoint.y1 = e.touches[0].pageY * 2;
-      twoPoint.x2 = e.touches[1].pageX * 2;
-      twoPoint.y2 = e.touches[1].pageY * 2;
-    }
-  },
-
-  touchmove: function (e) {
-    const {
-      data
-    } = this;
-    const thatData = data;
-
-    if (e.touches.length < 2 && canOnePointMove) {
-      // 单指移动
-      const onePointDiffX = e.touches[0].pageX * 2 - onePoint.x;
-      const onePointDiffY = e.touches[0].pageY * 2 - onePoint.y;
-
-      this.setData({
-        left: thatData.left + onePointDiffX,
-        top: thatData.top + onePointDiffY,
-        maskLeft: thatData.maskLeft + onePointDiffX,
-        maskTop: thatData.maskTop + onePointDiffY,
+  // 处理KB大小输入
+  onKbInput(event) {
+    let value = parseInt(event.detail.value);
+    if (isNaN(value) || value < 0){
+      wx.showToast({
+        title: "最小只能0哦~",
+        icon: 'none',
+        duration: 1500
       });
+    }else if (value > 1000) {
+      wx.showToast({
+        title: "最大只能1000哦~",
+        icon: 'none',
+        duration: 1500
+      });
+      value = 1000;
+    };
 
-      onePoint.x = e.touches[0].pageX * 2;
-      onePoint.y = e.touches[0].pageY * 2;
-    } else if (e.touches.length > 1) {
-      // 双指缩放/旋转
-      const preTwoPoint = JSON.parse(JSON.stringify(twoPoint));
-      twoPoint.x1 = e.touches[0].pageX * 2;
-      twoPoint.y1 = e.touches[0].pageY * 2;
-      twoPoint.x2 = e.touches[1].pageX * 2;
-      twoPoint.y2 = e.touches[1].pageY * 2;
-
-      const preAngle = Math.atan((preTwoPoint.y1 - preTwoPoint.y2) / (preTwoPoint.x1 - preTwoPoint.x2)) * 180 / Math.PI;
-      const curAngle = Math.atan((twoPoint.y1 - twoPoint.y2) / (twoPoint.x1 - twoPoint.x2)) * 180 / Math.PI;
-
-      const preDistance = Math.sqrt(Math.pow(preTwoPoint.x1 - preTwoPoint.x2, 2) + Math.pow(preTwoPoint.y1 - preTwoPoint.y2, 2));
-      const curDistance = Math.sqrt(Math.pow(twoPoint.x1 - twoPoint.x2, 2) + Math.pow(twoPoint.y1 - twoPoint.y2, 2));
-
-      const angleThreshold = 0.5;
-      const distanceThreshold = 2;
-
-      if (Math.abs(curAngle - preAngle) > angleThreshold || Math.abs(curDistance - preDistance) > distanceThreshold) {
-        const smoothFactor = 0.2;
-        let newScale = thatData.scale + (curDistance - preDistance) * 0.005 * smoothFactor;
-        if (newScale < 0.5) newScale = 0.5;
-
-        this.setData({
-          scale: newScale,
-          rotate: thatData.rotate + (curAngle - preAngle) * smoothFactor,
-          maskScale: newScale,
-          maskRotate: thatData.rotate + (curAngle - preAngle) * smoothFactor,
-        });
-      }
-    }
+    this.setData({
+      kb: value
+    });
+    
   },
 
-  touchend: function () {
-    canOnePointMove = false;
+  // 处理DPI大小输入
+  onDpiInput(event) {
+    let value = parseInt(event.detail.value);
+    if (isNaN(value) || value < 72){
+      wx.showToast({
+        title: "最小只能72哦~",
+        icon: 'none',
+        duration: 1500
+      });
+    }else if (value > 1000) {
+      wx.showToast({
+        title: "最大只能1000哦~",
+        icon: 'none',
+        duration: 1500
+      });
+      value = 1000;
+    };
+
+    this.setData({
+      dpi: value
+    });
+
   },
+
+
+  // 渲染模式变化处理
+  onRenderChange(event) {
+    const value = parseInt(event.detail.value);
+    this.setData({
+      render: value
+    });
+  },
+
+  // 切换标签
+  clickTab(event) {
+    const {
+      name
+    } = event.detail;
+    this.setData({
+      active: name
+    });
+  },
+
 });

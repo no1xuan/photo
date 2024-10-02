@@ -53,7 +53,6 @@ Page({
             hasMoreData: newData.length >= that.data.pageSize,
           });
         } else if (res.data.code == 404) {
-          console.log(that.data.category)
           if(that.data.category==4){
             wx.showToast({
               title: "您还没有定制过尺寸哦~",
@@ -87,7 +86,6 @@ Page({
   },
 
   onLoad: function () {
-    console.log("页面被加载")
     this.getSizeList();
   },
 

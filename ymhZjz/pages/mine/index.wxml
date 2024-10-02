@@ -4,8 +4,8 @@
     <view class="user-image" wx:if="{{!authorized}}">
       <image style="width: 100%; height: 100%;" mode="aspectFill" src="{{avatarUrl}}"></image>
     </view>
-        <!-- 用户头像 已登录 -->
-        <view class="user-image" wx:if="{{authorized}}" bindtap="openEditProfileModal">
+    <!-- 用户头像 已登录 -->
+    <view class="user-image" wx:if="{{authorized}}" bindtap="openEditProfileModal">
       <image style="width: 100%; height: 100%;" mode="aspectFill" src="{{avatarUrl}}"></image>
     </view>
     <!-- 未登录 -->
@@ -60,7 +60,7 @@
           <text>分享</text>
         </view>
       </button>
-      <button class="button-item">
+      <button class="button-item" bindtap="easterEgg">
         <view class="icon-text">
           <van-icon name="ellipsis" size="30px" />
           <text>待开发</text>
@@ -118,6 +118,19 @@
           <input type="nickname" class="nickname-input" placeholder="请输入昵称(非必填)" value="{{nicknameFile}}" bindinput="onNicknameInput"/>
         </view>
         <button class="save-button" bindtap="updateUserInfo">保存</button>
+      </view>
+    </view>
+  </view>
+
+  <!-- 彩蛋 -->
+  <view class="modal" wx:if="{{modalType === 'easterEgg'}}">
+    <view class="modal-content easter-egg-content">
+      <view class="modal-body">
+        <view class="modal-title">❤️ 恭喜您触发彩蛋 ❤️</view>
+        <view class="modal-message">
+          我给你的，就是我想要的，我爱你的方式，就是我希望被爱的方式。
+        </view>
+        <button bindtap="closeModal">一定会被爱的</button>
       </view>
     </view>
   </view>

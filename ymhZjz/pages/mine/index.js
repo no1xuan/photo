@@ -8,6 +8,8 @@ Page({
     nickname: '陌生人', // 默认昵称
     avatarFile: '../../images/tx.jpg', // 修改头像
     nicknameFile: '',
+    easterEggClickCount: 0, // 新增：彩蛋点击计数
+    easterEggTimer: null,    // 新增：彩蛋点击定时器
   },
 
   onLoad: function () {
@@ -195,23 +197,48 @@ Page({
           console.log(res)
         },
         fail: (res) => {
+          console.log(res)
         }
       });
     }
   },
 
   // 我的权益弹框
-  navigateToEdit: function () {
+  navigateToEdit() {
     this.setData({
       modalType: 'rights'
     });
   },
 
   // 常见问题弹框
-  navigateToFree: function () {
+  navigateToFree() {
     this.setData({
       modalType: 'questions'
     });
+  },
+
+  // 彩蛋点击处理函数
+  easterEgg(){
+    const { easterEggClickCount} = this.data;
+    const newCount = easterEggClickCount + 1;
+    this.setData({
+      easterEggClickCount: newCount
+    });
+    if (newCount === 1) {
+      this.data.easterEggTimer = setTimeout(() => {
+        this.setData({
+          easterEggClickCount: 0
+        });
+      }, 9000);
+    }
+
+    if (newCount === 3) {
+      clearTimeout(this.data.easterEggTimer);
+      this.setData({
+        modalType: 'easterEgg',
+        easterEggClickCount: 0
+      });
+    }
   },
 
   // 分享设置

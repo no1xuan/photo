@@ -2,6 +2,7 @@
   "navigationStyle": "default",
   "usingComponents": {
     "color-picker": "color-picker/color-picker",
-    "van-loading": "@vant/weapp/loading/index"
+    "van-dialog": "@vant/weapp/dialog/index",
+    "van-notice-bar": "@vant/weapp/notice-bar/index"
   }
 }

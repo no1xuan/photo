@@ -27,7 +27,7 @@
         <view class="circle" style="background: #438edb;"></view>
         <view class="circle" style="background: #00bff3;"></view>
         <view class="circle" style="background: #ff0000;"></view>
-        <view class="circle rainbow"></view> <!-- 五颜六色的按钮 -->
+        <view class="circle rainbow"></view>
       </view>
 
     </view>

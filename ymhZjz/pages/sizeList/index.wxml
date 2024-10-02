@@ -12,7 +12,7 @@
     <view class="list">
       <view>
         <view class="title">{{ item.name }}</view>
-        <view class="description">{{item.widthPx}}*{{item.heightPx}} | {{item.widthMm}}*{{item.heightMm}}</view>
+        <view class="description">{{item.widthPx}}*{{item.heightPx}} | {{item.widthMm}}*{{item.heightMm}} | {{item.dpi}}dpi</view>
       </view>
       <image style="width: 50px; height: 50px" src="./sizes/{{item.icon}}.png"></image>
     </view>
