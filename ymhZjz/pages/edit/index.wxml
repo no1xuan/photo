@@ -48,11 +48,8 @@
           text="小提示：KB填0即代表不限制，DPI建议300"
         />
         <view class="advanced-params">
-          <!-- 新增的参数包装容器 -->
           <view class="params-wrapper">
-            <!-- 左侧：KB 和 DPI 输入框 -->
             <view class="left-params">
-              <!-- KB 大小输入 -->
               <view class="param-item">
                 <text class="param-label">KB 大小:</text>
                 <input
@@ -62,7 +59,7 @@
                   bindinput="onKbInput"
                 />
               </view>
-              <!-- DPI 大小输入 -->
+
               <view class="param-item">
                 <text class="param-label">DPI 大小:</text>
                 <input
@@ -82,13 +79,13 @@
               <view class="param-item">
                 <radio-group bindchange="onRenderChange" class="render-radio-group">
                   <label class="radio-label">
-                    <radio value="0" checked="{{render === 0}}"/> 仅换背景色
+                    <radio value="0" checked="{{render == 0}}"/> 仅换背景色
                   </label>
                   <label class="radio-label">
-                    <radio value="1" checked="{{render === 1}}"/> 上下渐变效果
+                    <radio value="1" checked="{{render == 1}}"/> 上下渐变效果
                   </label>
                   <label class="radio-label">
-                    <radio value="2" checked="{{render === 2}}"/> 中心渐变效果
+                    <radio value="2" checked="{{render == 2}}"/> 中心渐变效果
                   </label>
                 </radio-group>
               </view>

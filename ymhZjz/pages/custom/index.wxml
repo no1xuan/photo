@@ -45,6 +45,20 @@
         class="input-field"
       />
 
+        <!-- 分辨率输入框 -->
+        <van-field 
+        value="{{ dpi }}" 
+        type="number" 
+        label="分辨率：" 
+        placeholder="分辨率：dpi" 
+        border 
+        size="large" 
+        maxlength="4" 
+        input-align="right" 
+        bind:input="changeDpi" 
+        class="input-field"
+      />
+
       <!-- 尺寸显示框 -->
       <van-field 
         value="{{ size }}" 

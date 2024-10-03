@@ -39,7 +39,7 @@ Page({
     },
     examineTo(){
           wx.navigateTo({
-              url: '/pages/preEdit/index?index=15&data={"id":759,"name":"中考报名","widthPx":240,"heightPx":320,"widthMm":20,"heightMm":27,"icon":1,"sort":100,"category":1,"dpi":300}',
+              url: '/pages/preEdit/index?category=1&data={"id":759,"name":"中考报名","widthPx":240,"heightPx":320,"widthMm":20,"heightMm":27,"icon":1,"sort":100,"category":1,"dpi":300}',
             });
     },
     

@@ -25,7 +25,7 @@ Page({
     rewardedVideoAd: null,
     typeDownload: 1,
     kb: 0,
-    dpi: 300,
+    dpi: 0,
     render: 0,
     active: 1
   },
@@ -44,8 +44,9 @@ Page({
           dpi: data.dpi,
           "imageData.cimg": data.kimg
         });
+        console.log(this.data.imageData)
         //某学校要求
-        if(this.data.imageData.id==759){
+        if(this.data.imageData.category==1 && this.data.imageData.id==759){
           this.setData({
             kb: 30
           });

@@ -5,6 +5,7 @@ Page({
   data: {
     width: '',
     height: '',
+    dpi:'',
     name: '',
     px: '0*0 px',
     size: '0*0 mm'
@@ -22,6 +23,13 @@ Page({
     const value = e.detail || '';
     this.setData({
       name: value
+    });
+  },
+  
+  changeDpi(e) {
+    const value = e.detail || '';
+    this.setData({
+      dpi: value
     });
   },
 
@@ -58,6 +66,7 @@ Page({
     const name = this.data.name.trim();
     const width = parseInt(this.data.width, 10);
     const height = parseInt(this.data.height, 10);
+    const dpi = parseInt(this.data.dpi, 10);
     
     if (!name) {
       wx.showToast({
@@ -72,6 +81,26 @@ Page({
     if (isNaN(width) || isNaN(height) || width <= 0 || height <= 0) {
       wx.showToast({
         title: '宽或高必须大于0',
+        icon: 'none',
+        duration: 2000,
+        mask: true
+      });
+      return;
+    }
+
+    if (isNaN(dpi) || dpi <= 75) {
+      wx.showToast({
+        title: '分辨率最低75',
+        icon: 'none',
+        duration: 2000,
+        mask: true
+      });
+      return;
+    }
+
+    if (dpi > 1000) {
+      wx.showToast({
+        title: '分辨率最高只能1000',
         icon: 'none',
         duration: 2000,
         mask: true
@@ -96,7 +125,8 @@ Page({
         name: name,
         widthPx: width,
         heightPx: height,
-        size: this.data.size
+        size: this.data.size,
+        dpi: dpi
       },
       header: {
         token: wx.getStorageSync('token')
@@ -112,6 +142,7 @@ Page({
             name: '',
             width: '',
             height: '',
+            dpi:'',
             px: '0*0 px',
             size: '0*0 mm'
           });

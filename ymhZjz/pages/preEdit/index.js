@@ -5,8 +5,7 @@ Page({
     autoplay: true,
     interval: 3000,
     duration: 1200,
-    detail: {},
-    detailtow: {}
+    detail: {}
   },
 
   /**
@@ -15,7 +14,8 @@ Page({
   onLoad: function (options) {
     const sizeDetail = JSON.parse(decodeURIComponent(options.data))
     this.setData({
-      detail: sizeDetail
+      detail: sizeDetail,
+      "detail.category":decodeURIComponent(options.category)
     })
     const data = {
       "swiperDatas": [{
@@ -194,6 +194,7 @@ Page({
     wx.showLoading({
       title: '制作中...',
     });
+    console.log(this.data.detail)
     wx.request({
       url: app.url + 'api/createIdPhoto',
       data: {

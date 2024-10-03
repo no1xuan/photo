@@ -77,7 +77,7 @@ Page({
 
   goNextPage: function (e) {
     wx.navigateTo({
-      url: '/pages/preEdit/index?index=' + e.currentTarget.dataset.index + '&data=' + JSON.stringify(this.data.photoSizeList[e.currentTarget.dataset.index]),
+      url: '/pages/preEdit/index?category=' + this.data.category + '&data=' + JSON.stringify(this.data.photoSizeList[e.currentTarget.dataset.index]),
     });
   },
 
