@@ -192,12 +192,12 @@ Page({
 
   //高级参数
   saveParams() {
-      if (isNaN(this.kb) || this.dpi<0){
+      if (isNaN(this.data.kb) || this.data.kb<0){
       this.setData({
         kb: 0
       })
     }
-        if (isNaN(this.dpi) || this.dpi<72){
+        if (isNaN(this.data.dpi) || this.data.dpi<72){
         this.setData({
           dpi: 72
         });
@@ -344,8 +344,8 @@ Page({
     wx.showLoading({
       title: '制作中...'
     });
-    wx.redirectTo({
-      url: './complete/index?msg=111&tempFilePath=pa&url=https://www.haimati.cn/img/1_7_1.98819809.jpg',
+    wx.navigateTo({
+      url: './complete/index?url=https://www.haimati.cn/img/1_7_1.98819809.jpg',
     });
   },
 
