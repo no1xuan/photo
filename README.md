@@ -13,6 +13,7 @@
 **相关项目**：
 
 - 小程序后端请前往：https://github.com/no1xuan/zjzWx
+- 小程序管理员网页后台请前往：https://github.com/no1xuan/zjzAdmin
 
 ------
 
