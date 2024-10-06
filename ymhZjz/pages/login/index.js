@@ -5,9 +5,7 @@ Page({
 
 
   
-  onLoad() {
-  
-  },
+  onLoad() {},
   
   noempower(){
     wx.showLoading({
@@ -17,7 +15,7 @@ Page({
         success(res) {
             wx.request({
                 url: app.url + 'user/login',
-                data: { "code": res.code },
+                data: { "code": res.code},
                 method: "GET",
                 success(res) {
                   wx.hideLoading();
@@ -28,14 +26,10 @@ Page({
                     });
                   }else{
                     wx.showToast({
-                      title: '登录失败,当前系统维护中...',
+                      title: '登录失败，请重试',
                       icon: 'none'
                     });
                   }
-
-                  //   wx.navigateTo({
-                  //     url: "pages/home/index",
-                  // })
                 }
             })
         }

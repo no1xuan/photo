@@ -1,0 +1,24 @@
+<view class="container">
+  <!-- 登录授权状态 -->
+  <view wx:if="{{!isAuthorized}}" class="card">
+    <view class="icon">
+      <icon type="warn" size="80" color="#FFA726"></icon>
+    </view>
+    <view class="title">使用微信授权登录</view>
+    
+    <button class="authorize-btn" bindtap="login">授权登录</button>
+    <button class="cancel-btn" bindtap="closeLogin">取消授权</button>
+    
+    <view class="footer-text">
+      您正在登录 <text class="link">网页管理员后台</text><text decode>&nbsp;&nbsp;</text>||<text decode>&nbsp;&nbsp;</text>如不是 <text class="link">您操作</text> 请关闭小程序
+    </view>
+  </view>
+
+  <!-- 登录成功状态 -->
+  <view wx:if="{{isAuthorized}}" class="success-card">
+    <view class="success-icon">
+      <icon type="success" size="80" color="#3CB371"></icon>
+    </view>
+    <view class="success-text">登录成功</view>
+  </view>
+</view>
