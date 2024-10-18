@@ -46,7 +46,7 @@ Page({
         });
         console.log(this.data.imageData)
         //某学校要求
-        if(this.data.imageData.category==1 && this.data.imageData.id==759){
+        if (this.data.imageData.category == 1 && this.data.imageData.id == 759) {
           this.setData({
             kb: 30
           });
@@ -84,7 +84,7 @@ Page({
       color: e.currentTarget.dataset.color,
       colorType: 1
     })
-    this.updateColor(this.data.color, this.data.imageData.kimg);
+    this.updateColor(this.data.color, this.data.imageData.kimg, 1);
   },
 
   toPick: function () {
@@ -103,20 +103,26 @@ Page({
       color: color,
       colorType: 1
     })
-    this.updateColor(color, this.data.imageData.kimg);
+    this.updateColor(color, this.data.imageData.kimg, 1);
   },
 
   // 调用换背景
-  updateColor(color, tu) {
+  updateColor(color, tu, type) {
+    let requestData = {
+      "image": tu,
+      "colors": color,
+      "kb": this.data.kb,
+      "render": this.data.render
+    };
+    
+    if (type == 1) {
+      requestData.dpi = this.data.dpi;
+    }else{
+      requestData.dpi = 0;   //高清下载时不能自定义dpi
+    }
     wx.request({
       url: app.url + 'api/updateIdPhoto',
-      data: {
-        "image": tu,
-        "colors": color,
-        "kb": this.data.kb,
-        "dpi": this.data.dpi,
-        "render": this.data.render
-      },
+      data: requestData,
       header: {
         "token": wx.getStorageSync("token")
       },
@@ -192,20 +198,20 @@ Page({
 
   //高级参数
   saveParams() {
-      if (isNaN(this.data.kb) || this.data.kb<0){
+    if (isNaN(this.data.kb) || this.data.kb < 0) {
       this.setData({
         kb: 0
       })
     }
-        if (isNaN(this.data.dpi) || this.data.dpi<72){
-        this.setData({
-          dpi: 72
-        });
+    if (isNaN(this.data.dpi) || this.data.dpi < 72) {
+      this.setData({
+        dpi: 72
+      });
     }
     this.setData({
       colorType: 1
     });
-    this.updateColor(this.data.color, this.data.imageData.kimg);
+    this.updateColor(this.data.color, this.data.imageData.kimg, 1);
     wx.showToast({
       title: "修改成功",
       icon: 'none',
@@ -265,9 +271,20 @@ Page({
       success: (res) => {
         wx.hideLoading();
         if (res.data.code == 200) {
-          this.updateColor(this.data.color, res.data.data.kimg);
-          wx.nextTick(() => {
+          this.updateColor(this.data.color, res.data.data.kimg, 2);
+           //之前使用wx.nextTick(()）发现有坑，高清照base64会被压缩，导致高清照一直没生效，最后想到的最佳解决办法就是使用弹窗 
+          Dialog.confirm({
+            title: '确认下载？',
+            message: '高清照已制作完成，是否立即下载？',
+          })
+          .then(() => {
             this.saveNormalPhoto();
+          })
+          .catch(() => {
+            wx.showToast({
+              title: '已取消下载',
+              icon: 'none'
+            });
           });
         } else if (res.data.code == 404) {
           wx.showToast({
@@ -472,13 +489,13 @@ Page({
   // 处理KB大小输入
   onKbInput(event) {
     let value = parseInt(event.detail.value);
-    if (isNaN(value) || value < 0){
+    if (isNaN(value) || value < 0) {
       wx.showToast({
         title: "最小只能0哦~",
         icon: 'none',
         duration: 1500
       });
-    }else if (value > 1000) {
+    } else if (value > 1000) {
       wx.showToast({
         title: "最大只能1000哦~",
         icon: 'none',
@@ -490,19 +507,19 @@ Page({
     this.setData({
       kb: value
     });
-    
+
   },
 
   // 处理DPI大小输入
   onDpiInput(event) {
     let value = parseInt(event.detail.value);
-    if (isNaN(value) || value < 72){
+    if (isNaN(value) || value < 72) {
       wx.showToast({
         title: "最小只能72哦~",
         icon: 'none',
         duration: 1500
       });
-    }else if (value > 1000) {
+    } else if (value > 1000) {
       wx.showToast({
         title: "最大只能1000哦~",
         icon: 'none',
