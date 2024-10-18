@@ -11,7 +11,7 @@
 
 
 **相关项目**：
-
+- 小程序前端另外一套请前往：https://github.com/no1xuan/ai-photo
 - 小程序后端请前往：https://github.com/no1xuan/HivisionIDPhotos-wechat-weapp
 - 小程序管理员网页后台请前往：https://github.com/no1xuan/zjzAdmin
 
