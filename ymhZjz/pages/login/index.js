@@ -25,6 +25,7 @@ Page({
                       delta: 1
                     });
                   }else{
+                    console.log("登录失败原因："+res.data.data)
                     wx.showToast({
                       title: '登录失败，请重试',
                       icon: 'none'
