@@ -1,0 +1,131 @@
+.wrap {
+  height: 100vh;
+  position: relative;
+  width: 750rpx;
+}
+
+.effect-top-bar {
+  flex-direction: row;
+  height: 140rpx;
+  width: 100%;
+}
+
+.effect-top-bar,
+.top-bar-icon {
+  align-items: center;
+  display: -webkit-flex;
+  display: flex;
+}
+
+.top-bar-icon {
+  border-radius: 60rpx;
+  box-shadow: 2px 2px 5px #a2a2a2;
+  height: 80rpx;
+  justify-content: center;
+  margin-left: 40rpx;
+  width: 80rpx;
+}
+
+.top-bar-title {
+  color: #000;
+  font-size: 40rpx;
+}
+
+.effect-image {
+  border-radius: 40rpx;
+  height: 38vh;
+  margin: 0 20rpx;
+  width: 710rpx;
+  overflow: hidden;
+}
+
+.effect-img {
+  border-radius: 50rpx;
+  height: 280px;
+  width: 100%;
+}
+
+.effect-content {
+  height: 38vh;
+  overflow: scroll;
+  padding: 20rpx 40rpx;
+  width: 750rpx;
+}
+
+.content-view-a {
+  display: -webkit-flex;
+  display: flex;
+  flex-direction: row;
+  margin-top: 20rpx;
+}
+
+.view-icon-a {
+  font-family: iconfont;
+  margin-top: 6rpx;
+}
+
+.view-icon-a,
+.view-text-a {
+  color: #000;
+  font-size: 30rpx;
+}
+
+.view-text-a {
+  font-weight: 700;
+  margin-left: 12rpx;
+}
+
+.content-view {
+  display: -webkit-flex;
+  display: flex;
+  flex-direction: row;
+  margin-top: 2.8vh;
+}
+
+.view-icon {
+  color: #000;
+  font-family: iconfont;
+  font-size: 30rpx;
+  margin-left: 1rpx;
+  margin-top: 8rpx;
+}
+
+.view-text {
+  color: #606266;
+  font-size: 26rpx;
+  line-height: 45rpx;
+  margin-left: 15rpx;
+  margin-right: 79px;
+  flex: 1;
+  white-space: normal;
+  word-wrap: break-word;
+}
+
+.effect-button {
+  bottom: 40rpx;
+  flex-direction: row;
+  justify-content: space-around;
+  position: absolute;
+  width: 100%;
+  align-items: center;
+  display: -webkit-flex;
+  display: flex;
+}
+
+.album-button {
+  align-items: center;
+  background-color: #2c2c2c;
+  border-radius: 30rpx;
+  color: #fff;
+  display: -webkit-flex;
+  display: flex;
+  font-size: 35rpx;
+  font-weight: 700;
+  height: 120rpx;
+  justify-content: center;
+  width: 540rpx;
+}
+
+.album-button:active {
+  opacity: .7;
+}

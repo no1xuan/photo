@@ -11,7 +11,9 @@
     "pages/searchs/index",
     "pages/custom/index",
     "pages/login/index",
-    "pages/admin/index"
+    "pages/admin/index",
+    "pages/colourize/index",
+    "pages/colourize/complete/index"
   ],
   "window": {
     "backgroundColor": "#F6F6F6",

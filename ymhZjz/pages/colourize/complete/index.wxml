@@ -1,0 +1,14 @@
+<view class="container">
+  <view class="container-content" style="width: 727rpx; display: block; box-sizing: content-box">
+    <view class="container-content-img" style="width: 662rpx; display: flex; box-sizing: content-box">
+      <image bindtap="preView" mode="heightFix" src="{{url}}" style="position: relative; left: 29rpx; top: 0rpx; height: 847rpx; display: block; box-sizing: border-box; width: 664rpx"></image>
+    </view>
+    <view class="img-msg" style="position: relative; left: 1rpx; top: 44rpx">
+      点击图片可放大查看
+    </view>
+  </view>
+  <view class="bottom">
+    <button bindtap="goHome">返回</button>
+    <button bindtap="downloadPic">下载</button>
+  </view>
+</view>

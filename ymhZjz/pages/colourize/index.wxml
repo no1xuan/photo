@@ -1,0 +1,30 @@
+<view class="wrap">
+    <view class="effect-top-bar">
+        <view class="top-bar-icon" style="background:#FFFFFF">
+          <van-icon name="photo" />
+        </view>
+        <view style="display:flex;flex-direction:column;margin-left:10px;">
+            <text class="top-bar-title">黑白图片上色</text>
+        </view>
+    </view>
+    <view class="effect-image">
+        <image src="/images/home/5.png" class="effect-img"></image>
+    </view>
+    <view class="effect-content">
+        <view class="content-view-a">
+            <text class="view-icon-a icon-collection"></text>
+            <text class="view-text-a">一键让图片充满色彩</text>
+        </view>
+        <view class="content-view">
+          <van-icon name="good-job" />
+            <text class="view-text">适用于老照片，旧照片，黑白照片等，进行AI上色</text>
+        </view>
+        <view class="content-view">
+          <van-icon name="photo" />
+            <text class="view-text">原图大小不能超10M，图片越大上色越慢</text>
+        </view>
+    </view>
+    <view class="effect-button">
+        <view class="album-button" bindtap="chooseImage">选择图片</view>
+    </view>
+</view>
