@@ -126,18 +126,18 @@ Page({
     });
   },
 
-  // 计算天数的函数
-  calculateDays: function (time) {
-    // 将时间字符串中的 '-' 替换为 '/'，以兼容 IOS 系统
-    const formattedStartTimeStr = time.replace(/-/g, '/');
-    const startDate = new Date(formattedStartTimeStr);
-    const currentDate = new Date();
-    const diffTime = currentDate - startDate;
-    const diffDays = Math.abs(Math.floor(diffTime / (1000 * 60 * 60 * 24)));
-    this.setData({
-      days: diffDays,
-    });
-  },
+// 计算天数的函数
+calculateDays: function (time) {
+  // 将时间字符串中的 '-' 替换为 '/'，以兼容 IOS 系统
+  const formattedStartTimeStr = time.replace(/-/g, '/');
+  const startDate = new Date(formattedStartTimeStr);
+  const currentDate = new Date();
+  const diffTime = currentDate - startDate;
+  const diffDays = Math.abs(Math.floor(diffTime / (1000 * 60 * 60 * 24)));
+  this.setData({
+    days: diffDays+1,
+  });
+},
 
   goLogin: function () {
     wx.navigateTo({

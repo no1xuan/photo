@@ -1,0 +1,94 @@
+<view class="explore-container">
+  <view class="explore-header">
+    <view class="explore-header-left">
+      <text class="explore-header-title">探索AI的魔力🪄 </text>
+      <text class="explore-header-subtitle">让照片处理变得简单有趣✨ </text>
+    </view>
+  </view>
+
+  <view class="explore-grid">
+    <view class="explore-row">
+      <view class="explore-card" bindtap="sizeListTo" data-type="3">
+        <image class="card-image" mode="aspectFill" src="../../images/home/3.png">
+          <view class="other-msg">
+            <view class="card-stats">✨ 推荐 | {{zjzCount}}次使用</view>
+          </view>
+        </image>
+        <view class="card-content">
+          <view class="card-title">AI证件照🎭</view>
+          <view class="card-desc">支持多种尺寸+自定义背景</view>
+        </view>
+      </view>
+
+      <view class="explore-card" bindtap="navigateTo" data-type="4">
+        <image class="card-image" mode="aspectFill" src="../../images/home/4.png">
+          <view class="other-msg">
+            <view class="card-stats">✨ 推荐 | {{colourizeCount}}次使用</view>    
+          </view>
+        </image>
+        <view class="card-content">
+          <view class="card-title">老照片上色🎨</view>
+          <view class="card-desc">一键让黑白照片充满色彩</view>
+        </view>
+      </view>
+    </view>
+
+
+    <view class="explore-row">
+      <view class="explore-card" bindtap="navigateTo" data-type="5">
+        <image class="card-image" mode="aspectFill" src="../../images/home/5.png">
+          <view class="other-msg">
+            <view class="card-stats">🔥 热门 | {{mattingCount}}次使用</view>
+          </view>
+        </image>
+        <view class="card-content">
+
+          <view class="card-title">智能抠图✂️</view>
+          <view class="card-desc">一键迅捷抠图，智能抠图</view>
+        </view>
+      </view>
+
+      <view class="explore-card" bindtap="stop" data-type="6">
+        <image class="card-image" mode="aspectFill" src="../../images/home/6.png">
+          <view class="other-msg">
+            <view class="card-stats">🔥 维护中 | 暂停使用</view>
+          </view>
+        </image>
+        <view class="card-content">
+          <view class="card-title">照片清晰增强✨</view>
+          <view class="card-desc">一键让模糊图片变清晰</view>
+        </view>
+      </view>
+    </view>
+
+
+    <view class="explore-row">
+      <view class="explore-card" bindtap="wait" data-type="7">
+        <image class="card-image" mode="aspectFill" src="../../images/home/7.png">
+          <view class="other-msg">
+            <view class="card-stats">🔜 即将上线 | 0次使用</view>
+          </view>
+        </image>
+        <view class="card-content">
+          <view class="card-title">粘土风写真🎭</view>
+          <view class="card-desc">又丑又萌的粘土风格照片</view>
+        </view>
+      </view>
+
+      <view class="explore-card" bindtap="wait" data-type="8">
+        <image class="card-image" mode="aspectFill" src="../../images/home/8.png">
+          <view class="other-msg">
+            <view class="card-stats">🔜 即将上线 | 0次使用</view>
+          </view>
+        </image>
+        <view class="card-content">
+          <view class="card-title">照片转卡通形象🎨</view>
+          <view class="card-desc">将照片转换成卡通形象</view>
+        </view>
+      </view>
+    </view>
+
+
+
+  </view>
+</view>

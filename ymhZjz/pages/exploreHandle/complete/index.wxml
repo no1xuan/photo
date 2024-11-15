@@ -1,0 +1,21 @@
+<view class="container">
+  <!-- 顶部标题区域 -->
+  <view class="header">
+    <text class="title">处理完成 🎉</text>
+    <text class="subtitle">点击图片可放大查看 ✨</text>
+  </view>
+
+  <!-- 图片展示区域 -->
+  <view class="image-container">
+    <image mode="aspectFit" bindtap="preView" src="{{url}}" class="result-image"></image>
+    <view class="image-overlay">
+      <view class="overlay-text">处理成功</view>
+    </view>
+  </view>
+
+  <!-- 操作按钮区域 -->
+  <view class="bottom">
+    <button bindtap="goHome">返回</button>
+    <button  bindtap="downloadPic">下载</button>
+  </view>
+</view>

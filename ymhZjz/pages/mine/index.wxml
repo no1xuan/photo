@@ -1,7 +1,7 @@
 <view class="my-page">
   <view class="top">
     <!-- 用户头像 未登录 -->
-    <view class="user-image" wx:if="{{!authorized}}">
+    <view class="user-image" wx:if="{{!authorized}}" bindtap="goLogin">
       <image style="width: 100%; height: 100%;" mode="aspectFill" src="{{avatarUrl}}"></image>
     </view>
     <!-- 用户头像 已登录 -->
@@ -60,12 +60,6 @@
           <text>分享</text>
         </view>
       </button>
-      <button class="button-item" bindtap="easterEgg">
-        <view class="icon-text">
-          <van-icon name="ellipsis" size="30px" />
-          <text>待开发</text>
-        </view>
-      </button>
     </view>
   </view>
 
@@ -77,7 +71,7 @@
         <view class="modal-list">
           <text>● 你目前已经解锁基础功能，并无限制使用;</text>
           <text>● 你目前享受一对一专属客服，7x24全年极速响应;</text>
-          <text>● 待解锁：排版照，人像抠图，黑白上色，粘土风写真;</text>
+          <text>● 待解锁：排版照，粘土风写真，将照片转换成卡通形象;</text>
           <text>● 请多多分享小程序，系统将自动为您解锁。</text>
         </view>
         <button bindtap="closeModal">我明白了</button>
@@ -118,19 +112,6 @@
           <input type="nickname" class="nickname-input" placeholder="请输入昵称(非必填)" value="{{nicknameFile}}" bindinput="onNicknameInput"/>
         </view>
         <button class="save-button" bindtap="updateUserInfo">保存</button>
-      </view>
-    </view>
-  </view>
-
-  <!-- 彩蛋 -->
-  <view class="modal" wx:if="{{modalType === 'easterEgg'}}">
-    <view class="modal-content easter-egg-content">
-      <view class="modal-body">
-        <view class="modal-title">❤️ 恭喜您触发彩蛋 ❤️</view>
-        <view class="modal-message">
-          我给你的，就是我想要的，我爱你的方式，就是我希望被爱的方式。
-        </view>
-        <button bindtap="closeModal">一定会被爱的</button>
       </view>
     </view>
   </view>

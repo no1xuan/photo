@@ -1,7 +1,7 @@
 <view class="container"> 
   <view class="photo-edit-content">
     <view class="canvas-view" style="background-color:{{bgc}}; width: 240px; height: 336px">
-      <image class="nowx_mask" style="width: 292px; left: 120px; top: 164px; transform: translate(-50%, -50%) scale(1) rotate(0deg); z-index: 99; height: 163.52px" src="./images/wmark.png" mode="widthFix"></image>
+      <image class="nowx_mask" style="width: 292px; left: 120px; top: 164px; transform: translate(-50%, -50%) scale(1) rotate(0deg); z-index: 99; height: 163.52px" src="../../images/wmark.png" mode="widthFix"></image>
       <!-- 保证图片完全覆盖 canvas-view -->
       <image class="people-photo" src="{{imageData.cimg}}" bindload="bindload"></image>
     </view>
@@ -97,12 +97,12 @@
 
     <!-- 保存按钮区域 -->
     <view class="download-view">
-      <!-- 在“背景”选项卡显示两个保存按钮 -->
+
       <view wx:if="{{ active == 1 }}" class="button-group">
         <button bindtap="openSavePhoto" data-type="1" type="default" class="save-btn">保存预览照</button>
-        <button bindtap="openSavePhoto" data-type="2" type="default" class="save-btn">保存AI高清照</button>
+        <button bindtap="openSavePhoto" data-type="2" type="default" class="save-btn">保存高清照</button>
       </view>
-      <!-- 在“高级参数”选项卡显示一个保存参数按钮 -->
+
       <view wx:elif="{{ active == 2 }}" class="button-group">
         <button bindtap="saveParams" type="default" class="save-btn single-btn">保存修改</button>
       </view>

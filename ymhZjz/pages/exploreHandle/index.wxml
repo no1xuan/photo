@@ -4,24 +4,24 @@
           <van-icon name="photo" />
         </view>
         <view style="display:flex;flex-direction:column;margin-left:10px;">
-            <text class="top-bar-title">黑白图片上色</text>
+            <text class="top-bar-title">{{title}}</text>
         </view>
     </view>
     <view class="effect-image">
-        <image src="/images/home/5.png" class="effect-img"></image>
+      <image src="{{pic}}" class="effect-img"></image>
     </view>
     <view class="effect-content">
         <view class="content-view-a">
             <text class="view-icon-a icon-collection"></text>
-            <text class="view-text-a">一键让图片充满色彩</text>
+            <text class="view-text-a">{{title2}}</text>
         </view>
         <view class="content-view">
           <van-icon name="good-job" />
-            <text class="view-text">适用于老照片，旧照片，黑白照片等，进行AI上色</text>
+            <text class="view-text">{{description}}</text>
         </view>
         <view class="content-view">
           <van-icon name="photo" />
-            <text class="view-text">原图大小不能超10M，图片越大上色越慢</text>
+            <text class="view-text">原图大小不能超10MB，图片越大处理时间越长</text>
         </view>
     </view>
     <view class="effect-button">

@@ -13,6 +13,12 @@ Page({
 
   // 页面加载时请求第一页数据
   onLoad() {
+    if (wx.getStorageSync("token") == "") {
+      wx.navigateTo({
+        url: "/pages/login/index",
+      });
+      return;
+    }
     Notify({ type: 'success', message: '只有下载过，才会出现在这里哦~' });
     this.getSizeList();
   },

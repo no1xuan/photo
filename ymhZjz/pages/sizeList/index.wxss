@@ -3,60 +3,77 @@
   top: 0;
   left: 0;
   width: 100%;
-  height: 8vh;
+  height: 7vh;
   background-color: #fff;
   font-size: 16px;
   z-index: 10;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
 }
 
 .container {
   margin-top: 8vh;
   height: 92vh;
+  background-color: #f8f8f8;
+}
+
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+  padding: 16px;
+}
+
+.grid-item {
   background-color: #fff;
-}
-
-.list {
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  padding: 16px;
   display: flex;
-  height: 10vh;
-  background-color: #2c2c2c;
-  margin: 0 20px 20px 20px;
-  border-radius: 15px;
-  justify-content: space-between;
+  flex-direction: column;
   align-items: center;
-  color: #fff;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-.list image {
-  margin-right: 20px;
-  border-radius: 50%;
+.grid-item:active {
+  transform: scale(0.98);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.12);
 }
 
-.list view {
-  margin-left: 10px;
+.grid-image {
+  width: 72px;
+  height: 72px;
+  margin-bottom: 12px;
+  transition: transform 0.2s ease;
+}
+
+.grid-item:active .grid-image {
+  transform: scale(0.95);
+}
+
+.grid-content {
+  text-align: center;
+  width: 100%;
 }
 
 .title {
-  font-size: 18px;
-  margin-bottom: 10px;
-  font-weight: 500;
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 6px;
+  color: #2c2c2c;
 }
 
 .description {
-  font-size: 14px;
-}
-
-.none {
-  width: 300px;
-  height: 300px;
-  margin: 0 auto;
+  font-size: 12px;
+  color: #888;
+  line-height: 1.5;
 }
 
 .scroll-to-top {
   position: fixed;
-  bottom: 60px;
-  right: 30px;
-  width: 50px;
-  height: 50px;
+  bottom: 64px;
+  right: 24px;
+  width: 48px;
+  height: 48px;
   background-color: #4a95e0;
   color: white;
   border-radius: 50%;
@@ -64,5 +81,11 @@
   justify-content: center;
   align-items: center;
   z-index: 100;
-  box-shadow: 0 0 10px rgba(0,0,0,0.2);
+  box-shadow: 0 2px 12px rgba(74, 149, 224, 0.3);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.scroll-to-top:active {
+  transform: scale(0.95);
+  box-shadow: 0 1px 6px rgba(74, 149, 224, 0.2);
 }

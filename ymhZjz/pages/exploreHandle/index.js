@@ -1,9 +1,46 @@
 const app = getApp()
 Page({
-  data: {},
+  data: {
+    title:'',
+    title2:'',
+    description:'',
+    pic:'',
+    url:'',
+    type:''
+  },
+
+
+  onLoad: function (options) {
+    this.setData({
+      type: options.type,
+      pic: '/images/home/'+options.type+'.png',
+      title: options.title,
+      title2: options.title2,
+      description: options.description
+    });
+
+    if(this.data.type==4){
+      this.setData({
+        url: "colourize"
+      });
+    }else if(this.data.type==5){
+      this.setData({
+        url: "matting"
+      });
+    }else if(this.data.type==6){
+    }else if(this.data.type==7){
+    }else if(this.data.type==8){
+    }
+  },
 
  // 相册选择
  chooseImage() {
+  if (wx.getStorageSync("token") == "") {
+    wx.navigateTo({
+      url: "/pages/login/index",
+    });
+    return;
+  }
   wx.chooseMedia({
     count: 1,
     mediaType: 'image',
@@ -73,12 +110,12 @@ Page({
 
   imageDivision(tu) {
     wx.showLoading({
-      title: 'AI上色中...',
+      title: '处理中...',
     });
     wx.request({
-      url: app.url + 'otherApi/colourize',
+      url: app.url + 'otherApi/' + this.data.url,
       data: {
-        "image": tu
+        processedImage: tu
       },
       header: {
         "token": wx.getStorageSync("token")
@@ -93,7 +130,8 @@ Page({
         } else if (res.data.code == 404) {
           wx.showToast({
             title: res.data.data,
-            icon: 'none'
+            icon: 'none',
+            duration: 2000
           });
         } else {
           wx.navigateTo({

@@ -2,20 +2,20 @@
   <view class="s-input">
     <van-search value="{{ value }}" bind:change="onChange" placeholder="请输入关键词,如：一寸" shape="round" />
   </view>
-  <scroll-view class="container" scroll-y bindscrolltolower="moredata" scroll-top="{{scrollTop}}">
-    <view wx:for="{{photoSizeList}}" wx:for-index="id" wx:key="id" data-index="{{id}}" bindtap="goNextPage">
-      <view class="list">
-        <view>
+  <scroll-view class="container" scroll-y bindscrolltolower="moredata" scroll-top="{{scrollTop}}" enhanced show-scrollbar="{{false}}">
+    <view class="grid-container">
+      <view class="grid-item" wx:for="{{photoSizeList}}" wx:key="name" data-index="{{index}}" bindtap="goNextPage" hover-class="grid-item-hover">
+        <image class="grid-image" src="../sizeList/sizes/{{item.icon}}.png" mode="aspectFit" lazy-load></image>
+        <view class="grid-content">
           <view class="title">{{ item.name }}</view>
-          <view class="description">{{item.widthPx}}*{{item.heightPx}} | {{item.widthMm}}*{{item.heightMm}}</view>
+          <view class="description">{{item.widthPx}}*{{item.heightPx}}</view>
+          <view class="description">{{item.widthMm}}*{{item.heightMm}} | {{item.dpi}}dpi</view>
         </view>
-        <image style="width: 50px; height: 50px" src="../sizeList/sizes/{{item.icon}}.png"></image>
       </view>
     </view>
   </scroll-view>
   <view class="none" wx:if="{{!photoSizeList.length}}">
     <image src="./images/none.png" style="width: 100%;height: 100%;"></image>
   </view>
-  <!-- 有问题，没有回到顶部，待修复 -->
-  <!-- <view class="scroll-to-top" bindtap="scrollToTop">⬆</view> -->
+  <view class="scroll-to-top" bindtap="scrollToTop" hover-class="scroll-to-top-hover">⬆</view>
 </view>

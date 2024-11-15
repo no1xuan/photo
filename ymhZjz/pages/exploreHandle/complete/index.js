@@ -8,6 +8,7 @@ Page({
       url: options.url
     })
   },
+  
   preView() {
     wx.previewImage({
       urls: [this.data.url]

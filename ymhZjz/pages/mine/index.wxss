@@ -220,41 +220,6 @@
   color: #999;
 }
 
-/* 彩蛋弹窗 */
-.easter-egg-content {
-  background-color: #ffe6f0;
-  border: 2px solid #ffb6c1;
-  border-radius: 15px;
-  padding: 20px;
-  text-align: center;
-}
-
-.easter-egg-content::before {
-  content: "💕";
-  font-size: 30px;
-  position: absolute;
-  top: -15px;
-  left: 50%;
-  transform: translateX(-50%);
-}
-
-.easter-egg-content .modal-title {
-  font-size: 20px;
-  color: #ff69b4;
-  margin-bottom: 20px;
-}
-
-.easter-egg-content .modal-message {
-  font-size: 16px;
-  color: #d6336c;
-  margin-bottom: 30px;
-  line-height: 1.5;
-}
-
-.easter-egg-content .modal-body button {
-  background-color: #ff69b4;
-}
-
 button {
   background-color: transparent;
   border: none;

@@ -62,42 +62,11 @@
       <van-icon name="flower-o" />
 		</view>
 	</view>
-	<view class="other">
-		<view class="other-title">探索系列</view>
 
-    <view class="other-content">
-			<view class="other-block">
-				<image class="other-img" bindtap="navigateTo" data-url="/pages/sizeList/index" src="../../images/home/3.png"></image>
-				<view class="other-msg">AI证件照</view>
-       <view class="other-msg2">支持多种尺寸+自定义背景</view>
-			</view>
-		</view>
-
-    <view class="other-content">
-			<view class="other-block">
-				<image class="other-img" bindtap="loginJump" data-url="/pages/colourize/index" src="../../images/home/5.png"></image>
-				<view class="other-msg">黑白照片上色</view>
-        <view class="other-msg2">黑白照片一键上色变清晰</view>
-			</view>
-		</view>
-
-		<view class="other-content">
-			<view class="other-block">
-				<image class="other-img" bindtap="toBeLaunched" src="../../images/home/6.png"></image>
-				<view class="other-msg">粘土风写真</view>
-       <view class="other-msg2">又丑又萌的粘土风格照片</view>
-			</view>
-		</view>
-
-		<view class="other-content">
-			<view class="other-block">
-				<image class="other-img" bindtap="toBeLaunched" src="../../images/home/4.png"></image>
-				<view class="other-msg">人像抠图</view>
-       <view class="other-msg2">智能识别人像，一键迅捷抠图</view>
-			</view>
-		</view>
+	<view class="login-prompt" wx:if="{{!authorized}}" bindtap="loginJump" data-url="/pages/home/index">
+    <text style="position: relative; left: 8rpx; top: 3rpx">你不登录，我就不走啦 (｡•́︿•̀｡)</text>
+    <button class="login-button" bindtap="handleLogin" style="position: relative; left: -29rpx; top: 1rpx">立即登录</button>
+</view>
 
 
-
-	</view>
 </view>

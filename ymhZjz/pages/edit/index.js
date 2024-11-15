@@ -356,16 +356,6 @@ Page({
   },
 
 
-  // 去分享页面(待开发分享下载)
-  async composeImage() {
-    wx.showLoading({
-      title: '制作中...'
-    });
-    wx.navigateTo({
-      url: './complete/index?url=https://www.haimati.cn/img/1_7_1.98819809.jpg',
-    });
-  },
-
   // 初始化激励视频广告
   initRewardedVideoAd(adUnitId) {
     if (wx.createRewardedVideoAd) {

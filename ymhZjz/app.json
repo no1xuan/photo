@@ -6,14 +6,14 @@
     "pages/preEdit/index",
     "pages/edit/index",
     "pages/camera/index",
-    "pages/edit/complete/index",
     "pages/works/index",
     "pages/searchs/index",
     "pages/custom/index",
     "pages/login/index",
     "pages/admin/index",
-    "pages/colourize/index",
-    "pages/colourize/complete/index"
+    "pages/explore/index",
+    "pages/exploreHandle/index",
+    "pages/exploreHandle/complete/index"
   ],
   "window": {
     "backgroundColor": "#F6F6F6",
@@ -48,6 +48,12 @@
         "text": "首页",
         "iconPath": "images/tabs/home.png",
         "selectedIconPath": "images/tabs/home-fil.png"
+      },
+      {
+        "pagePath": "pages/explore/index",
+        "text": "探索",
+        "iconPath": "images/tabs/service.png",
+        "selectedIconPath": "images/tabs/service-fil.png"
       },
       {
         "pagePath": "pages/mine/index",

@@ -194,7 +194,6 @@ Page({
     wx.showLoading({
       title: '制作中...',
     });
-    console.log(this.data.detail)
     wx.request({
       url: app.url + 'api/createIdPhoto',
       data: {

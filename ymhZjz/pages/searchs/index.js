@@ -74,18 +74,15 @@ Page({
     });
   },
 
-  //有问题，没有回到顶部，待修复
   scrollToTop: function () {
-    const that = this;
+    wx.pageScrollTo({
+      scrollTop: 0,
+      duration: 300
+    });
     this.setData({
-      scrollTop: 1
-    }, () => {
-      that.setData({
-        scrollTop: 0
-      });
+      scrollTop: 0
     });
   },
-  
 
   onLoad: function (options) {},
 
