@@ -63,9 +63,9 @@
 		</view>
 	</view>
 
-	<view class="login-prompt" wx:if="{{!authorized}}" bindtap="loginJump" data-url="/pages/home/index">
+	<view class="login-prompt" wx:if="{{!authorized}}" bindtap="login">
     <text style="position: relative; left: 8rpx; top: 3rpx">你不登录，我就不走啦 (｡•́︿•̀｡)</text>
-    <button class="login-button" bindtap="handleLogin" style="position: relative; left: -29rpx; top: 1rpx">立即登录</button>
+    <button class="login-button" style="position: relative; left: -29rpx; top: 1rpx">立即登录</button>
 </view>
 
 

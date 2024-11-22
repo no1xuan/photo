@@ -1,5 +1,6 @@
-const app = getApp()
 import Dialog from '@vant/weapp/dialog/dialog'
+const app = getApp()
+
 Page({
   data: {
     imageData: {},
@@ -44,7 +45,6 @@ Page({
           dpi: data.dpi,
           "imageData.cimg": data.kimg
         });
-        console.log(this.data.imageData)
         //某学校要求
         if (this.data.imageData.category == 1 && this.data.imageData.id == 759) {
           this.setData({

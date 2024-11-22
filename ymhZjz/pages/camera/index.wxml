@@ -1,22 +1,23 @@
-<!--pages/autoCamera/autoCamera.wxml-->
 <view class="camera">
 	<camera wx:if="{{!photoSrc}}" device-position="{{cameraPostion}}" flash="off" binderror="error" style="width: 100%; height: 100%;"></camera>
 	<view wx:else class="contain-photo">
 		<image src="{{photoSrc}}"></image>
 	</view>
 	<view class="person">
-		<image mode="scaleToFill" src="../../images/person.png"></image>
+		<image mode="scaleToFill" src="./images/person.png"></image>
 	</view>
 	<view wx:if="{{cameraImg}}">
 		<view class="iconfont icon_back" bindtap="goBackPhoto">
 			<image src="./images/back.png" style="width:100%; height:100%"></image>
-
 		</view>
 		<view class="iconfont icon_confirm" bindtap="goEditPhoto">
 			<image src="./images/go.png" style="width:100%; height:100%"></image>
 		</view>
 	</view>
 	<view wx:else>
+		<view class="iconfont icon_back" bindtap="goPreEdit">
+			<image src="./images/back.png" style="width:100%; height:100%"></image>
+		</view>
 		<view class="iconfont icon_cameraC" bindtap="photo">
 			<image src="./images/camera.png" style="width:100%; height:100%"></image>
 		</view>

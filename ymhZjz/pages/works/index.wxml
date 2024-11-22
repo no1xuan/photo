@@ -3,7 +3,7 @@
   <view class="container" wx:for="{{workList}}" wx:for-index="id" wx:key="id" data-index="{{id}}">
     <view class="left">
       <view class="photo">
-        <image style="width: 100%;height: 100%;" src="{{item.nimg}}"></image>
+        <image style="width: 100%;height: 100%;" src="{{item.nimg}}" data-url="{{item.nimg}}"  bindtap="preView"></image>
       </view>
       <view class="msg">
         <view>{{item.name}} </view>

@@ -71,7 +71,7 @@
         <view class="modal-list">
           <text>● 你目前已经解锁基础功能，并无限制使用;</text>
           <text>● 你目前享受一对一专属客服，7x24全年极速响应;</text>
-          <text>● 待解锁：排版照，粘土风写真，将照片转换成卡通形象;</text>
+          <text>● 待解锁：美颜，照片转卡通形象;</text>
           <text>● 请多多分享小程序，系统将自动为您解锁。</text>
         </view>
         <button bindtap="closeModal">我明白了</button>

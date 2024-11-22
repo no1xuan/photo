@@ -11,7 +11,7 @@ Page({
     hasMore: true
   },
 
-  // 页面加载时请求第一页数据
+
   onLoad() {
     if (wx.getStorageSync("token") == "") {
       wx.navigateTo({
@@ -159,4 +159,13 @@ remove(e) {
       }
     });
   },
+
+  //点击图片大屏展开
+  preView(e) {
+    console.log(e);
+    const url = e.target.dataset.url;
+    wx.previewImage({
+      urls: [url]
+    })
+  }
 });

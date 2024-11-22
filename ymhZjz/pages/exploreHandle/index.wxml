@@ -1,30 +1,87 @@
 <view class="wrap">
-    <view class="effect-top-bar">
-        <view class="top-bar-icon" style="background:#FFFFFF">
-          <van-icon name="photo" />
-        </view>
-        <view style="display:flex;flex-direction:column;margin-left:10px;">
-            <text class="top-bar-title">{{title}}</text>
-        </view>
+  <!-- 顶部内容 -->
+  <view class="effect-top-bar">
+    <view class="top-bar-icon" style="background:#FFFFFF">
+      <van-icon name="photo" />
     </view>
-    <view class="effect-image">
-      <image src="{{pic}}" class="effect-img"></image>
+    <view style="display:flex;flex-direction:column;margin-left:10px;">
+      <text class="top-bar-title">{{title}}</text>
     </view>
-    <view class="effect-content">
-        <view class="content-view-a">
-            <text class="view-icon-a icon-collection"></text>
-            <text class="view-text-a">{{title2}}</text>
-        </view>
-        <view class="content-view">
-          <van-icon name="good-job" />
-            <text class="view-text">{{description}}</text>
-        </view>
-        <view class="content-view">
-          <van-icon name="photo" />
-            <text class="view-text">原图大小不能超10MB，图片越大处理时间越长</text>
-        </view>
+  </view>
+
+  <view class="effect-image">
+    <image src="{{pic}}" class="effect-img"></image>
+  </view>
+
+  <view class="effect-content">
+    <view class="content-view-a">
+      <text class="view-icon-a icon-collection"></text>
+      <text class="view-text-a">{{title2}}</text>
     </view>
-    <view class="effect-button">
-        <view class="album-button" bindtap="chooseImage">选择图片</view>
+    <view class="content-view">
+      <van-icon name="good-job" />
+      <text class="view-text">{{description}}</text>
     </view>
+    <view class="content-view">
+      <van-icon name="photo" />
+      <text class="view-text" wx:if="{{type==4}}">谁的青春不想拥有一张排版照呢？</text>
+      <text class="view-text" wx:else>原图大小不能超10MB，图片越大处理时间越长</text>
+    </view>
+  </view>
+
+  <!-- 选择图片按钮 -->
+  <view class="effect-button">
+    <view class="album-button" bindtap="{{type == '4' || type == '6' ? 'showBottomModal' : 'chooseImage'}}">选择图片</view>
+  </view>
+
+  <!-- 屏蔽层和底部弹出框 -->
+  <view class="overlay" wx:if="{{showModal}}" bindtap="hideBottomModal"></view>
+  <view class="bottom-modal" animation="{{animationData}}" style="transform: translateY({{showModal ? '0' : '100%'}});">
+    <view class="modal-content">
+      <text class="modal-title">请设置以下参数</text>
+      <view class="modal-row" wx:if="{{type == '4' || type == '6'}}">
+        <van-field
+          type="digit"
+          input-class="digit-input"
+          label="DPI："
+          value="{{dpi}}"
+          placeholder="非必填（默认300）"
+          bindinput="onDpiInput"
+        />
+      </view>
+      <block wx:if="{{type == '4'}}">
+        <view class="modal-row">
+          <van-field
+            type="digit"
+            input-class="digit-input"
+            label="KB："
+            value="{{kb}}"
+            placeholder="非必填（默认不限制）"
+            bindinput="onKbInput"
+          />
+        </view>
+        <view class="modal-row">
+          <van-field
+            type="digit"
+            input-class="digit-input"
+            label="宽度："
+            value="{{width}}"
+            placeholder="非必填（默认295）"
+            bindinput="onWidthInput"
+          />
+        </view>
+        <view class="modal-row">
+          <van-field
+            type="digit"
+            input-class="digit-input"
+            label="高度："
+            value="{{height}}"
+            placeholder="非必填（默认413）"
+            bindinput="onHeightInput"
+          />
+        </view>
+      </block>
+      <view class="next-button" bindtap="chooseImage">下一步</view>
+    </view>
+  </view>
 </view>

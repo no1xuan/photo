@@ -1,5 +1,7 @@
 import tool from '././util'
+import Dialog from '@vant/weapp/dialog/dialog';
 const app = getApp();
+
 
 Page({
   data: {
@@ -26,23 +28,35 @@ Page({
     });
   },
   
+  // DPI输入框
   changeDpi(e) {
-    const value = e.detail || '';
+    let value = e.detail || '';
+    // 移除非数字字符和移除前导0
+    value = value.replace(/\D/g, '');
+    value = value.replace(/^0+(\d)/, '$1');
     this.setData({
       dpi: value
     });
   },
 
+  // 宽度输入框
   changeWidth: tool.debounce(function (e) {
-    const value = e.detail;
+    let value = e.detail || '';
+    // 移除非数字字符和移除前导0
+    value = value.replace(/\D/g, '');
+    value = value.replace(/^0+(\d)/, '$1');
     this.setData({
       width: value
     });
     this.updateSize();
   }, 300),
 
+  // 高度输入框
   changeHeight: tool.debounce(function (e) {
-    const value = e.detail;
+    let value = e.detail || '';
+    // 移除非数字字符和移除前导0
+    value = value.replace(/\D/g, '');
+    value = value.replace(/^0+(\d)/, '$1');
     this.setData({
       height: value
     });
@@ -88,9 +102,9 @@ Page({
       return;
     }
 
-    if (isNaN(dpi) || dpi <= 75) {
+    if (isNaN(dpi) || dpi < 72) {
       wx.showToast({
-        title: '分辨率最低75',
+        title: '分辨率最低72',
         icon: 'none',
         duration: 2000,
         mask: true
@@ -133,11 +147,7 @@ Page({
       },
       success: (res) => {
         if (res.data.code == 200) {
-          wx.showToast({
-            title: '定制成功',
-            duration: 2000,
-            mask: true
-          });
+        
           this.setData({
             name: '',
             width: '',
@@ -146,6 +156,23 @@ Page({
             px: '0*0 px',
             size: '0*0 mm'
           });
+
+          Dialog.confirm({
+            title: '定制成功',
+            message: '尺寸定制成功，是否立即去制作？',
+          })
+            .then(() => {
+              wx.navigateTo({
+                url: '/pages/preEdit/index?category=4&data='+JSON.stringify(res.data.data),
+              });
+            })
+            .catch(() => {
+              wx.showToast({
+                title: '后续可在快速制作里面的我的定制进行查看',
+                icon: 'none'
+              });
+            });
+            
         } else if(res.data.code == 404){
           wx.showToast({
             title: res.data.data,

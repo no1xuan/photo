@@ -1,5 +1,7 @@
 {
   "navigationBarTitleText": "定制尺寸",
   "navigationStyle": "default",
-  "usingComponents": {}
+  "usingComponents": {
+   "van-dialog": "@vant/weapp/dialog/index"
+  }
 }

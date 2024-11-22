@@ -1,9 +1,6 @@
 const app = getApp()
 Page({
 
-  /**
-   * 页面的初始数据
-   */
   data: {
     cameraPostion: 'back',
     cameraImg: false,
@@ -11,10 +8,8 @@ Page({
     detail: {}
   },
 
-  /**
-   * 生命周期函数--监听页面加载
-   */
-  onLoad: function (options) {
+
+  onLoad: function () {
     this.getEmitData()
   },
 
@@ -74,6 +69,16 @@ Page({
       photoSrc: ''
     })
 
+  },
+  //返回前一页
+  goPreEdit() {
+    this.setData({
+      cameraImg: false,
+      photoSrc: ''
+    })
+    wx.navigateBack({
+      delta: 1
+    })
   },
 
   // 上传原图
@@ -166,9 +171,7 @@ Page({
 
 
 
-  /**
-   * 去编辑页面
-   */
+ //去编辑页面
   goEditPage(data) {
     const {
       category,
@@ -197,53 +200,4 @@ Page({
   },
 
 
-
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-
-  }
 })

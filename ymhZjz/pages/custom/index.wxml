@@ -92,4 +92,6 @@
   <view class="bottom">
     <button bindtap="addSize" class="save-button" hover-class="save-button-hover">保存尺寸</button>
   </view>
+  <!-- 弹窗 -->
+  <van-dialog id="van-dialog" />
 </view>

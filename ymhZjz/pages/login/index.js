@@ -1,13 +1,15 @@
 const app = getApp()
 Page({
-  data: {},
+  data: {
+    title:app.appName
+  },
   
 
 
   
   onLoad() {},
   
-  noempower(){
+  login(){
     wx.showLoading({
       title: '登录中...',
     });

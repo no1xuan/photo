@@ -215,34 +215,17 @@ calculateDays: function (time) {
     this.setData({
       modalType: 'questions'
     });
-  },
-
-  // 彩蛋点击处理函数
-  easterEgg(){
-    const { easterEggClickCount} = this.data;
-    const newCount = easterEggClickCount + 1;
-    this.setData({
-      easterEggClickCount: newCount
-    });
-    if (newCount === 1) {
-      this.data.easterEggTimer = setTimeout(() => {
-        this.setData({
-          easterEggClickCount: 0
-        });
-      }, 9000);
-    }
-
-    if (newCount === 3) {
-      clearTimeout(this.data.easterEggTimer);
-      this.setData({
-        modalType: 'easterEgg',
-        easterEggClickCount: 0
-      });
-    }
-  },
+  }, 
 
   // 分享设置
   onShareAppMessage() {
+    return {
+      title: '哇塞，这个证件照小程序也太好用了吧！好清晰，还免费',
+      path: 'pages/home/index',
+      imageUrl: '../../images/share.jpg'
+    }
+  },
+  onShareTimeline() {
     return {
       title: '哇塞，这个证件照小程序也太好用了吧！好清晰，还免费',
       path: 'pages/home/index',

@@ -6,13 +6,13 @@
   <view class="cont-button">
     <view class="logo-block">
       <view class="logo">
-        <view>证件照伴侣</view>
+        <view>{{title}}</view>
       <view>您身边的证件照管家</view>
       </view>
 
     </view>
     <view class="but-wh">
-      <button bindtap="noempower" class="button">快捷登录</button>
+      <button bindtap="login" class="button">快捷登录</button>
     </view>
   </view>
 </view>
