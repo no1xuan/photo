@@ -281,7 +281,7 @@ Page({
   imageDivision(tu) {
     wx.showLoading({ title: '处理中...' });
 
-    if (this.data.type === 6) {
+    if (this.data.type == 6) {
       setTimeout(() => {
         wx.showLoading({ title: '正在处理细节...' });
       }, 1000);
