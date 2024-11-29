@@ -31,23 +31,12 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-
-.grid-item:active {
-  transform: scale(0.98);
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.12);
 }
 
 .grid-image {
   width: 72px;
   height: 72px;
   margin-bottom: 12px;
-  transition: transform 0.2s ease;
-}
-
-.grid-item:active .grid-image {
-  transform: scale(0.95);
 }
 
 .grid-content {

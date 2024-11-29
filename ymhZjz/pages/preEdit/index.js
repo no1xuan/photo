@@ -5,6 +5,7 @@ Page({
     autoplay: true,
     interval: 3000,
     duration: 1200,
+    swiperHeight: 200,
     detail: {}
   },
 
@@ -30,8 +31,14 @@ Page({
         }
       ]
     };
+    
+    // 获取窗口信息设置合适的轮播图大小
+    const windowInfo = wx.getWindowInfo()
+    // 根据屏幕宽度等比例设置高度
+    const swiperHeight = windowInfo.windowWidth * 0.5 // 设置为屏幕宽度的一半
     this.setData({
-      swiperDatas: data.swiperDatas
+      swiperDatas: data.swiperDatas,
+      swiperHeight: swiperHeight
     })
   },
 

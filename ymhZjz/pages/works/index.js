@@ -1,4 +1,3 @@
-// 引入Dialog
 import Dialog from '../../miniprogram_npm/@vant/weapp/dialog/dialog';
 import Notify from '@vant/weapp/notify/notify';
 const app = getApp();
@@ -8,9 +7,10 @@ Page({
     workList: [],
     pageNum: 1,
     pageSize: 5,
+    total: 0,
+    pages: 0,
     hasMore: true
   },
-
 
   onLoad() {
     if (wx.getStorageSync("token") == "") {
@@ -39,22 +39,26 @@ Page({
         pageSize: this.data.pageSize,
       },
       header: {
-        "token": wx.getStorageSync("token")
+        token: wx.getStorageSync("token")
       },
       method: "GET",
       success(res) {
         wx.hideLoading();
-        if (res.data.code === 200) {
-          const newData = res.data.data;
+        if (res.data.code == 200) {
+          const newData = res.data.data.records;
+          const total = res.data.data.total;
+          const pages = res.data.data.pages;
           that.setData({
-            workList: that.data.pageNum === 1 ? newData : that.data.workList.concat(newData),  // 拼接新数据
-            hasMore: newData.length === that.data.pageSize  // 如果返回的数据少于 pageSize，表示没有更多数据了
+            workList: that.data.pageNum == 1 ? newData : that.data.workList.concat(newData),
+            total: total,
+            pages: pages,
+            hasMore: that.data.pageNum < pages
           });
-        } else if (res.data.code === 404) {
+        } else if (res.data.code == 404) {
           that.setData({
             hasMore: false 
           });
-        }else if(res.data.code === 500){
+        } else if (res.data.code == 500) {
           wx.navigateTo({
             url: '/pages/login/index',
           });
@@ -71,50 +75,53 @@ Page({
     });
   },
 
-// 删除操作
-remove(e) {
-  let that = this;
-  const itemId = e.target.dataset.id;
-  
-  Dialog.confirm({
-    message: '确定要删除这张吗？',
-  }).then(() => {
-    wx.request({
-      url: app.url + 'item/deletePhotoId',
-      data: {
-        id: itemId,
-      },
-      header: {
-        "token": wx.getStorageSync("token")
-      },
-      method: "GET",
-      success(res) {
-        wx.hideLoading();
-        if (res.data.code === 200) {
-          // 本地移除页面元素
-          const updatedList = that.data.workList.filter(item => item.id !== itemId);
-          that.setData({
-            workList: updatedList
-          });
+  // 删除操作
+  remove(e) {
+    let that = this;
+    const itemId = e.target.dataset.id;
+    
+    Dialog.confirm({
+      message: '确定要删除这张吗？',
+    }).then(() => {
+      wx.request({
+        url: app.url + 'item/deletePhotoId',
+        data: {
+          id: itemId,
+        },
+        header: {
+          token: wx.getStorageSync("token")
+        },
+        method: "GET",
+        success(res) {
+          wx.hideLoading();
+          if (res.data.code == 200) {
+            // 本地移除页面元素
+            const updatedList = that.data.workList.filter(item => item.id != itemId);
+            that.setData({
+              workList: updatedList
+            });
+            wx.showToast({
+              title: '删除成功',
+              icon: 'success',
+              duration: 2000
+            });
+   
+            if (that.data.workList.length < that.data.pageSize && that.data.pageNum <= that.data.pages) {
+              that.getSizeList();
+            }
+          }
+        },
+        fail() {
           wx.showToast({
-            title: '删除成功',
-            icon: 'success',
+            title: '删除失败，请重试',
+            icon: 'none',
             duration: 2000
           });
         }
-      },
-      fail() {
-        wx.showToast({
-          title: '删除失败，请重试',
-          icon: 'none',
-          duration: 2000
-        });
-      }
+      });
+    }).catch(() => {
     });
-  }).catch(() => {
-  });
-},
-
+  },
 
   // 页面上拉触底事件（下滑加载下一页）
   onReachBottom() {

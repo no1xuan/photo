@@ -7,16 +7,29 @@
     <van-tab title="搜索" name="5"></van-tab>
   </van-tabs>
 </view>
-<scroll-view class="container" scroll-y bindscrolltolower="moredata" scroll-top="{{scrollTop}}" enhanced show-scrollbar="{{false}}">
+
+
+
+<scroll-view 
+  class="container" 
+  scroll-y 
+  bindscrolltolower="moredata"
+  bindscroll="onPageScroll"
+  scroll-top="{{scrollTop}}" 
+  scroll-with-animation
+  enhanced 
+  show-scrollbar="{{false}}">
   <view class="grid-container">
-    <view class="grid-item" wx:for="{{photoSizeList}}" wx:key="name" data-index="{{index}}" bindtap="goNextPage" hover-class="grid-item-hover">
+    <view class="grid-item" wx:for="{{photoSizeList}}" wx:key="id" data-index="{{index}}" bindtap="goNextPage">
       <image class="grid-image" src="./sizes/{{item.icon}}.png" mode="aspectFit" lazy-load></image>
       <view class="grid-content">
         <view class="title">{{ item.name }}</view>
         <view class="description">{{item.widthPx}}*{{item.heightPx}}</view>
-        <view class="description">{{item.widthMm}}*{{item.heightMm}} | {{item.dpi}}dpi</view>
+        <view class="description">{{item.widthMm}}*{{item.widthMm}} | {{item.dpi}}dpi</view>
       </view>
     </view>
   </view>
 </scroll-view>
-<view class="scroll-to-top" bindtap="scrollToTop" hover-class="scroll-to-top-hover">⬆</view>
+<view class="scroll-to-top" wx:if="{{showBackTop}}" bindtap="scrollToTop" hover-class="scroll-to-top-hover">
+  <van-icon name="arrow-up" size="24px" color="#fff"/>
+</view>

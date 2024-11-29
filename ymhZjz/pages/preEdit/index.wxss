@@ -4,11 +4,11 @@
   position: relative;
 }
 
-/* 轮播图样式 */
+
 .swiper-component {
-  margin-top: 6vh;
+  margin-top: 4vh;
   width: 100%;
-  height: 28%;
+  height: 35vh;
 }
 
 .swiper-content {
@@ -19,9 +19,10 @@
 .slide-image {
   width: 100%;
   height: 100%;
+  object-fit: cover; 
 }
 
-/* 照片尺寸 */
+
 .title {
   margin: 30px 20px;
   font-size: 20px;

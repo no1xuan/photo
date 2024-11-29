@@ -8,6 +8,9 @@ Page({
     pageSize: 10,
     hasMoreData: true,
     scrollTop: 0,
+    total: 0,
+    pages: 0,
+    showBackTop: false
   },
 
   clickTab: function (e) {
@@ -16,6 +19,8 @@ Page({
       category: e.detail.name,
       pageNum: 1,
       hasMoreData: true,
+      total: 0,
+      pages: 0
     });
     if (this.data.category == 5) {
       wx.navigateTo({
@@ -46,11 +51,15 @@ Page({
       success(res) {
         wx.hideLoading();
         if (res.data.code == 200) {
-          let newData = res.data.data || [];
+          const newData = res.data.data.records || [];
+          const total = res.data.data.total;
+          const pages = res.data.data.pages;
           that.setData({
             photoSizeList: that.data.photoSizeList.concat(newData),
             pageNum: that.data.pageNum + 1,
-            hasMoreData: newData.length >= that.data.pageSize,
+            hasMoreData: that.data.pageNum < pages,
+            total: total,
+            pages: pages
           });
         } else if (res.data.code == 404) {
           if(that.data.category==4){
@@ -72,7 +81,15 @@ Page({
   },
 
   moredata: function () {
-    this.getSizeList();
+    if (this.data.hasMoreData) {
+      this.getSizeList();
+    } else {
+      wx.showToast({
+        title: '没有更多尺寸啦~',
+        icon: 'none',
+        duration: 2000
+      });
+    }
   },
 
   goNextPage: function (e) {
@@ -82,8 +99,25 @@ Page({
   },
 
   scrollToTop: function () {
-    this.setData({ scrollTop: 0 });
+    this.setData({
+      scrollTop: 0
+    });
   },
+
+  onPageScroll: function(e) {
+    if (e.detail.scrollTop > 100 && !this.data.showBackTop) {
+      this.setData({
+        showBackTop: true
+      });
+    } else if (e.detail.scrollTop <= 100 && this.data.showBackTop) {
+      this.setData({
+        showBackTop: false
+      });
+    }
+  },
+
+
+
 
   onLoad: function () {
     this.getSizeList();
@@ -94,6 +128,8 @@ Page({
       photoSizeList: [],
       pageNum: 1,
       hasMoreData: true,
+      total: 0,
+      pages: 0
     });
     this.getSizeList();
   },

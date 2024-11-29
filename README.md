@@ -11,15 +11,17 @@
 
 
 **相关项目**：
-- 小程序前端另外一套请前往：https://github.com/no1xuan/ai-photo
-- 小程序后端请前往：https://github.com/no1xuan/HivisionIDPhotos-wechat-weapp
-- 小程序管理员网页后台请前往：https://github.com/no1xuan/zjzAdmin
+- 小程序前端第二套：https://github.com/no1xuan/ai-photo
+- 小程序前端第三套：https://github.com/no1xuan/id-photo-wechat
+- 小程序后端：https://github.com/no1xuan/HivisionIDPhotos-wechat-weapp
+- 小程序管理员网页后台：https://github.com/no1xuan/zjzAdmin
 
 ------
 
 # ⭐最近更新
     版本更新教程：https://www.bilibili.com/video/BV1xNUvYTEjo
 
+- 2024.11.29: 优化加快规格列表/搜索列表/照片列表，修复作品列表特殊场景删除造成不分页的问题，固定微信基础库版本：3.6.6
 - 2024.11.22: 增加六寸排版照，相机增加返回，部分探索功能增加自定义参数，调整首页登录，我的作品增加点击图片查看，定制尺寸增加引导用户跳转制作，移除彩蛋遗留代码
 - 2024.11.15: 大更新来喽！全局优化代码，页面UI优化，增加探索中心/通用抠图，修复搜索页无法一键到顶，调整我的作品登录逻辑，调整个人中心未登录点击逻辑，移除彩蛋
 - 2024.11.08: 增加黑白图片上色功能

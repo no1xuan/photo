@@ -1,10 +1,10 @@
 <view class="search">
   <view class="s-input">
-    <van-search value="{{ value }}" bind:change="onChange" placeholder="请输入关键词,如：一寸" shape="round" />
+    <van-search value="{{ value || '' }}" bind:change="onChange" placeholder="请输入关键词,如：一寸" shape="round" />
   </view>
-  <scroll-view class="container" scroll-y bindscrolltolower="moredata" scroll-top="{{scrollTop}}" enhanced show-scrollbar="{{false}}">
+<scroll-view class="container" scroll-y bindscrolltolower="moredata" scroll-top="{{scrollTop}}" enhanced show-scrollbar="{{false}}">
     <view class="grid-container">
-      <view class="grid-item" wx:for="{{photoSizeList}}" wx:key="name" data-index="{{index}}" bindtap="goNextPage" hover-class="grid-item-hover">
+      <view class="grid-item" wx:for="{{photoSizeList}}" wx:key="id" data-index="{{index}}" bindtap="goNextPage">
         <image class="grid-image" src="../sizeList/sizes/{{item.icon}}.png" mode="aspectFit" lazy-load></image>
         <view class="grid-content">
           <view class="title">{{ item.name }}</view>
@@ -14,8 +14,10 @@
       </view>
     </view>
   </scroll-view>
-  <view class="none" wx:if="{{!photoSizeList.length}}">
-    <image src="./images/none.png" style="width: 100%;height: 100%;"></image>
+  <view class="empty-state" wx:if="{{!loading && !photoSizeList.length}}">
+    <image src="./images/none.png" mode="aspectFit"></image>
   </view>
-  <view class="scroll-to-top" bindtap="scrollToTop" hover-class="scroll-to-top-hover">⬆</view>
+  <view class="scroll-to-top" wx:if="{{showBackTop}}" bindtap="scrollToTop" hover-class="scroll-to-top-hover">
+    <van-icon name="arrow-up" size="24px" color="#fff"/>
+  </view>
 </view>

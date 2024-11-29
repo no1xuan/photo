@@ -1,7 +1,7 @@
 <view class="explore-container">
   <view class="explore-header">
     <view class="explore-header-left">
-      <text class="explore-header-title">探索AI的魔力🪄 </text>
+      <text class="explore-header-title">探索神奇的魔力🪄 </text>
       <text class="explore-header-subtitle">让照片处理变得简单有趣✨ </text>
     </view>
   </view>
@@ -15,7 +15,7 @@
           </view>
         </image>
         <view class="card-content">
-          <view class="card-title">AI证件照🎭</view>
+          <view class="card-title">智能证件照🎭</view>
           <view class="card-desc">支持多种尺寸+自定义背景</view>
         </view>
       </view>
