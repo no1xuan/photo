@@ -75,15 +75,15 @@
         </view>
       </view>
 
-      <view class="explore-card" bindtap="wait" data-type="8">
+      <view class="explore-card" bindtap="navigateTo" data-type="8">
         <image class="card-image" mode="aspectFill" src="../../images/home/8.png">
           <view class="other-msg">
-            <view class="card-stats">🔜 即将上线 | 0次使用</view>
+            <view class="card-stats">🆕 新品 | {{cartoonCount}}次使用</view>
           </view>
         </image>
         <view class="card-content">
-          <view class="card-title">照片转卡通形象🎨</view>
-          <view class="card-desc">将照片转换成卡通形象</view>
+          <view class="card-title">新海诚动漫风🎨</view>
+          <view class="card-desc">一键转换动漫风格照片</view>
         </view>
       </view>
     </view>

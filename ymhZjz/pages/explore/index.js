@@ -5,7 +5,8 @@ Page({
     zjzCount: 0,
     colourizeCount: 0,
     mattingCount: 0,
-    generateLayoutCount: 0
+    generateLayoutCount: 0,
+    cartoonCount: 0
   },
 
   onShow() {
@@ -25,7 +26,8 @@ Page({
           zjzCount: res.data.data.zjzCount,
           generateLayoutCount: res.data.data.generateLayoutCount,
           colourizeCount: res.data.data.colourizeCount,
-          mattingCount: res.data.data.mattingCount
+          mattingCount: res.data.data.mattingCount,
+          cartoonCount: res.data.data.cartoonCount
         })
       }
     })
@@ -35,14 +37,6 @@ Page({
     wx.navigateTo({
       url: "/pages/sizeList/index"
     });
-  },
-
-  wait(){
-    wx.showToast({
-      title: '该功能正在内测中，即将上线，敬请期待',
-      icon: 'none', 
-      duration: 3000
-    })
   },
   stop(){
     wx.showToast({
@@ -74,9 +68,9 @@ Page({
       title2 = '一键让模糊图片变清晰';
       description = '适用于模糊图变清晰，老照片清晰化，质量低照片，无损放大';
     }else if(type==8){
-      title = '照片转卡通形象';
-      title2 = '';
-      description = '';
+      title = '新海诚动漫风';
+      title2 = '一键转换动漫风格照片';
+      description = '适用于照片转新海诚动漫风格，让照片充满艺术感';
     }
     wx.navigateTo({
       url: '/pages/exploreHandle/index?type='+type+'&title='+title+'&title2='+title2+'&description='+description,

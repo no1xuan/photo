@@ -35,7 +35,7 @@ Page({
     } else if (this.data.type == 7) {
       this.setData({ url: '' });
     } else if (this.data.type == 8) {
-      this.setData({ url: '' });
+      this.setData({ url: 'cartoon' });
     } else {
       this.setData({ url: '' });
     }
