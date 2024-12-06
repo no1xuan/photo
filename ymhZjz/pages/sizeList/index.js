@@ -51,6 +51,13 @@ Page({
       success(res) {
         wx.hideLoading();
         if (res.data.code == 200) {
+          if(that.data.category==4 && res.data.data.records.length == 0){
+            wx.showToast({
+              title: "您还没有定制过尺寸哦~",
+              icon: 'none',
+              duration: 2000
+            });
+          }
           const newData = res.data.data.records || [];
           const total = res.data.data.total;
           const pages = res.data.data.pages;
@@ -61,20 +68,12 @@ Page({
             total: total,
             pages: pages
           });
-        } else if (res.data.code == 404) {
-          if(that.data.category==4){
-            wx.showToast({
-              title: "您还没有定制过尺寸哦~",
-              icon: 'none',
-              duration: 2000
-            });
-          }else{
-            wx.showToast({
-              title: "没有更多尺寸啦~",
-              icon: 'none',
-              duration: 1500
-            });
-          }
+        } else {
+          wx.showToast({
+            title: "加载失败~",
+            icon: 'none',
+            duration: 2000
+          });
         }
       }
     });

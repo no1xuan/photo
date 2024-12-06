@@ -1,9 +1,6 @@
 import tool from '././util';
 const app = getApp();
 
-
-
-
 Page({
   data: {
     value: '', 
@@ -17,8 +14,6 @@ Page({
     hasMore: true,
     showBackTop: false
   },
-
-  onLoad: function (options) {},
 
   onChange: tool.debounce(function (e) {
     if (e[0].detail) {
