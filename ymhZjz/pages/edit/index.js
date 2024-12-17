@@ -23,7 +23,6 @@ Page({
     downloadHd: 2,
     videoUnitId: 0,
     rewardedVideoAd: null,
-    typeDownload: 1,
     kb: 0,
     dpi: 0,
     render: 0,
@@ -61,9 +60,6 @@ Page({
   getvideoUnit() {
     wx.request({
       url: app.url + 'api/getvideoUnit',
-      header: {
-        "token": wx.getStorageSync("token")
-      },
       method: "POST",
       success: (res) => {
         this.setData({
@@ -153,9 +149,6 @@ Page({
       });
       return;
     }
-    this.setData({
-      typeDownload: e.currentTarget.dataset.type
-    });
 
     // 普通下载没开启广告
     if (e.currentTarget.dataset.type == 1) {
@@ -184,11 +177,7 @@ Page({
         } else {
           console.error('广告实例不存在');
           // 防止广告权限被封或无广告权限导致用户无法下载
-          if (this.data.typeDownload == 1) {
-            this.saveNormalPhoto();
-          } else {
-            this.saveHDPhoto()
-          }
+          this.saveHDPhoto();
         }
       })
       .catch(() => {
@@ -378,22 +367,14 @@ Page({
       rewardedVideoAd.onError((err) => {
         console.error('激励视频广告加载失败', err);
         // 用户可能观看广告上限，防止无法下载，仍发放奖励
-        if (this.data.typeDownload == 1) {
-          this.saveNormalPhoto();
-        } else {
-          this.saveHDPhoto()
-        }
+        this.saveHDPhoto();
       });
 
       // 监听广告关闭事件
       rewardedVideoAd.onClose((res) => {
         if (res && res.isEnded) {
           // 发放奖励
-          if (this.data.typeDownload == 1) {
-            this.saveNormalPhoto();
-          } else {
-            this.saveHDPhoto()
-          }
+          this.saveHDPhoto();
         } else {
           console.log('没看完广告，不发奖励');
           wx.showToast({
@@ -409,11 +390,7 @@ Page({
     } else {
       console.error('微信版本太低不支持激励视频广告');
       // 防止无法下载，所以仍然发放奖励
-      if (this.data.typeDownload == 1) {
-        this.saveNormalPhoto();
-      } else {
-        this.saveHDPhoto()
-      }
+      this.saveHDPhoto();
     }
   },
 

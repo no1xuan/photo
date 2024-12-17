@@ -14,7 +14,7 @@ Page({
     kb: '',     
     width: '',  
     height: '', 
-    count:'',
+    count:null,
     showModal: false, 
     animationData: {}, 
     authorized: false,
