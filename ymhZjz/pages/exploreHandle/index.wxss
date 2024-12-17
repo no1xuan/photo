@@ -33,6 +33,23 @@
   font-size: 40rpx;
 }
 
+.other-msg {
+  display: inline-block;
+  margin-left: 180rpx;
+}
+
+.card-stats {
+  font-size: 21rpx;
+  color: #fff;
+  background: rgba(0, 0, 0, 0.5);
+  padding: 6rpx 16rpx;
+  border-radius: 20rpx;
+  display: inline-block;
+}
+
+
+
+
 /* 图片展示样式 */
 .effect-image {
   border-radius: 40rpx;

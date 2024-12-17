@@ -6,7 +6,10 @@ Page({
     interval: 3000,
     duration: 1200,
     swiperHeight: 200,
-    detail: {}
+    detail: {},
+    isBeautyOn: 0,
+    openIsBeautyOn: 0,
+    safeAreaBottom: 0
   },
 
 
@@ -36,10 +39,18 @@ Page({
     const windowInfo = wx.getWindowInfo()
     // 根据屏幕宽度等比例设置高度
     const swiperHeight = windowInfo.windowWidth * 0.5 // 设置为屏幕宽度的一半
+    // 解决小设备
+    const safeAreaBottom = windowInfo.screenHeight - windowInfo.safeArea.bottom
+
     this.setData({
       swiperDatas: data.swiperDatas,
-      swiperHeight: swiperHeight
+      swiperHeight: swiperHeight,
+      safeAreaBottom: safeAreaBottom
     })
+  },
+
+  onShow: function () {
+    this.getWebGlow();
   },
 
   //温馨提示
@@ -48,6 +59,35 @@ Page({
       title: "请点击底部相册选择或相机拍照",
       icon: 'none',
       duration: 1500
+    });
+  },
+
+  // 美颜开关切换
+  onBeautySwitch(e) {
+    this.setData({
+      isBeautyOn: e.detail.value ? 1 : 0
+    })
+  },
+
+  //获取管理员是否开启美颜
+  getWebGlow() {
+    if (wx.getStorageSync("token") == "") {
+      this.setData({
+        openIsBeautyOn: 0, //防止无token
+      })
+      return;
+    }
+    wx.request({
+      url: app.url + 'api/getWebGlow',
+      header: {
+        "token": wx.getStorageSync("token")
+      },
+      method: "POST",
+      success: (res) => {
+        this.setData({
+          openIsBeautyOn: res.data.data
+        });
+      }
     });
   },
 
@@ -111,6 +151,7 @@ Page({
       widthMm,
       widthPx
     } = this.data.detail
+    const isBeautyOn = this.data.isBeautyOn
     //选择相机拍照
     wx.getSetting({
       success(res) {
@@ -125,7 +166,8 @@ Page({
                 id,
                 name,
                 widthMm,
-                widthPx
+                widthPx,
+                isBeautyOn: isBeautyOn
               })
             }
           })
@@ -204,7 +246,8 @@ Page({
       data: {
         "image": tu,
         "type": this.data.detail.category == 4 ? 0 : 1,
-        "itemId": this.data.detail.id
+        "itemId": this.data.detail.id,
+        "isBeautyOn": this.data.isBeautyOn
       },
       header: {
         "token": wx.getStorageSync("token")
@@ -218,7 +261,7 @@ Page({
           console.log(res.data);
           wx.showToast({
             title: res.data.data,
-            icon: 'error'
+            icon: 'none'
           });
         } else {
           wx.navigateTo({
@@ -238,11 +281,12 @@ Page({
       id,
       name,
       widthMm,
-      widthPx
+      widthPx,
     } = this.data.detail
+    const isBeautyOn = this.data.isBeautyOn
     wx.navigateTo({
       url: '/pages/edit/index',
-      success: function (res) {
+      success: (res) => {
         res.eventChannel.emit('sendImageData', {
           ...data,
           category,
@@ -251,9 +295,13 @@ Page({
           id,
           name,
           widthMm,
-          widthPx
+          widthPx,
+          isBeautyOn: isBeautyOn
         })
       }
     })
-  },
+  }
+
+
+
 })

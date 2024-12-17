@@ -28,7 +28,6 @@ Page({
     const that = this;
     wx.login({
         success(res) {
-          console.log("abccc"+that.data.scene)
             wx.request({
                 url: app.url + 'admin/okLogin',
                 data: { "code1": res.code,"code2":that.data.scene},
@@ -41,7 +40,7 @@ Page({
                     });
                   }else{
                     wx.showToast({
-                      title: '登录失败，二维码过期或已登录',
+                      title: res.data.data,
                       icon: 'none'
                     });
                   }

@@ -9,7 +9,8 @@
     </swiper>
   </view>
 
-  <view class="preEdit-content" bindtap="warm">
+  <view class="preEdit-content">
+    <view bindtap="warm">
     <view class="title">{{detail.name}}</view>
     <view class="block">
       <view>冲印尺寸</view>
@@ -30,6 +31,11 @@
         <view class="circle rainbow"></view>
       </view>
 
+    </view>
+    </view>
+    <view class="block beauty-switch" wx:if="{{openIsBeautyOn==1}}">
+      <view>美颜开关</view>
+      <switch checked="{{isBeautyOn==1}}" bindchange="onBeautySwitch" color="#2c2c2c" style="transform:scale(0.8)"/>
     </view>
   </view>
 

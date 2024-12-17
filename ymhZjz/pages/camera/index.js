@@ -17,7 +17,6 @@ Page({
   getEmitData() {
     const eventChannel = this.getOpenerEventChannel && this.getOpenerEventChannel()
     eventChannel && eventChannel.on('chooseCamera', (data) => {
-      console.log(data)
       this.setData({
         detail: data
       })
@@ -144,7 +143,8 @@ Page({
       data: {
         "image": tu,
         "type": type,
-        "itemId": this.data.detail.id
+        "itemId": this.data.detail.id,
+        "isBeautyOn": this.data.detail.isBeautyOn
       },
       header: {
         "token": wx.getStorageSync("token")
@@ -158,7 +158,7 @@ Page({
           console.log(res.data);
           wx.showToast({
             title: res.data.data,
-            icon: 'error'
+            icon: 'none'
           });
         } else {
           wx.navigateTo({
@@ -180,8 +180,10 @@ Page({
       id,
       name,
       widthMm,
-      widthPx
+      widthPx,
+      isBeautyOn
     } = this.data.detail
+
     wx.navigateTo({
       url: '/pages/edit/index',
       success: function (res) {
@@ -193,7 +195,8 @@ Page({
           id,
           name,
           widthMm,
-          widthPx
+          widthPx,
+          isBeautyOn
         })
       }
     })

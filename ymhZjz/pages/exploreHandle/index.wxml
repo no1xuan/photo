@@ -17,6 +17,9 @@
     <view class="content-view-a">
       <text class="view-icon-a icon-collection"></text>
       <text class="view-text-a">{{title2}}</text>
+      <view class="other-msg" wx:if="{{authorized}}">
+      <view class="card-stats">今日免费剩余：{{count === -1 ? '无限次' : count + '次'}}</view>    
+      </view>
     </view>
     <view class="content-view">
       <van-icon name="good-job" />
@@ -84,4 +87,6 @@
       <view class="next-button" bindtap="chooseImage">下一步</view>
     </view>
   </view>
+
 </view>
+<van-dialog id="van-dialog" />

@@ -6,7 +6,8 @@ Page({
     colourizeCount: 0,
     mattingCount: 0,
     generateLayoutCount: 0,
-    cartoonCount: 0
+    cartoonCount: 0,
+    imageDefinitionEnhanceCount: 0
   },
 
   onShow() {
@@ -27,7 +28,8 @@ Page({
           generateLayoutCount: res.data.data.generateLayoutCount,
           colourizeCount: res.data.data.colourizeCount,
           mattingCount: res.data.data.mattingCount,
-          cartoonCount: res.data.data.cartoonCount
+          cartoonCount: res.data.data.cartoonCount,
+          imageDefinitionEnhanceCount: res.data.data
         })
       }
     })
@@ -69,7 +71,7 @@ Page({
       description = '适用于模糊图变清晰，老照片清晰化，质量低照片，无损放大';
     }else if(type==8){
       title = '新海诚动漫风';
-      title2 = '一键转换动漫风格照片';
+      title2 = '一键转换动漫风格';
       description = '适用于照片转新海诚动漫风格，让照片充满艺术感';
     }
     wx.navigateTo({

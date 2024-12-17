@@ -1,3 +1,4 @@
+import Dialog from '@vant/weapp/dialog/dialog'
 const app = getApp();
 
 Page({
@@ -8,12 +9,18 @@ Page({
     pic: '', 
     url: '', 
     type: '', 
+    type2: '', 
     dpi: '',    
     kb: '',     
     width: '',  
     height: '', 
+    count:'',
     showModal: false, 
     animationData: {}, 
+    authorized: false,
+    videoUnitId: 0,
+    rewardedVideoAd: null,
+    tupic:''
   },
 
   onLoad: function (options) {
@@ -27,18 +34,23 @@ Page({
 
     // 根据类型设置URL
     if (this.data.type == 4) {
-      this.setData({ url: 'generateLayoutPhotos' });
+      this.setData({ url: 'generateLayoutPhotos',type2:7});
     } else if (this.data.type == 5) {
-      this.setData({ url: 'colourize' });
+      this.setData({ url: 'colourize',type2:5});
     } else if (this.data.type == 6) {
-      this.setData({ url: 'matting' });
+      this.setData({ url: 'matting',type2:6});
     } else if (this.data.type == 7) {
-      this.setData({ url: '' });
+      this.setData({ url: '',type2:9});
     } else if (this.data.type == 8) {
-      this.setData({ url: 'cartoon' });
+      this.setData({ url: 'cartoon',type2:8});
     } else {
       this.setData({ url: '' });
     }
+  },
+
+  onShow: function () {
+    this.setData({tupic: ''});
+    this.checkTheFreeQuota(this.data.type,this.data.type2);
   },
 
   // 显示底部弹框
@@ -119,15 +131,45 @@ Page({
     });
   },
 
+  
+  //获取这个功能用户剩余次数，没token/token过期了就不显示
+  checkTheFreeQuota(type,type2) {
+    if (wx.getStorageSync('token') == '') {
+      return;
+    }
+    this.getvideoUnit();
+    this.setData({authorized: true});
+    wx.request({
+      url: app.url + 'otherApi/checkTheFreeQuota',
+      method: 'GET',
+      header: {
+        'token': wx.getStorageSync('token')
+      },
+      data: {
+        type: type,
+        type2: type2
+      }, 
+      success: (res) => {
+        this.setData({
+          count:res.data.data
+        })
+      },
+      fail: () => {
+        this.setData({
+          authorized: false
+        });
+      }
+    })
+  },
+
+
   // 选择图片
   chooseImage() {
 
-    if (wx.getStorageSync('token') === '') {
+    if (wx.getStorageSync('token') == '') {
       wx.navigateTo({ url: '/pages/login/index' });
       return;
     }
-
-
 
     const width = parseInt(this.data.width, 10);
     const height = parseInt(this.data.height, 10);
@@ -264,7 +306,9 @@ Page({
         wx.hideLoading();
         const data = JSON.parse(res.data);
         if (data.code == 200) {
-          this.imageDivision(data.data);
+          //检查是否还有次数，有次数继续,没次数看广告
+          //为什么在这里检查？是因为只有所有图片判断通过后才能进行检查，不然一个错误看一个广告，用户就要骂人了
+          this.checkCotun(data.data)  
         } else if (data.code == 404) {
           wx.showToast({
             title: data.data,
@@ -275,6 +319,41 @@ Page({
         }
       },
     });
+  },
+
+  //检查是可以免费下载还是看广告下载
+  checkCotun(tu){
+    if(this.data.count==0){  //能跑到这个方法一定有token，所以不用担心值为空
+      Dialog.confirm({
+        title: '提示',
+        message: '您今日免费次数已用完，需要看一次广告后才能继续使用或等明天再来',
+      })
+      .then(() => {
+        this.setData({
+          tupic:tu
+        })
+        const rewardedVideoAd = this.data.rewardedVideoAd;
+        if (rewardedVideoAd) {
+          // 尝试播放广告
+          rewardedVideoAd.show().catch(() => {
+            // 如果广告未加载成功，则重新加载并播放广告
+            this.loadRewardedVideoAd(tu);
+          });
+        } else {
+          console.error('广告实例不存在');
+          // 防止广告权限被封或无广告权限导致用户无法下载
+          this.imageDivision(tu);
+        }
+      })
+      .catch(() => {
+        // 用户取消观看广告
+      });
+      
+    }else{
+      this.imageDivision(tu);  //可以免费下载
+    }
+
+ 
   },
 
   // 图片处理
@@ -319,4 +398,85 @@ Page({
       },
     });
   },
+
+  getvideoUnit() {
+    wx.request({
+      url: app.url + 'api/getvideoUnit',
+      header: {
+        "token": wx.getStorageSync("token")
+      },
+      method: "POST",
+      success: (res) => {
+        this.setData({
+          videoUnitId: res.data.data.videoUnitId
+        });
+        this.initRewardedVideoAd(res.data.data.videoUnitId);
+      }
+    });
+  },
+
+    // 初始化激励视频广告
+    initRewardedVideoAd(adUnitId) {
+      if (wx.createRewardedVideoAd) {
+        const rewardedVideoAd = wx.createRewardedVideoAd({
+          adUnitId: adUnitId
+        });
+  
+        // 确保广告事件只监听一次
+        rewardedVideoAd.offLoad();
+        rewardedVideoAd.offError();
+        rewardedVideoAd.offClose();
+  
+        // 监听广告加载成功
+        rewardedVideoAd.onLoad(() => {
+          console.log('重新拉取广告成功');
+        });
+  
+        // 监听广告加载失败
+        rewardedVideoAd.onError((err) => {
+          console.error('激励视频广告加载失败', err);
+          // 用户可能观看广告上限，防止无法下载，仍发放奖励
+          this.imageDivision(this.data.tupic);
+        });
+  
+        // 监听广告关闭事件
+        rewardedVideoAd.onClose((res) => {
+          if (res && res.isEnded) {
+            // 发放奖励
+            this.imageDivision(this.data.tupic);
+          } else {
+            console.log('没看完广告，不发奖励');
+            wx.showToast({
+              title: "需要看完广告才能制作哦~",
+              icon: 'none',
+              duration: 1500
+            });
+          }
+        });
+        this.setData({
+          rewardedVideoAd: rewardedVideoAd
+        });
+      } else {
+        console.error('微信版本太低不支持激励视频广告');
+        // 防止无法下载，所以仍然发放奖励
+        this.imageDivision(this.data.tupic);
+      }
+    },
+  
+    // 加载激励视频广告
+    loadRewardedVideoAd(tu) {
+      const rewardedVideoAd = this.data.rewardedVideoAd;
+      rewardedVideoAd
+        .load()
+        .then(() => rewardedVideoAd.show())
+        .catch((err) => {
+          console.error('广告加载失败', err);
+          // 看广告上限/网络失败，为了防止无法制作，仍发放奖励
+          this.imageDivision(tu);
+        });
+    }
+
+
+
+
 });

@@ -60,7 +60,8 @@ Page({
                   }else{
                     console.log("登录失败原因："+res.data.data)
                     wx.showToast({
-                      title: '登录失败，请重试',
+                      title: res.data.data,
+                      duration: 3000,
                       icon: 'none'
                     });
                   }

@@ -20,8 +20,7 @@ Page({
     color: "#ffffff",
     colorType: 0,
     picUrl: "",
-    downloadOne: 1,
-    downloadTwo: 2,
+    downloadHd: 2,
     videoUnitId: 0,
     rewardedVideoAd: null,
     typeDownload: 1,
@@ -33,7 +32,7 @@ Page({
 
   onLoad: function () {
     this.getImageData();
-    this.getWeb();
+    this.getvideoUnit();
   },
 
   getImageData() {
@@ -51,26 +50,27 @@ Page({
             kb: 30
           });
         }
+
         wx.setNavigationBarTitle({
           title: this.data.imageData.name + "（预览）"
         });
+        
       });
   },
 
-  getWeb() {
+  getvideoUnit() {
     wx.request({
-      url: app.url + 'api/getWeb',
+      url: app.url + 'api/getvideoUnit',
       header: {
         "token": wx.getStorageSync("token")
       },
       method: "POST",
       success: (res) => {
         this.setData({
-          downloadOne: res.data.downloadOne,
-          downloadTwo: res.data.downloadTwo,
-          videoUnitId: res.data.videoUnitId
+          downloadHd: res.data.data.downloadHd,
+          videoUnitId: res.data.data.videoUnitId
         });
-        this.initRewardedVideoAd(res.data.videoUnitId);
+        this.initRewardedVideoAd(res.data.data.videoUnitId);
       }
     });
   },
@@ -158,12 +158,12 @@ Page({
     });
 
     // 普通下载没开启广告
-    if (this.data.downloadOne == 1 && e.currentTarget.dataset.type == 1) {
+    if (e.currentTarget.dataset.type == 1) {
       this.saveNormalPhoto();
       return;
     }
     // 高清下载没开启广告
-    if (this.data.downloadTwo == 1 && e.currentTarget.dataset.type == 2) {
+    if (this.data.downloadHd == 0 && e.currentTarget.dataset.type == 2) {
       this.saveHDPhoto();
       return;
     }
@@ -262,7 +262,8 @@ Page({
       data: {
         "image": this.data.imageData.oimg,
         "type": this.data.imageData.category == 4 ? 0 : 1,
-        "itemId": this.data.imageData.id
+        "itemId": this.data.imageData.id,
+        "isBeautyOn": this.data.imageData.isBeautyOn
       },
       header: {
         "token": wx.getStorageSync("token")

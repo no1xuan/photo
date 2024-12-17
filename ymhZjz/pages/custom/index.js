@@ -10,7 +10,8 @@ Page({
     dpi:'',
     name: '',
     px: '0*0 px',
-    size: '0*0 mm'
+    widthMm:'',
+    heightMm:''
   },
 
   onLoad: function () {
@@ -72,7 +73,9 @@ Page({
     let height_mm = Math.floor(height_px / 11.8);
     this.setData({
       px: `${width_px}*${height_px} px`,
-      size: `${width_mm}*${height_mm} mm`
+      size: `${width_mm}*${height_mm} mm`,
+      widthMm: width_mm,
+      heightMm: height_mm
     });
   },
 
@@ -139,7 +142,8 @@ Page({
         name: name,
         widthPx: width,
         heightPx: height,
-        size: this.data.size,
+        widthMm: this.data.widthMm,
+        heightMm: this.data.heightMm,
         dpi: dpi
       },
       header: {
@@ -154,7 +158,9 @@ Page({
             height: '',
             dpi:'',
             px: '0*0 px',
-            size: '0*0 mm'
+            size: '0*0 mm',
+            widthMm: '',
+            heightMm: ''
           });
 
           Dialog.confirm({

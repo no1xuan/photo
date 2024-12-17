@@ -43,15 +43,12 @@
   margin-left: 10px;
   font-size: 16px;
   color: #2c2c2c;
-  /* margin-bottom: 10px; */
-  /* font-weight: 500; */
 }
 
 .msg view:nth-child(2) {
   margin-left: 10px;
   font-size: 14px;
   color: rgb(192, 190, 190);
-  /* margin-bottom: 10px; */
 }
 
 .msg view:last-child {
