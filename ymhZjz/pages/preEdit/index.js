@@ -71,17 +71,8 @@ Page({
 
   //获取管理员是否开启美颜
   getWebGlow() {
-    if (wx.getStorageSync("token") == "") {
-      this.setData({
-        openIsBeautyOn: 0, //防止无token
-      })
-      return;
-    }
     wx.request({
       url: app.url + 'api/getWebGlow',
-      header: {
-        "token": wx.getStorageSync("token")
-      },
       method: "POST",
       success: (res) => {
         this.setData({
