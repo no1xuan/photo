@@ -18,7 +18,7 @@
       <text class="view-icon-a icon-collection"></text>
       <text class="view-text-a">{{title2}}</text>
       <view class="other-msg" wx:if="{{authorized}}">
-      <view class="card-stats">今日免费剩余：{{count === -1 ? '无限次' : count + '次'}}</view>    
+      <view class="card-stats" wx:if="{{count!=null}}">今日免费剩余：{{count === -1 ? '无限次' : count + '次'}}</view>    
       </view>
     </view>
     <view class="content-view">
