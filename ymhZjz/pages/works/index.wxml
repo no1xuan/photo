@@ -1,33 +1,30 @@
 <view class="works">
   <van-notify id="van-notify" />
-  <view class="container" wx:for="{{workList}}" wx:for-index="id" wx:key="id" data-index="{{id}}">
-    <view class="left">
-      <view class="photo">
-        <image style="width: 100%;height: 100%;" src="{{item.nimg}}" data-url="{{item.nimg}}"  bindtap="preView"></image>
-      </view>
-      <view class="msg">
-        <view>{{item.name}} </view>
-        <view>{{item.size}} px</view>
-        <view>{{item.createTime}}</view>
-      </view>
-    </view>
-    <view class="right" style="display: flex; flex-direction: column; align-items: stretch; margin-top: 10px;">
   <van-dialog id="van-dialog" />
   
-  <!-- 保存按钮 -->
-  <van-button type="primary" data-url="{{item.nimg}}" bindtap="savePicUrlAndImg" style="margin-bottom: 10px;">
-    下载
-  </van-button>
-  
-  <!-- 删除按钮 -->
-  <van-button type="danger" data-id="{{item.id}}" bindtap="remove">
-    删除
-  </van-button>
-</view>
-
-
+  <view class="photo-grid">
+    <view class="photo-card" wx:for="{{workList}}" wx:for-index="id" wx:key="id">
+      <view class="photo-preview">
+        <image src="{{item.nimg}}" data-url="{{item.nimg}}" bindtap="preView"></image>
+      </view>
+      <view class="photo-info">
+        <view class="photo-name">{{item.name}}</view>
+        <view class="photo-size">{{item.size}} px</view>
+        <view class="photo-time">{{item.createTime}}</view>
+      </view>
+      <view class="photo-actions">
+        <van-button type="primary" size="small" data-url="{{item.nimg}}" bindtap="savePicUrlAndImg">
+          下载
+        </van-button>
+        <van-button type="danger" size="small" data-id="{{item.id}}" bindtap="remove">
+          删除
+        </van-button>
+      </view>
+    </view>
   </view>
-  <view class="none" wx:if="{{!workList.length}}">
-    <image src="../searchs/images/none.png" style="width: 100%;height: 100%;"></image>
+
+  <view class="empty-state" wx:if="{{!workList.length}}">
+    <image src="../searchs/images/none.png" style="position: relative; left: -1rpx; top: 297rpx"></image>
+    <text style="position: relative; left: 0rpx; top: 215rpx">暂无作品</text>
   </view>
 </view>

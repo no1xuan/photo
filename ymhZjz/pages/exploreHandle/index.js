@@ -40,7 +40,7 @@ Page({
     } else if (this.data.type == 6) {
       this.setData({ url: 'matting',type2:6});
     } else if (this.data.type == 7) {
-      this.setData({ url: '',type2:9});
+      this.setData({ url: 'editImage',type2:9});
     } else if (this.data.type == 8) {
       this.setData({ url: 'cartoon',type2:8});
     } else {
@@ -283,9 +283,38 @@ Page({
           return;
         }
 
-        this.imgUpload(file.tempFilePath);
+        if(this.data.type==7){
+          this.editImage(file.tempFilePath); 
+        }else{
+          this.imgUpload(file.tempFilePath);
+        }
+
+    
       },
     });
+  },
+  
+
+  //微信原生实现图片编辑功能
+  editImage(tu){
+    const that = this;
+    wx.editImage({
+      src: tu,
+      success(res) {
+        that.imgUpload(res.tempFilePath);
+      },
+      fail(err) {
+        //不支持开发者工具使用，不支持电脑微信使用，原错误信息：err.errMsg
+        wx.showToast({
+          title: "该功能仅支持手机/平板使用",
+          duration: 2000,
+          icon: "none",
+          mask: true
+        })
+
+      }
+    });
+
   },
 
   
@@ -384,7 +413,7 @@ Page({
         wx.hideLoading();
         if (res.data.code == 200) {
           wx.navigateTo({
-            url: './complete/index?url=' + res.data.data,
+            url: './complete/index?url=' + res.data.data + '&type=' + this.data.type,
           });
         } else if (res.data.code == 404) {
           wx.showToast({

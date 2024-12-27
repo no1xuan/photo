@@ -66,15 +66,15 @@
 
     <view class="explore-row">
 
-      <view wx:if="{{imageDefinitionEnhanceCount!=-1}}" class="explore-card" bindtap="stop" data-type="7">
+      <view wx:if="{{editImageCount!=-1}}" class="explore-card" bindtap="navigateTo" data-type="7">
         <image class="card-image" mode="aspectFill" src="../../images/home/7.png">
           <view class="other-msg">
-            <view class="card-stats">⛔ 维护中 | 暂停使用</view>
+            <view class="card-stats">🆕 新品 | {{editImageCount}}次使用</view>
           </view>
         </image>
         <view class="card-content">
-          <view class="card-title">照片清晰增强✨</view>
-          <view class="card-desc">一键让模糊图片变清晰</view>
+          <view class="card-title">图片编辑✏️</view>
+          <view class="card-desc">一键随心所欲编辑图片</view>
         </view>
       </view>
 

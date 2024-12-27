@@ -6,7 +6,7 @@
   </view>
 
   <!-- 图片展示区域 -->
-  <view class="image-container">
+  <view class="image-container {{type==6?'matting-container':''}}">
     <image mode="aspectFit" bindtap="preView" src="{{url}}" class="result-image"></image>
     <view class="image-overlay">
       <view class="overlay-text">处理成功</view>
@@ -16,6 +16,6 @@
   <!-- 操作按钮区域 -->
   <view class="bottom">
     <button bindtap="goHome">返回</button>
-    <button  bindtap="downloadPic">下载</button>
+    <button bindtap="downloadPic">下载</button>
   </view>
 </view>

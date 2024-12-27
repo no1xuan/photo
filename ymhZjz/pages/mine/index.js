@@ -8,8 +8,7 @@ Page({
     nickname: '陌生人', // 默认昵称
     avatarFile: '../../images/tx.jpg', // 修改头像
     nicknameFile: '',
-    easterEggClickCount: 0, // 新增：彩蛋点击计数
-    easterEggTimer: null,    // 新增：彩蛋点击定时器
+    title:app.appName
   },
 
   onLoad: function () {

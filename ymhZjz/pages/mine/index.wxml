@@ -18,7 +18,7 @@
         Hi，{{nickname}}
         <van-icon name="edit" size="16px" bindtap="openEditProfileModal" class="edit-icon" />
       </view>
-      <view class="user-days" bindtap="openEditProfileModal">证件照伴侣已经陪伴你走过 {{days}} 天</view>
+      <view class="user-days" bindtap="openEditProfileModal">{{title}}已经陪伴你走过 {{days}} 天</view>
     </view>
   </view>
 

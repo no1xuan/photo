@@ -7,7 +7,7 @@ Page({
     mattingCount: 0,
     generateLayoutCount: 0,
     cartoonCount: 0,
-    imageDefinitionEnhanceCount: 0
+    editImageCount: 0
   },
 
   onShow() {
@@ -29,7 +29,7 @@ Page({
           colourizeCount: res.data.data.colourizeCount,
           mattingCount: res.data.data.mattingCount,
           cartoonCount: res.data.data.cartoonCount,
-          imageDefinitionEnhanceCount: res.data.data
+          editImageCount: res.data.data.editImageCount
         })
       }
     })
@@ -39,13 +39,6 @@ Page({
     wx.navigateTo({
       url: "/pages/sizeList/index"
     });
-  },
-  stop(){
-    wx.showToast({
-      title: '该功能维护中，暂停使用',
-      icon: 'none', 
-      duration: 3000
-    })
   },
 
   navigateTo(e) {
@@ -66,9 +59,9 @@ Page({
       title2 = '一键轻松抠出图像';
       description = '适用于人像，宠物，物品，植物等照片进行抠图';
     }else if(type==7){
-      title = '照片清晰度增强';
-      title2 = '一键让模糊图片变清晰';
-      description = '适用于模糊图变清晰，老照片清晰化，质量低照片，无损放大';
+      title = '图片编辑';
+      title2 = '一键自由编辑图片';
+      description = '适用于添加表情，文字，马赛克，涂鸦，调整尺寸等';
     }else if(type==8){
       title = '新海诚动漫风';
       title2 = '一键转换动漫风格';

@@ -15,7 +15,7 @@
     </view>
   </scroll-view>
   <view class="empty-state" wx:if="{{!loading && !photoSizeList.length}}">
-    <image src="./images/none.png" mode="aspectFit"></image>
+    <image src="./images/none.png" mode="aspectFit" style="position: relative; left: 56rpx; top: 216rpx"></image>
   </view>
   <view class="scroll-to-top" wx:if="{{showBackTop}}" bindtap="scrollToTop" hover-class="scroll-to-top-hover">
     <van-icon name="arrow-up" size="24px" color="#fff"/>

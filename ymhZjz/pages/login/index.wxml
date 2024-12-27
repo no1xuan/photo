@@ -11,7 +11,7 @@
       </view>
 
     </view>
-    <view class="but-wh">
+    <view class="but-block">
       <button bindtap="login" class="button">快捷登录</button>
     </view>
   </view>

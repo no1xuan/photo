@@ -1,11 +1,13 @@
 Page({
   data: {
-    url: ''
+    url: '',
+    type: 0
   },
 
   onLoad: function (options) {
     this.setData({
-      url: options.url
+      url: options.url,
+      type: options.type
     })
   },
   
