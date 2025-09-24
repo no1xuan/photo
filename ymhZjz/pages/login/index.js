@@ -38,6 +38,15 @@ Page({
             })
         }
     })
+  },
+
+  cancelLogin() {
+      const pages = getCurrentPages();
+      if (pages && pages.length > 1) {
+          wx.navigateBack({ delta: 1 });
+      } else {
+          wx.switchTab({ url: '/pages/index/index' });
+      }
   }
 
 

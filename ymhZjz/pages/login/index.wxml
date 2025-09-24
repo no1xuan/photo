@@ -7,12 +7,13 @@
     <view class="logo-block">
       <view class="logo">
         <view>{{title}}</view>
-      <view>您身边的证件照管家</view>
+        <view>您身边的证件照管家</view>
       </view>
-
     </view>
+
     <view class="but-block">
       <button bindtap="login" class="button">快捷登录</button>
+      <button bindtap="cancelLogin" class="button button-ghost">取消登录</button>
     </view>
   </view>
 </view>

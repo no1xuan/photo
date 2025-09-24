@@ -63,14 +63,32 @@
 
 .but-block {
   margin-top: 40rpx;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
 }
 
 .button {
   width: 70vw;
   height: 88rpx;
   background: #2c2c2c;
-  color: white;
+  color: #fff;
   font-size: 30rpx;
   line-height: 88rpx;
   border-radius: 50rpx;
+}
+
+
+.button-ghost {
+  margin-top: 24rpx;
+  background: transparent;
+  color: #2c2c2c;
+  border: 2rpx solid #2c2c2c;
+}
+
+
+.button-ghost--light {
+  color: #ffffff;
+  border-color: #ffffff;
 }
