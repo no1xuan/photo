@@ -25,7 +25,7 @@
       <view class="grid-content">
         <view class="title">{{ item.name }}</view>
         <view class="description">{{item.widthPx}}*{{item.heightPx}}</view>
-        <view class="description">{{item.widthMm}}*{{item.widthMm}} | {{item.dpi}}dpi</view>
+        <view class="description">{{item.widthMm}}*{{item.heightMm}} | {{item.dpi}}dpi</view>
       </view>
     </view>
   </view>
