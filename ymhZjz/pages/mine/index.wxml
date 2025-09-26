@@ -48,12 +48,6 @@
           <text>客服中心</text>
         </view>
       </button>
-      <button class="button-item" bindtap="evaluate">
-        <view class="icon-text">
-          <van-icon name="star-o" size="30px" />
-          <text>赏好评</text>
-        </view>
-      </button>
       <button class="button-item" open-type="share">
         <view class="icon-text">
           <van-icon name="share-o" size="30px" />
@@ -69,9 +63,8 @@
       <view class="modal-body">
         <view class="modal-title">我的权益</view>
         <view class="modal-list">
-          <text>● 你目前已经解锁基础功能，并无限制使用;</text>
+          <text>● 你目前已经解锁全部功能，并无限制使用;</text>
           <text>● 你目前享受一对一专属客服，7x24全年极速响应;</text>
-          <text>● 待解锁：美颜，照片转卡通形象;</text>
           <text>● 请多多分享小程序，系统将自动为您解锁。</text>
         </view>
         <button bindtap="closeModal">我明白了</button>
