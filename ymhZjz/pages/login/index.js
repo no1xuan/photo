@@ -45,7 +45,7 @@ Page({
       if (pages && pages.length > 1) {
           wx.navigateBack({ delta: 1 });
       } else {
-          wx.switchTab({ url: '/pages/index/index' });
+          wx.switchTab({ url: '/pages/home/index' });
       }
   }
 
