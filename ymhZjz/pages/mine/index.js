@@ -187,21 +187,6 @@ calculateDays: function (time) {
     }
   },
 
-  // 赏好评
-  evaluate() {
-    if (wx.openBusinessView) {
-      wx.openBusinessView({
-        businessType: 'servicecommentpage',
-        success: (res) => {
-          console.log(res)
-        },
-        fail: (res) => {
-          console.log(res)
-        }
-      });
-    }
-  },
-
   // 我的权益弹框
   navigateToEdit() {
     this.setData({
